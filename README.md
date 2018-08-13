@@ -5,3 +5,6 @@ This repository is the next evolution in CommonCore; simply called Core.  Instea
  
  
  (NOTE)  All templates require that you download Xamarin.Forms.Core.zip.  Unzip the file and reference this shared project in all solutions created from templates.
+
+ (Tutorial)
+ - Single Page App  - https://youtu.be/PVo-z6FmA90
