@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{28B832B3-83AF-48C5-A1BE-2F6F185C8FEE}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Xamarin.Forms.Core.AzurePush</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FirebaseRegistrationService.Droid.cs">
+      <DependentUpon>CoreAzurePush.Droid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FirebaseService.Droid.cs">
+      <DependentUpon>CoreAzurePush.Droid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)CoreAzurePush.Droid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreAzurePush.IOS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\PushNotificationSettingsPartial.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)_init\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Partials\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />
+  </ItemGroup>
+</Project>

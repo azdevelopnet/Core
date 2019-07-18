@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{50352576-B69C-4831-8CAF-BB6DA4E29F22}|Default">
+  <MonoDevelop.Ide.ItemProperties.Fonts.Android PreferredExecutionTarget="Android.n6p_phone" />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Fonts" expanded="True">
+            <Node name="Fonts.iOS" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Fonts.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

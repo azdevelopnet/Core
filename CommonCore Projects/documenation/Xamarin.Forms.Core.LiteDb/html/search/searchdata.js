@@ -1,0 +1,24 @@
+var indexSectionsWithContent =
+{
+  0: "cilx",
+  1: "cil",
+  2: "x",
+  3: "l"
+};
+
+var indexSectionNames =
+{
+  0: "all",
+  1: "classes",
+  2: "namespaces",
+  3: "properties"
+};
+
+var indexSectionLabels =
+{
+  0: "All",
+  1: "Classes",
+  2: "Namespaces",
+  3: "Properties"
+};
+

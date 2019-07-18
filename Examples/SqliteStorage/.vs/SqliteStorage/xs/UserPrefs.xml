@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{BA3F1BE9-BB58-49C9-BA86-EC3E7E0F62A5}|Default">
+  <MonoDevelop.Ide.ItemProperties.SqliteStorage FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.SqliteStorage.Android PreferredExecutionTarget="Android.n81" />
+  <MonoDevelop.Ide.ItemProperties.SqliteStorage.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SqliteStorage/SqliteStorage.Android/MainApplication.cs">
+    <Files>
+      <File FileName="SqliteStorage/SqliteStorage/ViewModels/SomeViewModel.cs" Line="12" Column="1" />
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core.Sqlite/Services/SqliteDb.cs" Line="131" Column="91" />
+      <File FileName="SqliteStorage/SqliteStorage/App.xaml.cs" Line="16" Column="10" />
+      <File FileName="SqliteStorage/SqliteStorage.Android/MainApplication.cs" Line="4" Column="23" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SqliteStorage" expanded="True" selected="True">
+            <Node name="Xamarin.Forms.Core.Sqlite" expanded="True">
+              <Node name="Services" expanded="True">
+                <Node name="ISqliteDb.cs" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{1A648B44-D0AC-4652-9B66-15F080250FB6}|Default">
+  <MonoDevelop.Ide.ItemProperties.Pagination.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.ItemProperties.Pagination.Android PreferredExecutionTarget="Android.n81" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pagination/Pagination.Android/MainApplication.cs">
+    <Files>
+      <File FileName="Pagination/Pagination/ViewModels/SomeViewModel.cs" Line="13" Column="1" />
+      <File FileName="Pagination/Pagination/Views/SomePage.cs" />
+      <File FileName="Pagination/Pagination/Config/settings/config.dev.json" />
+      <File FileName="Pagination/Pagination/Models/SomeModel.cs" />
+      <File FileName="Pagination/Pagination/Views/RandomUserCell.cs" />
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/Dependencies/DialogPrompt.IOS.cs" />
+      <File FileName="Pagination/Pagination.iOS/AppDelegate.cs" />
+      <File FileName="Pagination/Pagination.Android/MainApplication.cs" Line="4" Column="23" />
+      <File FileName="Pagination/Pagination/App.xaml.cs" Line="16" Column="10" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Pagination" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Pagination FirstBuild="True" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

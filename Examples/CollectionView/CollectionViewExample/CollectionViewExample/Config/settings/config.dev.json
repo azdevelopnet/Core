@@ -1,0 +1,22 @@
+﻿{
+  "AESEncryptionKey": "123",
+  "HttpSettings": {
+    "DisplayRawJson": false,
+    "HttpTimeOut": 0,
+    "HttpAllowAutoRedirect": false,
+    "IOSHttpHandler": "ModernHttpClient",
+    "AndroidHttpHandler": "ModernHttpClient"
+  },
+  "MobileAppCenter": {
+    "IOSAppId": "",
+    "AndroidAppId": "",
+    "UWPAppId": ""
+  },
+  "WebApi": {
+    "randomuser": "https://randomuser.me/api/?results=200",
+  },
+  "CustomSettings": {
+    "CustomName": "somevalue",
+    "customName2": "somevalue2"
+  }
+}

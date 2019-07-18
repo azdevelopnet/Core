@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{A874011A-4B46-490F-9E2A-51D85E0FC924}|Default">
+  <MonoDevelop.Ide.ItemProperties.CollectionViewExample.Android PreferredExecutionTarget="Android.Android_Accelerated_Oreo" />
+  <MonoDevelop.Ide.ItemProperties.CollectionViewExample.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CollectionViewExample.Android/MainApplication.cs">
+    <Files>
+      <File FileName="CollectionViewExample/ViewModels/ListsViewModel.cs" Line="29" Column="40" />
+      <File FileName="CollectionViewExample/BusinessLogic/SomeBusinessLogic.cs" />
+      <File FileName="../../../CommonCore Projects/Xamarin.Forms.Core/_init/ReadMe.txt" />
+      <File FileName="../../../CommonCore Projects/Xamarin.Forms.Core/CoreClasses/CoreExtensions.cs" />
+      <File FileName="CollectionViewExample/Partials/StylesPartial.cs" />
+      <File FileName="CollectionViewExample.iOS/AppDelegate.cs" Line="28" Column="79" />
+      <File FileName="CollectionViewExample/Views/ListPage.cs" Line="74" Column="2" />
+      <File FileName="CollectionViewExample/App.xaml.cs" Line="17" Column="1" />
+      <File FileName="CollectionViewExample.Android/MainApplication.cs" Line="4" Column="23" />
+      <File FileName="CollectionViewExample.Android/MainActivity.cs" Line="10" Column="68" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CollectionViewExample" expanded="True">
+            <Node name="CollectionViewExample.Android" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

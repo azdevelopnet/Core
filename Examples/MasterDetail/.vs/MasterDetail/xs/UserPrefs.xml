@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{61BB414C-719D-4D26-9A9B-DD57567D22B3}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MasterDetail/MasterDetail.Android/MainApplication.cs">
+    <Files>
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/Services/CoreDependencyService.cs" Line="164" Column="50" />
+      <File FileName="MasterDetail/MasterDetail/Views/Nav/MainNav.cs" />
+      <File FileName="MasterDetail/MasterDetail/Views/Nav/SlidingPageCell.cs" />
+      <File FileName="MasterDetail/MasterDetail/ViewModels/MasterDetailViewModel.cs" />
+      <File FileName="MasterDetail/MasterDetail/Views/Nav/SlidingPage.cs" />
+      <File FileName="MasterDetail/MasterDetail.Android/MainApplication.cs" Line="4" Column="23" />
+      <File FileName="MasterDetail/MasterDetail/ViewModels/SomeViewModel.cs" Line="9" Column="6" />
+      <File FileName="MasterDetail/MasterDetail/App.xaml.cs" Line="19" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MasterDetail" expanded="True" selected="True">
+            <Node name="MasterDetail.Android" expanded="True" />
+            <Node name="MasterDetail" expanded="True">
+              <Node name="ViewModels" expanded="True" />
+              <Node name="App.xaml" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.MasterDetail.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.ItemProperties.MasterDetail FirstBuild="True" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.MasterDetail.Android PreferredExecutionTarget="Android.n81" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

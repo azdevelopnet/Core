@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{99401032-3D63-4739-B1AC-221EB3A38F2B}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Xamarin.Forms.Core.Fonts</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\EntypoPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\FontAwesome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\Ionicons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\Material.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\Meteocons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\SimpleLineIcons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\Typicons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontTypes\WeatherIcons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FontUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)FontTypes\" />
+    <Folder Include="$(MSBuildThisFileDirectory)_init\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)_init\readme.txt" />
+  </ItemGroup>
+</Project>
