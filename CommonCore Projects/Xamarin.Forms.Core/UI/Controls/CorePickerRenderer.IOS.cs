@@ -37,7 +37,9 @@ namespace Xamarin.Forms.Core
                     Control.BorderStyle = UITextBorderStyle.None;
                 }
                 pickerView = (UIPickerView)Control.InputView;
-
+                
+                var font = UIFont.FromName(element.FontFamily, (nfloat)element.FontSize);
+                Control.Font = font;
             }
         }
         private void FocusChangedEvent(object sender, FocusEventArgs args){
@@ -93,9 +95,20 @@ namespace Xamarin.Forms.Core
 
             }
 
+            if (e.PropertyName == CorePicker.FontFamilyProperty.PropertyName)
+            {
+                Element.FontFamily = ((CorePicker)sender).FontFamily;
+            }
+            if (e.PropertyName == CorePicker.FontSizeProperty.PropertyName)
+            {
+                Element.FontSize = ((CorePicker)sender).FontSize;
+            }
+
             base.OnElementPropertyChanged(sender, e);
 
         }
+
+    
 
         private string[] GetPickerDisplayValues()
         {

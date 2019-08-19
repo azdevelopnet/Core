@@ -11,6 +11,10 @@ namespace Xamarin.Forms.Core
         {
             get { return CoreDependencyService.GetService<IEncryptionService, EncryptionService>(true); }
         }
+        public IFileStore FileStore
+        {
+            get { return CoreDependencyService.GetService<IFileStore, FileStore>(true); }
+        }
 
         public async Task<(T Response, bool Success, Exception Error)> GetSecureData<T>(string name) where T : class, new()
         {
@@ -46,9 +50,9 @@ namespace Xamarin.Forms.Core
             {
                 var data = JsonConvert.SerializeObject(obj);
                 if (!string.IsNullOrEmpty(password))
-                    data = Encryption.AesEncrypt(data, password);
-                await SecureStorage.SetAsync(name, data);
-                return null;
+                    data = await Encryption.AesEncrypt(data, password);
+                var saveResult = await FileStore.SaveStringAsync(name, data);
+                return saveResult.Error;
             }
             catch (Exception ex)
             {
@@ -60,11 +64,19 @@ namespace Xamarin.Forms.Core
         {
             try
             {
-                var data = await SecureStorage.GetAsync(name);
-                if (!string.IsNullOrEmpty(password))
-                    data = Encryption.AesDecrypt(data, password);
-                var obj = JsonConvert.DeserializeObject<T>(data);
-                return (obj, null);
+                var dataFile = await FileStore.GetStringAsync(name);
+                if (dataFile.Success)
+                {
+                    if (!string.IsNullOrEmpty(password))
+                        dataFile.Response = await Encryption.AesDecrypt(dataFile.Response, password);
+                    var obj = JsonConvert.DeserializeObject<T>(dataFile.Response);
+                    return (obj, null);
+                }
+                else
+                {
+                    return (null, new ApplicationException("Does not exist"));
+                }
+
             }
             catch (Exception ex)
             {

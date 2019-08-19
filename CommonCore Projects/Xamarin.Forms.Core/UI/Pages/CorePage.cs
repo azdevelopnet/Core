@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Core
         
         public T VM
         {
-            get { return CoreDependencyService.GetViewModel<T>(); }
+            get { return CoreDependencyService.GetViewModel<T>(true); }
         }
 
 		public CorePage()

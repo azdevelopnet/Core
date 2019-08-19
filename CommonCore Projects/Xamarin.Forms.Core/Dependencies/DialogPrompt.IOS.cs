@@ -149,7 +149,7 @@ namespace Xamarin.Forms.Core
 
         public void ShowToast(string message)
         {
-            alertDelay = NSTimer.CreateScheduledTimer(3.5, (obj) =>
+            alertDelay = NSTimer.CreateScheduledTimer(3, (obj) =>
             {
                 if (alert != null)
                 {

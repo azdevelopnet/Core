@@ -50,12 +50,16 @@ namespace Xamarin.Forms.Core
             {
                 DependencyService.Register<T>();
                 vmContainer.Add(typeof(T).FullName);
-                loadResources = true;
+                var vm = DependencyService.Get<T>(DependencyFetchTarget.GlobalInstance);
+                if (loadResources)
+                    vm.OnInit();
+                return vm;
             }
-            var vm = DependencyService.Get<T>(DependencyFetchTarget.GlobalInstance);
-            if (loadResources)
-                vm.OnInit();
-            return vm;
+            else
+            {
+                return DependencyService.Get<T>(DependencyFetchTarget.GlobalInstance);
+            }
+
         }
 
 

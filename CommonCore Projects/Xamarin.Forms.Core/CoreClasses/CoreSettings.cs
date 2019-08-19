@@ -25,6 +25,7 @@ namespace Xamarin.Forms.Core
     }
     public partial class CoreSettings
     {
+        private static ISettings AppSettings => CrossSettings.Current;
         public static string CurrentBuild { get; set; } = "dev";
         public static INavigation AppNav { get; set; }
         public static Size ScreenSize
@@ -47,6 +48,8 @@ namespace Xamarin.Forms.Core
 
             }
         }
+
+
         public static List<string> NotificationTags { get; set; } = new List<string>();
 
         public static T On<T>(params T[] parameters)
@@ -72,17 +75,6 @@ namespace Xamarin.Forms.Core
             return obj;
         }
 
-        //public static int DeviceValue(int num)
-        //{
-        //    if (Device.RuntimePlatform.ToUpper() == "IOS")
-        //    {
-        //        return num;
-        //    }
-        //    else
-        //    {
-        //        return num.ConvertPixtoDip();
-        //    }
-        //}
 
         public static DeviceOS OS
         {
@@ -152,22 +144,62 @@ namespace Xamarin.Forms.Core
         }
 
 
+        public static bool HasDeviceToken
+        {
+            get
+            {
+#if __ANDROID__
+                return !string.IsNullOrEmpty(DeviceToken);
+#else
+                return DeviceToken!=null;
+#endif
+            }
+        }
+
 
 #if __ANDROID__
+
+        public static string DeviceToken
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("DeviceToken", null);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("DeviceToken", value);
+            }
+        }
+
         public static int AppIcon { get; set; }
         public static int SearchView { get; set; }
-        public static string DeviceToken { get; set; }
-        public static Type MainActivity { get; set; } 
+        
+        public static Type MainActivity { get; set; }
 #endif
 
 #if __IOS__
-        public static NSData DeviceToken { get; set; }
-        //public static bool PrefersLargeTitles { get; set; }
+        public static NSData DeviceToken
+        {
+            get
+            {
+                var tokenString = AppSettings.GetValueOrDefault("DeviceToken", null);
+                if(!string.IsNullOrEmpty(tokenString))
+                    return new NSData(tokenString, NSDataBase64DecodingOptions.None);
+
+                return null;
+            }
+            set
+            {
+                var tokenStringBase64 = value.GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+                AppSettings.AddOrUpdateValue("DeviceToken", tokenStringBase64);
+            }
+        }
+
 #endif
 
         internal class AppData
         {
-            //public static AppData Instance = new AppData();
+
             static AppData()
             {
                 Load();

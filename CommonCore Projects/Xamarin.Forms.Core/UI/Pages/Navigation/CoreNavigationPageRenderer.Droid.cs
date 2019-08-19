@@ -70,9 +70,10 @@ namespace Xamarin.Forms.Core
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
-            base.OnLayout(changed, l, t, r, b);
 
-            UpdateToolbarInstance();
+                base.OnLayout(changed, l, t, r, b);
+
+                UpdateToolbarInstance();
         }
 
         protected override void OnConfigurationChanged(Configuration newConfig)

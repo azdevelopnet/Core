@@ -17,6 +17,7 @@ using System.Collections;
 using System.Reflection;
 using Plugin.CurrentActivity;
 using Android.Content;
+using Android.Graphics;
 
 [assembly: ExportRenderer(typeof(CorePicker), typeof(CorePickerRenderer))]
 namespace Xamarin.Forms.Core
@@ -56,6 +57,8 @@ namespace Xamarin.Forms.Core
 
             if (e.NewElement != null)
             {
+                element = (CorePicker)e.NewElement;
+
                 ((INotifyCollectionChanged)e.NewElement.Items).CollectionChanged += RowsCollectionChanged;
                 if (Control == null)
                 {
@@ -66,10 +69,17 @@ namespace Xamarin.Forms.Core
                     textField.Tag = this;
                     textField.InputType = InputTypes.Null;
 
+                    textField.TextSize = (float)element.FontSize;
+                    if (element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
+                    {
+                        var file = element.FontFamily.Split('#')[0];
+                        var fontFace = Typeface.CreateFromAsset(this.Context.Assets, file);
+                        textField.SetTypeface(fontFace, TypefaceStyle.Normal);
+                    }
+
+
                     if (e.NewElement != null)
                     {
-                        element = (CorePicker)e.NewElement;
-
                         if (element != null && element.EntryColor != null && textField != null)
                         {
                             textField.Background.Mutate().SetColorFilter(element.EntryColor.ToAndroid(), Graphics.PorterDuff.Mode.SrcAtop);
@@ -78,6 +88,16 @@ namespace Xamarin.Forms.Core
 
                     textField.SetOnClickListener(PickerListener.Instance);
                     SetNativeControl(textField);
+                }
+                else
+                {
+                    Control.TextSize = (float)element.FontSize;
+                    if (element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
+                    {
+                        var file = element.FontFamily.Split('#')[0];
+                        var fontFace = Typeface.CreateFromAsset(this.Context.Assets, file);
+                        Control.SetTypeface(fontFace, TypefaceStyle.Normal);
+                    }
                 }
                 UpdatePicker();
 

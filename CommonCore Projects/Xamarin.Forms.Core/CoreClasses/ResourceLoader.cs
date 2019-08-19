@@ -10,13 +10,30 @@ namespace Xamarin.Forms.Core
 	/// </summary>
 	public static class ResourceLoader
 	{
-		/// <summary>
-		/// Attempts to find and return the given resource from within the specified assembly.
-		/// </summary>
-		/// <returns>The embedded resource stream.</returns>
-		/// <param name="assembly">Assembly.</param>
-		/// <param name="resourceFileName">Resource file name.</param>
-		public static (Stream Response, Exception Error) GetEmbeddedResourceStream(Assembly assembly, string resourceFileName)
+        public static string GetFullResourceName(string resourceFileName)
+        {
+            var assembly = Assembly.GetAssembly(typeof(ResourceLoader));
+            var resourceNames = assembly.GetManifestResourceNames();
+            var resourcePath = resourceNames
+                .FirstOrDefault(x => x.EndsWith(resourceFileName, StringComparison.CurrentCultureIgnoreCase));
+
+            return resourcePath;
+        }
+
+        public static Stream GetEmbeddedResourceStream(string resourceFileName)
+        {
+            var assembly = Assembly.GetAssembly(typeof(ResourceLoader));
+            var response = GetEmbeddedResourceStream(assembly, resourceFileName);
+            return response.Response;
+        }
+
+        /// <summary>
+        /// Attempts to find and return the given resource from within the specified assembly.
+        /// </summary>
+        /// <returns>The embedded resource stream.</returns>
+        /// <param name="assembly">Assembly.</param>
+        /// <param name="resourceFileName">Resource file name.</param>
+        public static (Stream Response, Exception Error) GetEmbeddedResourceStream(Assembly assembly, string resourceFileName)
 		{
             (Stream Response, Exception Error) response = (null, null);
 			var resourceNames = assembly.GetManifestResourceNames();

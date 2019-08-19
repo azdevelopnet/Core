@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Core
                         case "ModernHttpClient":
                             handler = new NativeMessageHandler()
                             {
-                                AllowAutoRedirect = CoreSettings.Config.HttpSettings.HttpAllowAutoRedirect
+                                AllowAutoRedirect = CoreSettings.Config.HttpSettings.HttpAllowAutoRedirect,
                             };
 
                             break;
@@ -82,7 +82,6 @@ namespace Xamarin.Forms.Core
                             {
                                 AllowAutoRedirect = CoreSettings.Config.HttpSettings.HttpAllowAutoRedirect,
                             };
-
                             break;
                         case "AndroidClientHandler":
                             handler = new Xamarin.Android.Net.AndroidClientHandler()
@@ -109,8 +108,8 @@ namespace Xamarin.Forms.Core
                     else
                     {
                         httpClient = new HttpClient(handler, true);
+                        httpClient.Timeout = Timeout.InfiniteTimeSpan;
                     }
-
                 }
 
                 return httpClient;
@@ -174,7 +173,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
 
                 var postResponse = await Client.PostAsync(url, content, token).ConfigureAwait(false);
                 postResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -210,7 +209,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -235,7 +234,7 @@ namespace Xamarin.Forms.Core
 
         }
 
-        public async Task<(string Response, bool Success, Exception Error)> PosttRaw(string url, CancellationToken? ct = null)
+        public async Task<(string Response, bool Success, Exception Error)> PostRaw(string url, CancellationToken? ct = null)
         {
             if (!IsConnected)
             {
@@ -246,7 +245,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -284,7 +283,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -383,7 +382,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token).ConfigureAwait(false))
                 {
@@ -421,7 +420,7 @@ namespace Xamarin.Forms.Core
                 await new SynchronizationContextRemover();
 
                 var data = JsonConvert.SerializeObject(obj);
-                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token).ConfigureAwait(false))
+                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json")).ConfigureAwait(false))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
@@ -457,7 +456,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                await new SynchronizationContextRemover();
+                //await new SynchronizationContextRemover();
 
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))

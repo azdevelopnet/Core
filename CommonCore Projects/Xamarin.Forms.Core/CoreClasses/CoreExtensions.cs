@@ -93,6 +93,15 @@ namespace Xamarin.Forms.Core
             return obj;
         }
 
+        public static T[] AddItem<T>(this T[] array, T obj)
+        {
+            var lst = new List<T>();
+            foreach (var item in array)
+                lst.Add(item);
+            lst.Add(obj);
+            return lst.ToArray();
+        }
+
 
         /// <summary>
         /// Save the state of the view model.  Used for when the application may teardown the memory losing the property

@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Core
         public static UIAlertController alert;
         public void ShowProgress(string message)
         {
-            BTProgressHUD.Show(message);
+            BTProgressHUD.Show(message, -1, ProgressHUD.MaskType.Black);
         }
 
         public void Dismiss()
@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Core
 
         public void ShowProgress(string message, double percentage)
         {
-           BTProgressHUD.Show(message, (float)percentage);
+           BTProgressHUD.Show(message, (float)percentage,ProgressHUD.MaskType.Black);
         }
 
     }

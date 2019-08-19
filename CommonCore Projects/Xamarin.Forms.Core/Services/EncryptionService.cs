@@ -23,44 +23,50 @@ namespace Xamarin.Forms.Core
     {
         private byte[] encryptionSalt;
 
-        public EncryptionService()
+        public IFileStore FileStore
         {
-            GetEncryptionSalt().ConfigureAwait(false);
+            get { return CoreDependencyService.GetService<IFileStore, FileStore>(true); }
         }
 
         public async Task GetEncryptionSalt()
         {
             Guid guid = Guid.NewGuid();
-            try
+            var data = await FileStore.GetStringAsync("encryptionSalt");
+            if (data.Success)
             {
-                var data = await SecureStorage.GetAsync("encryptionSalt");
-                if(data!=null)
-                {
-                    guid = Guid.Parse(data);
-                }
+                guid = Guid.Parse(data.Response);
             }
-            catch{}
-            await SecureStorage.SetAsync("encryptionSalt", guid.ToString());
+            else
+            {
+                await FileStore.SaveStringAsync("encryptionSalt", guid.ToString());
+            }
+           
             encryptionSalt = guid.ToByteArray();
         }
 
-        public string AesEncrypt(string clearValue, string encryptionKey)
+        public async Task<string> AesEncrypt(string clearValue, string encryptionKey)
         {
+            if (encryptionSalt == null)
+                await GetEncryptionSalt();
+
             using (Aes aes = Aes.Create())
             {
                 aes.Key = CreateKey(encryptionKey);
 
-                byte[] encrypted = AesEncryptStringToBytes(clearValue, aes.Key, aes.IV);
+                byte[] encrypted = await AesEncryptStringToBytes(clearValue, aes.Key, aes.IV);
                 return Convert.ToBase64String(encrypted) + ";" + Convert.ToBase64String(aes.IV);
             }
         }
 
-        public string AesDecrypt(string encryptedValue, string encryptionKey)
+        public async Task<string> AesDecrypt(string encryptedValue, string encryptionKey)
         {
+            if (encryptionSalt == null)
+                await GetEncryptionSalt();
+
             string iv = encryptedValue.Substring(encryptedValue.IndexOf(';') + 1, encryptedValue.Length - encryptedValue.IndexOf(';') - 1);
             encryptedValue = encryptedValue.Substring(0, encryptedValue.IndexOf(';'));
 
-            return AesDecryptStringFromBytes(Convert.FromBase64String(encryptedValue), CreateKey(encryptionKey), Convert.FromBase64String(iv));
+            return await AesDecryptStringFromBytes(Convert.FromBase64String(encryptedValue), CreateKey(encryptionKey), Convert.FromBase64String(iv));
         }
 
 
@@ -72,8 +78,11 @@ namespace Xamarin.Forms.Core
                 return keyGenerator.GetBytes(keyBytes);
             }
         }
-        private byte[] AesEncryptStringToBytes(string plainText, byte[] key, byte[] iv)
+        private async Task<byte[]> AesEncryptStringToBytes(string plainText, byte[] key, byte[] iv)
         {
+            if (encryptionSalt == null)
+                await GetEncryptionSalt();
+
             if (plainText == null || plainText.Length <= 0)
                 throw new ArgumentNullException($"{nameof(plainText)}");
             if (key == null || key.Length <= 0)
@@ -102,8 +111,11 @@ namespace Xamarin.Forms.Core
             return encrypted;
         }
 
-        private string AesDecryptStringFromBytes(byte[] cipherText, byte[] key, byte[] iv)
+        private async Task<string> AesDecryptStringFromBytes(byte[] cipherText, byte[] key, byte[] iv)
         {
+            if (encryptionSalt == null)
+                await GetEncryptionSalt();
+
             if (cipherText == null || cipherText.Length <= 0)
                 throw new ArgumentNullException($"{nameof(cipherText)}");
             if (key == null || key.Length <= 0)

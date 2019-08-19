@@ -8,11 +8,6 @@ using System.Reflection;
 
 namespace Xamarin.Forms.Core
 {
-    //public class CorePickerItem
-    //{
-    //    public int ID { get; set; }
-    //    public string OptionText { get; set; }
-    //}
     public class CorePicker : Picker
     {
 

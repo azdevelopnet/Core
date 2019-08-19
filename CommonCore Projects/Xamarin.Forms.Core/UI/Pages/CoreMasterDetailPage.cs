@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Core
         public T VM { get; set; }
         public CoreMasterDetailPage()
         {
-            VM = CoreDependencyService.GetViewModel<T>();
+            VM = CoreDependencyService.GetViewModel<T>(true);
             this.BindingContext = VM;
         }
     }

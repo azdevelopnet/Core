@@ -1,5 +1,6 @@
 ﻿#if __ANDROID__
 using System;
+using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
 using Android.Widget;
@@ -42,32 +43,52 @@ namespace Xamarin.Forms.Core
 					this.Control.ThumbDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
 				}
 
-				this.Control.CheckedChange += this.OnCheckedChange;
+				//this.Control.CheckedChange += this.OnCheckedChange;
 			}
 		}
 
-		protected override void Dispose(bool disposing)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == CoreSwitch.IsToggledProperty.PropertyName)
+            {
+                if (this.Control.Checked)
+                {
+                    this.Element.IsToggled = true;
+                    this.Control.TrackDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                    this.Control.ThumbDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                }
+                else
+                {
+                    this.Element.IsToggled = false;
+                    this.Control.TrackDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                    this.Control.ThumbDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                }
+            }
+            base.OnElementPropertyChanged(sender, e);
+        }
+
+        protected override void Dispose(bool disposing)
 		{
-			this.Control.CheckedChange -= this.OnCheckedChange;
+			//this.Control.CheckedChange -= this.OnCheckedChange;
 			base.Dispose(disposing);
 		}
 
-		private void OnCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
-		{
+		//private void OnCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+		//{
 
-			if (this.Control.Checked)
-			{
-                this.Element.IsToggled = true;
-				this.Control.TrackDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
-				this.Control.ThumbDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
-			}
-			else
-			{
-                this.Element.IsToggled = false;
-				this.Control.TrackDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
-				this.Control.ThumbDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
-			}
-		}
+		//	if (this.Control.Checked)
+		//	{
+  //              this.Element.IsToggled = true;
+		//		this.Control.TrackDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
+		//		this.Control.ThumbDrawable.SetColorFilter(trueColor.ToAndroid(), PorterDuff.Mode.Multiply);
+		//	}
+		//	else
+		//	{
+  //              this.Element.IsToggled = false;
+		//		this.Control.TrackDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
+		//		this.Control.ThumbDrawable.SetColorFilter(falseColor.ToAndroid(), PorterDuff.Mode.Multiply);
+		//	}
+		//}
     }
 }
 #endif

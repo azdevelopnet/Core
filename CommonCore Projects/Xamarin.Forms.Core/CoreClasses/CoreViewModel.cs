@@ -42,6 +42,14 @@ namespace Xamarin.Forms.Core
         }
 
 
+        [JsonIgnore]
+        protected ICacheService CacheService
+        {
+            get
+            {
+                return (ICacheService)CoreDependencyService.GetService<ICacheService, CacheService>(true);
+            }
+        }
 
         /// <summary>
         /// Service that provides network calls over http.

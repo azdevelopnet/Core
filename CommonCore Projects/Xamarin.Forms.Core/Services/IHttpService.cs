@@ -25,5 +25,6 @@ namespace Xamarin.Forms.Core
         void RemoveHeader(string name);
         bool ContainsHeader(string name);
         bool IsConnected { get; set; }
+
     }
 }

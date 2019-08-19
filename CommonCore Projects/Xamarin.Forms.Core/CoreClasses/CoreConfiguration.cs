@@ -10,7 +10,8 @@ namespace Xamarin.Forms.Core
 		public bool HttpAllowAutoRedirect { get; set; } = false;
 		public string IOSHttpHandler { get; set; } = "Managed";
 		public string AndroidHttpHandler { get; set; } = "Managed";
-	}
+        public bool GZipEnabled { get; set; } = false;
+    }
     public partial class SocialMedia
     {
         public GoogleSettings GoogleSettings { get; set; }

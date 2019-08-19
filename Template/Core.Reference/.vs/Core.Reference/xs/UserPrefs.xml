@@ -1,16 +1,8 @@
-﻿<Properties StartupConfiguration="{D712D2DC-5F12-419A-A155-FD73389884E0}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+﻿<Properties StartupConfiguration="{E9C24A81-BE75-4386-8146-B7703C34E89C}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Reference.Android/MainApplication.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../.nuget/packages/xamarin.androidx.migration/1.0.0-preview02/readme.txt">
     <Files>
-      <File FileName="Core.Reference/Views/SomePage.cs" Line="8" Column="6" />
-      <File FileName="Core.Reference.iOS/AppDelegate.cs" />
-      <File FileName="Core.Reference.Android/MainApplication.cs" Line="1" Column="1" />
-      <File FileName="Core.Reference.Android/MainActivity.cs" />
-      <File FileName="Core.Reference/App.xaml.cs" />
-      <File FileName="Core.Reference.iOS/Entitlements.plist" />
-      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/_init/AppLinksReadMe.txt" />
-      <File FileName="Core.Reference.Android/SplashScreenActivity.cs" />
-      <File FileName="Core.Reference/Partials/SettingsPartial.cs" Line="1" Column="1" />
+      <File FileName="../../../../.nuget/packages/xamarin.androidx.migration/1.0.0-preview02/readme.txt" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

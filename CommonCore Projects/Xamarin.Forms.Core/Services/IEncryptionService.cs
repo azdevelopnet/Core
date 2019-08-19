@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Core
 {
 	public interface IEncryptionService
 	{
-		string AesEncrypt(string clearValue, string encryptionKey);
-		string AesDecrypt(string encryptedValue, string encryptionKey);
+        Task<string> AesEncrypt(string clearValue, string encryptionKey);
+        Task<string> AesDecrypt(string encryptedValue, string encryptionKey);
 		byte[] GetHash(string input, Encoding encoding);
 		byte[] GetHash(string input);
 		string GetHashString(byte[] input);

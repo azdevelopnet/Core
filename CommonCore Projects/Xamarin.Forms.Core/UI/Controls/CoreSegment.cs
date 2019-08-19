@@ -9,6 +9,7 @@ namespace Xamarin.Forms.Core
     public class CoreSegmentItem
     {
         public string Text { get; set; }
+        public FormattedString FormattedText { get; set; }
         public ImageSource Image { get; set; }
     }
 
@@ -215,12 +216,16 @@ namespace Xamarin.Forms.Core
                     {
                         FontSize = this.FontSize,
                         FontFamily = this.FontFamily,
-                        Text = segmentItem.Text,
                         VerticalTextAlignment = TextAlignment.Center,
                         TextColor = SelectedIndex == x ? SelectedTextColor : UnselectedTextColor,
                         BackgroundColor = SelectedIndex == x ? SelectedBackground : UnselectedBackground,
                         HeightRequest = this.HeightRequest
                     };
+                    if (segmentItem.FormattedText != null)
+                        segmentLabel.FormattedText = segmentItem.FormattedText;
+                    else
+                        segmentLabel.Text = segmentItem.Text;
+
                     pnl.Children.Add(segmentLabel);
 
                     pnl.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.EndAndExpand });

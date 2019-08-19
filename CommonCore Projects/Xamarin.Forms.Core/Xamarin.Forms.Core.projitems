@@ -342,6 +342,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\HorizontalGestures.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IDragGesture.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\VerticalGestures.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IFileViewer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\FileViewer.Droid.cs">
+      <DependentUpon>IFileViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\FileViewer.IOS.cs">
+      <DependentUpon>IFileViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FluentMarkup\FluentMarkupExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ICacheService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CacheService.cs">
+      <DependentUpon>ICacheService.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -361,8 +373,12 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\" />
+    <Folder Include="$(MSBuildThisFileDirectory)FluentMarkup\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />
+    <None Include="$(MSBuildThisFileDirectory)Dependencies\fileViewer_readme.txt">
+      <DependentUpon>IFileViewer.cs</DependentUpon>
+    </None>
   </ItemGroup>
 </Project>
