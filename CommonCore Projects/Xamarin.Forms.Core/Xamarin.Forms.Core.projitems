@@ -82,13 +82,6 @@
       <DependentUpon>IEncryptionService.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\AuthenticationModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\BackgroundTimerService.Droid.cs">
-      <DependentUpon>IBackgroundTimerService.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IBackgroundTimerService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\BackgroundTimerService.IOS.cs">
-      <DependentUpon>IBackgroundTimerService.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ISnackBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\SnackBar.Droid.cs">
       <DependentUpon>ISnackBar.cs</DependentUpon>
@@ -350,10 +343,20 @@
       <DependentUpon>IFileViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FluentMarkup\FluentMarkupExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\ICacheService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\CacheService.cs">
-      <DependentUpon>ICacheService.cs</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreWebView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreWebViewRenderer.Droid.cs">
+      <DependentUpon>CoreWebView.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreWebViewRenderer.IOS.cs">
+      <DependentUpon>CoreWebView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\BackgroundTask.Droid.cs">
+      <DependentUpon>IBackgroundTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\BackgroundTask.IOS.cs">
+      <DependentUpon>IBackgroundTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IBackgroundTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />

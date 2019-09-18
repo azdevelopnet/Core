@@ -1,20 +1,19 @@
-﻿using System;
-using Xamarin.Forms;
-using System.Linq;
+﻿using Xamarin.Forms;
 
 [assembly: ResolutionGroupName("CoreEffects")]
 namespace Xamarin.Forms.Core
 {
-    
-#if __IOS__
 
     public class RemoveEmptyRowsEffect : RoutingEffect
-	{
+    {
         public RemoveEmptyRowsEffect() : base($"CoreEffects.{typeof(ListRemoveEmptyRows).Name}") { }
-	}
+    }
+
+#if __IOS__
+
 	public class DisableWebViewScrollEffect : RoutingEffect
 	{
-		public DisableWebViewScrollEffect() : base($"CoreEffects.{typeof(WebViewDisableScroll).Name}") { }
+		public DisableWebViewScrollEffect() : base($"CoreEffects.{typeof(WKWebViewDisableScroll).Name}") { }
 	}
 
 #endif

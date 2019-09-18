@@ -1,21 +1,22 @@
 ﻿#if __IOS__
 using System;
-using Xamarin.Forms.Core;
-using CoreGraphics;
-using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
-using Foundation;
 using System.ComponentModel;
+using CoreGraphics;
+using Foundation;
+using UIKit;
+using WebKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Core;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportEffect(typeof(ViewShadow), "ViewShadow")]
 [assembly: ExportEffect(typeof(ListRemoveEmptyRows), "ListRemoveEmptyRows")]
-[assembly: ExportEffect(typeof(WebViewDisableScroll), "WebViewDisableScroll")]
+[assembly: ExportEffect(typeof(WKWebViewDisableScroll), "WKWebViewDisableScroll")]
 [assembly: ExportEffect(typeof(HideTableSeparator), "HideTableSeparator")]
 namespace Xamarin.Forms.Core
 {
 
-	public class ListRemoveEmptyRows : PlatformEffect
+    public class ListRemoveEmptyRows : PlatformEffect
 	{
 		protected override void OnAttached()
 		{
@@ -32,14 +33,14 @@ namespace Xamarin.Forms.Core
 		}
 	}
 
-	public class WebViewDisableScroll : PlatformEffect
+	public class WKWebViewDisableScroll : PlatformEffect
 	{
 		protected override void OnAttached()
 		{
 			if (Control != null)
 			{
-				var wv = Control as UIKit.UIWebView;
-				wv.ScrollView.ScrollEnabled = false;
+                var wv = Control as WKWebView;
+                wv.ScrollView.ScrollEnabled = false;
 				wv.ScrollView.Bounces = false;
 			}
 		}

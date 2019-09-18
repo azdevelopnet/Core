@@ -1,30 +1,20 @@
 ﻿<Properties StartupConfiguration="{85241CD6-DCD6-4C44-9570-E5EDDC255B8C}|Default">
   <MonoDevelop.Ide.ItemProperties.BotExample.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BotExample/Config/settings/config.dev.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BotExample/Views/SomePage.cs">
     <Files>
-      <File FileName="BotExample/Views/SomePage.cs" Line="13" Column="40" />
-      <File FileName="BotExample/ViewModels/SomeViewModel.cs" Line="25" Column="1" />
-      <File FileName="BotExample/BusinessLogic/SomeBusinessLogic.cs" />
-      <File FileName="BotExample/Config/settings/config.dev.json" Line="1" Column="1" />
-      <File FileName="BotExample/Config/settings/config.prod.json" />
-      <File FileName="BotExample/App.xaml.cs" />
-      <File FileName="BotExample.Android/MainApplication.cs" Line="6" Column="26" />
-      <File FileName="../../../../../../../Library/Frameworks/Mono.framework/External/xbuild/Xamarin/Android/Xamarin.Android.Common.targets" />
-      <File FileName="BotExample.Android/Assets/bot.html" />
-      <File FileName="BotExample.Android/Assets/AboutAssets.txt" />
-      <File FileName="BotExample.Android/Assets/bot.js" />
-      <File FileName="BotExample/Config/settings/config.qa.json" />
+      <File FileName="BotExample/Views/SomePage.cs" Line="14" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="BotExample" expanded="True">
+          <Node name="BotExample" expanded="True" selected="True">
             <Node name="BotExample" expanded="True">
+              <Node name="BusinessLogic" expanded="True" />
               <Node name="Config" expanded="True">
-                <Node name="settings" expanded="True">
-                  <Node name="config.dev.json" selected="True" />
-                </Node>
+                <Node name="settings" expanded="True" />
               </Node>
+              <Node name="Views" expanded="True" />
+              <Node name="App.xaml" expanded="True" />
             </Node>
           </Node>
         </State>

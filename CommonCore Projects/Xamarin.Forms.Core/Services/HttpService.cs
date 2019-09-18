@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Core
         private HttpClient httpClient;
         private HttpMessageHandler handler;
         private JsonSerializer _serializer;
-        public string json;
+        public string json { get; set; }
 
         public bool IsConnected { get; set; }
 
@@ -173,7 +173,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
 
                 var postResponse = await Client.PostAsync(url, content, token).ConfigureAwait(false);
                 postResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -209,7 +209,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -245,7 +245,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -283,7 +283,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
 
                 using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
                 {
@@ -344,6 +344,7 @@ namespace Xamarin.Forms.Core
 
         }
 
+
         public async Task<byte[]> DownloadFile(string url, Action<double> percentChanged, Action<Exception> error, string token = null, CancellationToken? ct = null)
         {
             try
@@ -382,7 +383,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token).ConfigureAwait(false))
                 {
@@ -440,7 +441,7 @@ namespace Xamarin.Forms.Core
             }
             catch (Exception ex)
             {
-                ex.ConsoleWrite();
+                ex.ConsoleWrite(true);
                 return (null, false, ex);
             }
 
@@ -456,7 +457,7 @@ namespace Xamarin.Forms.Core
             {
                 var token = ct ?? CancellationToken.None;
 
-                //await new SynchronizationContextRemover();
+                await new SynchronizationContextRemover();
 
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))

@@ -13,6 +13,7 @@ using App = Android.App;
 #if __IOS__
 using Foundation;
 using UIKit;
+using Xamarin.Essentials;
 #endif
 
 namespace Xamarin.Forms.Core

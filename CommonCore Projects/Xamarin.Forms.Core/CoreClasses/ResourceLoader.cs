@@ -10,6 +10,24 @@ namespace Xamarin.Forms.Core
 	/// </summary>
 	public static class ResourceLoader
 	{
+        public static (string Response, Exception Error) GetEmbeddedResourceString(string resourceFileName)
+        {
+            var assembly = Assembly.GetAssembly(typeof(ResourceLoader));
+            var result = GetEmbeddedResourceStream(assembly, resourceFileName);
+            if (result.Error == null)
+            {
+                using (var streamReader = new StreamReader(result.Response))
+                {
+                    var stream = streamReader.ReadToEnd();
+                    return (stream, null);
+                }
+            }
+            else
+            {
+                return (null, result.Error);
+            }
+        }
+
         public static string GetFullResourceName(string resourceFileName)
         {
             var assembly = Assembly.GetAssembly(typeof(ResourceLoader));

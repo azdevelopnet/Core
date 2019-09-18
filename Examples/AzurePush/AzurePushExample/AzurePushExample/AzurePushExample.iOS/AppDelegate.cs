@@ -4,6 +4,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using Xamarin.Forms.Core;
+using Xamarin.Forms.Core.AzurePush;
 
 namespace AzurePushExample.iOS
 {
@@ -37,6 +38,15 @@ namespace AzurePushExample.iOS
         {
             Xamarin.Forms.FormsMaterial.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+        }
+
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            CoreAzurePush.RegisteredForRemoteNotifications(application, deviceToken);
+        }
+        public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
+        {
+            CoreAzurePush.ProcessNotification(userInfo, false);
         }
 
         private void InitBuildSettings()

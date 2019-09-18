@@ -4,12 +4,10 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Firebase;
-using Xamarin.Forms.Platform.Android.AppLinks;
 
 namespace AzurePushExample.Droid
 {
     [Activity(Label = "AzurePushExample", Icon = "@mipmap/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -23,6 +21,9 @@ namespace AzurePushExample.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
+
+            FirebaseApp.InitializeApp(this);
+
             LoadApplication(new App());
         }
 

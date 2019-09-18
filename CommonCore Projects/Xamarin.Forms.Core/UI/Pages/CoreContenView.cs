@@ -30,7 +30,7 @@ namespace Xamarin.Forms.Core
 
     }
 
-    public class CoreContenView<T> : ContentView
+    public class CoreContentView<T> : ContentView
         where T : CoreViewModel
     {
         public T VM
@@ -38,7 +38,7 @@ namespace Xamarin.Forms.Core
             get { return CoreDependencyService.GetViewModel<T>(true); }
         }
 
-        public CoreContenView()
+        public CoreContentView()
         {
             this.BindingContext = VM;
         }

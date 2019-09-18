@@ -1,5 +1,23 @@
 ﻿namespace Xamarin.Forms.Core
 {
+    public static class CoreStyleExtensions
+    {
+        public static Span SpanStyle(this Span span, float fontSize, Color textColor, bool isBold = false, bool isItalic = false)
+        {
+            var androidSize = fontSize - 2;
+            span.FontSize = CoreSettings.On<float>(fontSize, androidSize);
+
+            if (isBold)
+                span.FontAttributes = FontAttributes.Bold;
+
+            if (isItalic)
+                span.FontAttributes = FontAttributes.Italic;
+
+            span.TextColor = textColor;
+
+            return span;
+        }
+    }
     public partial class CoreStyles
     {
         public static Style RandomUserCollection { get; } = new Style(typeof(ContentView))
@@ -24,6 +42,8 @@
 
             }
         };
+
+
         public static Style CardTitle { get; } = new Style(typeof(Span))
         {
             Setters =

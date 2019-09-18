@@ -6,17 +6,10 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.Core
 {
-    public class CoreSegmentItem
-    {
-        public string Text { get; set; }
-        public FormattedString FormattedText { get; set; }
-        public ImageSource Image { get; set; }
-    }
 
-    public class CoreSegmentControl : ContentView, IDisposable
+    public class CoreSegmentControl : ContentView
     {
-        private Grid contentGrid;
-        private List<TapGestureRecognizer> tapGestures = new List<TapGestureRecognizer>();
+        private StackLayout _layout;
 
         public static readonly BindableProperty CommandProperty =
             BindableProperty.Create("Command",
@@ -26,9 +19,9 @@ namespace Xamarin.Forms.Core
 
         public static readonly BindableProperty ItemsSourceProperty =
             BindableProperty.Create(propertyName: "ItemsSource",
-                    returnType: typeof(List<CoreSegmentItem>),
+                    returnType: typeof(List<string>),
                     declaringType: typeof(CoreSegmentControl),
-                    defaultValue: new List<CoreSegmentItem>(),
+                    defaultValue: new List<string>(),
                     propertyChanged: ItemsSourceChangedEvent);
 
         public static readonly BindableProperty SelectedIndexProperty =
@@ -43,12 +36,6 @@ namespace Xamarin.Forms.Core
                                     typeof(CoreSegmentControl),
                                     Device.GetNamedSize(NamedSize.Default, typeof(Label)));
 
-
-        public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create("FontFamily",
-                                    typeof(string),
-                                    typeof(CoreSegmentControl),
-                                    "");
 
 
         public static readonly BindableProperty BorderThicknessProperty =
@@ -85,20 +72,39 @@ namespace Xamarin.Forms.Core
                                     typeof(CoreSegmentControl),
                                     Color.Black);
 
+        public static readonly BindableProperty CornerRadiusProperty =
+            BindableProperty.Create("CornerRadius",
+                                    typeof(double),
+                                    typeof(CoreSegmentControl),
+                                    0.0);
+
+        public static readonly BindableProperty FontFamilyProperty =
+            BindableProperty.Create("FontFamily",
+                                    typeof(string),
+                                    typeof(CoreSegmentControl),
+                                    Font.Default.FontFamily);
+
         public int SelectedIndex
         {
             get { return (int)this.GetValue(SelectedIndexProperty); }
             set { this.SetValue(SelectedIndexProperty, value); }
         }
 
-        public List<CoreSegmentItem> ItemsSource
+        public List<string> ItemsSource
         {
-            get { return (List<CoreSegmentItem>)this.GetValue(ItemsSourceProperty); }
+            get { return (List<string>)this.GetValue(ItemsSourceProperty); }
             set
             {
                 this.SetValue(ItemsSourceProperty, value);
                 RenderControl();
             }
+        }
+
+
+        public double CornerRadius
+        {
+            get { return (double)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
         }
 
         public ICommand Command
@@ -161,134 +167,109 @@ namespace Xamarin.Forms.Core
         {
             if (ItemsSource != null)
             {
-                if (contentGrid == null)
-                {
-                    contentGrid = new Grid()
-                    {
-                        ColumnSpacing = BorderThickness,
-                        Padding = BorderThickness,
-                        BackgroundColor = BorderColor
-                    };
-                }
-
-                else
-                {
-                    foreach (var gesture in tapGestures)
-                    {
-                        gesture.Tapped -= SegmentClickEvent;
-                    }
-                    tapGestures.Clear();
-                    contentGrid.Children.Clear();
-                    contentGrid.ColumnDefinitions.Clear();
-                }
-
+                _layout = new StackLayout() { Spacing = -1, Orientation = StackOrientation.Horizontal };
                 for (int x = 0; x < ItemsSource.Count; x++)
                 {
-                    var segmentItem = ItemsSource[x];
-                    var tapGesture = new TapGestureRecognizer();
-                    tapGesture.Tapped += SegmentClickEvent;
-                    tapGestures.Add(tapGesture);
+                    var seg = ItemsSource[x];
+                    var cornerRadius = new CornerRadius(0);
+                    var backgroundColor = Color.Default;
+                    var textColor = Color.Default;
 
-                    var pnl = new StackLayout()
+                    if (x == 0)
                     {
-                        BackgroundColor = SelectedIndex == x ? SelectedBackground : UnselectedBackground,
-                        Orientation = StackOrientation.Horizontal
-                    };
-                    pnl.GestureRecognizers.Add(tapGesture);
-                    pnl.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.StartAndExpand });
-
-                    contentGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
-
-                
-                    if (segmentItem.Image != null)
-                    {
-                        var imgItem = new Image() {
-                            Source = segmentItem.Image,
-                            BackgroundColor = SelectedIndex == x ? SelectedBackground : UnselectedBackground,
-                            HeightRequest = this.FontSize,
-                            WidthRequest = this.FontSize
-                        };
-                        pnl.Children.Add(imgItem);
+                        cornerRadius = new CornerRadius(this.CornerRadius, 0, this.CornerRadius, 0);
                     }
-
-
-                    var segmentLabel = new Label()
+                    if (x == ItemsSource.Count - 1)
                     {
-                        FontSize = this.FontSize,
-                        FontFamily = this.FontFamily,
-                        VerticalTextAlignment = TextAlignment.Center,
-                        TextColor = SelectedIndex == x ? SelectedTextColor : UnselectedTextColor,
-                        BackgroundColor = SelectedIndex == x ? SelectedBackground : UnselectedBackground,
-                        HeightRequest = this.HeightRequest
-                    };
-                    if (segmentItem.FormattedText != null)
-                        segmentLabel.FormattedText = segmentItem.FormattedText;
-                    else
-                        segmentLabel.Text = segmentItem.Text;
-
-                    pnl.Children.Add(segmentLabel);
-
-                    pnl.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.EndAndExpand });
-
-                    contentGrid.AddChild(pnl, 0, x);
-                }
-
-                this.Content = contentGrid;
-            }
-        }
-
-        private void SegmentClickEvent(object sender, EventArgs args)
-        {
-            for (int x = 0; x < contentGrid.Children.Count; x++)
-            {
-                var pnl = (StackLayout)contentGrid.Children[x];
-                var item = pnl.Children.FirstOrDefault(p => p is Label);
-                var img = pnl.Children.FirstOrDefault(p => p is Image);
-                if (item is Label)
-                {
-                    var lbl = (Label)item;
-                    if (pnl == sender)
+                        cornerRadius = new CornerRadius(0, this.CornerRadius, 0, this.CornerRadius);
+                    }
+                    if (x == SelectedIndex)
                     {
-                        pnl.BackgroundColor = SelectedBackground;
-                        lbl.TextColor = SelectedTextColor;
-                        lbl.BackgroundColor = SelectedBackground;
-                        if (img != null)
-                            img.BackgroundColor = SelectedBackground;
-
-                        SelectedIndex = x;
-                        Command?.Execute(x);
+                        backgroundColor = SelectedBackground;
+                        textColor = SelectedTextColor;
                     }
                     else
                     {
-                        pnl.BackgroundColor = UnselectedBackground;
-                        lbl.BackgroundColor = UnselectedBackground;
-                        lbl.TextColor = UnselectedTextColor;
-                        if (img != null)
-                            img.BackgroundColor = UnselectedBackground;
+                        backgroundColor = UnselectedBackground;
+                        textColor = UnselectedTextColor;
                     }
-                }
-            }
 
+                    if (seg == ItemsSource.First())
+                    {
+                        cornerRadius = new CornerRadius(this.CornerRadius, 0, this.CornerRadius, 0);
+
+                    }
+                    if (seg == ItemsSource.Last())
+                    {
+                        cornerRadius = new CornerRadius(0, this.CornerRadius, 0, this.CornerRadius);
+                    }
+
+                    var view = new Xamarin.Forms.PancakeView.PancakeView()
+                    {
+                        CornerRadius = cornerRadius,
+                        BorderColor = this.SelectedBackground,
+                        BorderThickness = 1,
+                        BackgroundColor = backgroundColor,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        Content = new StackLayout()
+                        {
+                            Children =
+                            {
+                                new Label(){
+                                    TextColor = textColor,
+                                    Text = seg,
+                                    FontFamily = this.FontFamily,
+                                    FontSize = this.FontSize,
+                                    VerticalOptions = LayoutOptions.FillAndExpand,
+                                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                                    VerticalTextAlignment = TextAlignment.Center,
+                                    HorizontalTextAlignment = TextAlignment.Center,
+
+                                }
+                            }
+                        }
+                    };
+                    view.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        Command = new Command(() => {
+                            SegmentClicked(view);
+                        })
+                    });
+
+                    _layout.Children.Add(view);
+
+
+                }
+
+                this.Content = _layout;
+            }
         }
 
-        public void Dispose()
+        private void SegmentClicked(Xamarin.Forms.PancakeView.PancakeView view)
         {
-            if (contentGrid != null)
+            var stackLayout = (StackLayout)this.Content;
+            foreach (var item in stackLayout.Children)
             {
-                foreach (var gesture in tapGestures)
+                var pancake = (Xamarin.Forms.PancakeView.PancakeView)item;
+                var lbl = (Label)((StackLayout)pancake.Content).Children[0];
+                if (pancake == view)
                 {
-                    gesture.Tapped -= SegmentClickEvent;
+                    SelectedIndex = stackLayout.Children.IndexOf(pancake);
+                    pancake.BackgroundColor = this.SelectedBackground;
+                    lbl.TextColor = this.SelectedTextColor;
                 }
-                tapGestures.Clear();
-                contentGrid.Children.Clear();
-                contentGrid.ColumnDefinitions.Clear();
+                else
+                {
+                    pancake.BackgroundColor = this.UnselectedBackground;
+                    lbl.TextColor = this.UnselectedTextColor;
+                }
             }
+
+            Command?.Execute(SelectedIndex);
+
         }
 
-        ~CoreSegmentControl()
-        {
-            this.Dispose();
-        }
     }
 }
+
 

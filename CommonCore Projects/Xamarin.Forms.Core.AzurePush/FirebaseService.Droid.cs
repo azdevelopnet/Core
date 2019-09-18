@@ -45,7 +45,7 @@ namespace Xamarin.Forms.Core.AzurePush
             var pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.OneShot);
 
             var notificationBuilder = new NotificationCompat.Builder(this, notificationChannelName)
-                .SetContentTitle("XamarinNotify Message")
+                .SetContentTitle("Notification Center Message")
                 .SetSmallIcon(CoreSettings.AppIcon)
                 .SetContentText(body)
                 .SetAutoCancel(true)

@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Core
         {
             if (e.PropertyName == "Content")
             {
-                Tracker.UpdateLayout();
+                //Tracker.UpdateLayout();
             }
             else if (e.PropertyName == CoreCardView.PaddingProperty.PropertyName)
             {
@@ -99,10 +99,16 @@ namespace Xamarin.Forms.Core
 
         public void UpdateLayout()
         {
-            if (Tracker == null)
-                return;
+            try
+            {
+                if(Tracker!=null)
+                    Tracker.UpdateLayout();
+            }
+            catch (Exception ex)
+            {
 
-            Tracker.UpdateLayout();
+            }
+
         }
 
         public void SetLabelFor(int? id)

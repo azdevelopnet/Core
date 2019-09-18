@@ -17,29 +17,6 @@ namespace Xamarin.Forms.Core
 
         #region Injection Services
 
-        /// <summary>
-        /// Backgrounding event timer that fires an event specified in the future on a repeating basis.
-        /// </summary>
-        /// <value>The background timer.</value>
-        [JsonIgnore]
-        protected IBackgroundTimer BackgroundTimer
-        {
-            get
-            {
-                return (IBackgroundTimer)CoreDependencyService.GetService<IBackgroundTimer, BackgroundTimer>(true);
-            }
-        }
-
-
-
-        [JsonIgnore]
-        protected ICacheService CacheService
-        {
-            get
-            {
-                return (ICacheService)CoreDependencyService.GetService<ICacheService, CacheService>(true);
-            }
-        }
 
         /// <summary>
         /// Service that provides network calls over http.

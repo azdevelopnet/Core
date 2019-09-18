@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{560B741A-5555-444C-9EF9-658EEE704ACA}|Default">
+  <MonoDevelop.Ide.ItemProperties.BackgroundingExample FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BackgroundingExample/BackgroundingExample/Views/SomePage.cs">
+    <Files>
+      <File FileName="BackgroundingExample/BackgroundingExample/Models/MyJob.cs" Line="3" Column="21" />
+      <File FileName="BackgroundingExample/BackgroundingExample/ViewModels/SomeViewModel.cs" />
+      <File FileName="BackgroundingExample/BackgroundingExample/Views/SomePage.cs" Line="52" Column="53" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BackgroundingExample" expanded="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.BackgroundingExample.Android PreferredExecutionTarget="Android.n6p_phone" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.BackgroundingExample.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.6934EA1B-32BC-43D2-8ED0-82B16DD2F9E9" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

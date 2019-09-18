@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Humanizer;
+using Xamarin.Forms;
+using Xamarin.Forms.Core;
 namespace CollectionViewExample.Models
 {
     public class Name
@@ -113,6 +115,20 @@ namespace CollectionViewExample.Models
         public string ZipCode { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+
+        public FormattedString FriendlyText
+        {
+            get
+            {
+                var fs = new FormattedString();
+                //var title = $"{Title} {FirstName} {LastName}".Humanize(LetterCasing.Title) + "\n";
+                fs.AddSpan(new Span() { Text = $"{Title} {FirstName} {LastName}".Humanize(LetterCasing.Title) + "\n" }.SpanStyle(18, Color.Black));
+                fs.AddTextSpan($"{Address}".Humanize(LetterCasing.Title) + "\n");
+                fs.AddTextSpan($"{City}, {State}   {ZipCode}".Humanize(LetterCasing.Title) + "\n");
+                fs.AddTextSpan($"{CellPhone} \n");
+                return fs;
+            }
+        }
     }
 
     public static class RootObjectExtensions

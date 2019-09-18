@@ -3,8 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
-using Firebase;
-using Xamarin.Forms.Platform.Android.AppLinks;
+
 
 namespace Core.Reference.Droid
 {

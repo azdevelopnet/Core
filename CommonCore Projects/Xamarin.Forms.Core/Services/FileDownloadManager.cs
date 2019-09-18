@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Xamarin.Forms.Core
 {
+   
     internal class FileDownloadManager : BindableObject, IDisposable
 	{
         private string _bearerToken;
@@ -55,7 +58,17 @@ namespace Xamarin.Forms.Core
         }
 		private void DownloadComplete(object sender, DownloadDataCompletedEventArgs args)
 		{
-            DownloadCompleted?.Invoke(args.Result);
+            try
+            {
+                DownloadCompleted?.Invoke(args.Result);
+            }
+            catch (Exception ex)
+            {
+                var token = Client.Headers[HttpRequestHeader.Authorization];
+                var im = ex.InnerException.Message;
+                var x = ex;
+            }
+            
 		}
 		private void DownprogressChanged(object sender, DownloadProgressChangedEventArgs args)
 		{

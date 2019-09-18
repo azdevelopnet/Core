@@ -1,21 +1,21 @@
 ﻿<Properties StartupConfiguration="{3D7C68B5-A16A-44BA-8399-07FEBB63A69C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/_init/ReadMe.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AzurePushExample.Android/MainActivity.cs">
     <Files>
-      <File FileName="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/_init/ReadMe.txt" Line="30" Column="1" />
-      <File FileName="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/FirebaseRegistrationService.Droid.cs" Line="1" Column="1" />
-      <File FileName="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/FirebaseService.Droid.cs" Line="1" Column="1" />
-      <File FileName="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/CoreAzurePush.Droid.cs" Line="1" Column="1" />
-      <File FileName="../../../../CommonCore Projects/Xamarin.Forms.Core.AzurePush/CoreAzurePush.IOS.cs" Line="1" Column="1" />
+      <File FileName="AzurePushExample/Views/SomePage.cs" Line="47" Column="6" />
+      <File FileName="AzurePushExample.iOS/AppDelegate.cs" Line="50" Column="10" />
+      <File FileName="AzurePushExample/App.xaml.cs" Line="15" Column="1" />
+      <File FileName="AzurePushExample.Android/MainActivity.cs" Line="5" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AzurePushExample" expanded="True">
+            <Node name="AzurePushExample.Android" expanded="True">
+              <Node name="Properties" expanded="True" />
+              <Node name="MainActivity.cs" selected="True" />
+            </Node>
             <Node name="Xamarin.Forms.Core.AzurePush" expanded="True">
-              <Node name="_init" expanded="True">
-                <Node name="ReadMe.txt" selected="True" />
-              </Node>
-              <Node name="CoreAzurePush.Droid.cs" expanded="True" />
+              <Node name="_init" expanded="True" />
             </Node>
           </Node>
         </State>

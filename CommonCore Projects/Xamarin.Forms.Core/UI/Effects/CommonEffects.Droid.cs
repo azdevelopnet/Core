@@ -14,8 +14,22 @@ using Android.Widget;
 
 [assembly: ExportEffect(typeof(ViewShadow), "ViewShadow")]
 [assembly: ExportEffect(typeof(HideTableSeparator), "HideTableSeparator")]
+[assembly: ExportEffect(typeof(ListRemoveEmptyRows), "ListRemoveEmptyRows")]
 namespace Xamarin.Forms.Core
 {
+
+	public class ListRemoveEmptyRows : PlatformEffect
+	{
+		protected override void OnAttached()
+		{
+
+		}
+
+		protected override void OnDetached()
+		{
+
+		}
+	}
 
 	public class HideTableSeparator : PlatformEffect
 	{

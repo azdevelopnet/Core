@@ -11,16 +11,17 @@ namespace BotExample
         public SomePage()
         {
             this.Title = "Bot Framework";
-            browser = new WebView()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-            };
-            var htmlSource = new HtmlWebViewSource();
-            htmlSource.Html = DependencyService.Get<IBaseUrl>().ReadContent("bot.html");
-            htmlSource.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
-            browser.Source = htmlSource;
-            Content = browser;
+
+			Content = new WebView()
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Source = new HtmlWebViewSource()
+				{
+					Html = DependencyService.Get<IBaseUrl>().ReadContent("bot.html"),
+					BaseUrl = DependencyService.Get<IBaseUrl>().Get()
+				}
+			}.Assign(out browser);
         }
 
         protected override void OnAppearing()

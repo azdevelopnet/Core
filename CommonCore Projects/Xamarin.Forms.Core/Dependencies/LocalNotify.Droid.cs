@@ -1,14 +1,13 @@
 ﻿#if __ANDROID__
 using System;
-using Android;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using Plugin.CurrentActivity;
 using Xamarin.Forms.Core;
-using App = Android.App;
 using Content = Android.Content;
+using DroidColor = Android.Graphics.Color;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalNotify))]
 namespace Xamarin.Forms.Core
@@ -20,6 +19,8 @@ namespace Xamarin.Forms.Core
             get => CrossCurrentActivity.Current.Activity;
         }
 
+
+
         public Type MainType
         {
             get
@@ -30,51 +31,46 @@ namespace Xamarin.Forms.Core
 
         public void Show(LocalNotification notification)
         {
-            // When the user clicks the notification, SecondActivity will start up.
-            Intent resultIntent = new Intent(Ctx, MainType);
+ 
+            Intent intent = new Intent(Intent.ActionView);
+            //var AppId = NSBundle.MainBundle.BundleIdentifier;
+            // intent.SetData(Android.Net.Uri.Parse("https://play.google.com/store/apps/details?id=" + AppId));
+            //intent.SetData(Android.Net.Uri.Parse("market://details?id=" + AppId));
+            const int _pendingIntentId = 0;
+            PendingIntent oPendingIntent = PendingIntent.GetActivity(Ctx, _pendingIntentId, intent, PendingIntentFlags.OneShot);
 
-            if (!string.IsNullOrEmpty(notification.MetaData))
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
-                Bundle valuesForActivity = new Bundle();
-                valuesForActivity.PutString("metadata", notification.MetaData);
-                resultIntent.PutExtras(valuesForActivity);
+                Notification.Builder oBuilder = new Notification.Builder(Ctx, "local_notification")
+                     .SetContentIntent(oPendingIntent)
+                     .SetContentTitle(notification.Title)
+                     .SetContentText(notification.Message)
+                     .SetSmallIcon(GetResourceIdByName(notification.Icon));
+
+                oBuilder.SetColor(DroidColor.ParseColor("#f9cf00"));
+                Notification oNotification = oBuilder.Build();
+                NotificationManager oNotificationManager = NotificationManager.FromContext(Ctx);
+                oNotificationManager.Notify(1000, oNotification);
             }
-
-            // Construct a back stack for cross-task navigation:
-            var stackBuilder = App.TaskStackBuilder.Create(Ctx);
-
-            stackBuilder.AddParentStack(Java.Lang.Class.FromType(MainType));
-            stackBuilder.AddNextIntent(resultIntent);
-
-            // Create the PendingIntent with the back stack:            
-            PendingIntent resultPendingIntent =
-                stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
-
-            int appIcon = GetResourceIdByName(notification.Icon);
-            if (appIcon == 0)
-                appIcon = CoreSettings.AppIcon;
-
-
-            // Build the notification:
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(Ctx, "Local Notifications")
-                .SetAutoCancel(true)                    // Dismiss from the notif. area when clicked
-                .SetContentIntent(resultPendingIntent)  // Start 2nd activity when the intent is clicked.
-                .SetContentTitle(notification.Title)      // Set its title
-                                                          //.SetNumber(count)                       // Display the count in the Content Info
-                .SetSmallIcon(appIcon)  // Display this icon
-                .SetContentText(notification.Message); // The message to display.
-
-            // Finally, publish the notification:
-            NotificationManager notificationManager =
-                (NotificationManager)Ctx.GetSystemService(Context.NotificationService);
-            
-            notificationManager.Notify(notification.Id, builder.Build());
+            else
+            {
+                NotificationCompat.Builder _Builder = new NotificationCompat.Builder(Ctx)
+                         .SetContentIntent(oPendingIntent)
+                         .SetContentTitle(notification.Title)
+                         .SetContentText(notification.Message)
+                         .SetSmallIcon(GetResourceIdByName(notification.Icon));
+                _Builder.SetColor(DroidColor.ParseColor("#f9cf00"));
+                Notification oNotification = _Builder.Build();
+                NotificationManager oNotificationManager = NotificationManager.FromContext(Ctx);
+                oNotificationManager.Notify(1000, oNotification);
+            }
         }
+
 
 		public void RequestPermission(Action<bool> callBack)
 		{
-			callBack?.Invoke(true);
+            CreateNotificationChannel();
+            callBack?.Invoke(true);
 		}
 
         private int GetResourceIdByName(string name)
@@ -87,6 +83,29 @@ namespace Xamarin.Forms.Core
             else
             {
                 return Ctx.PackageManager.GetApplicationInfo(Ctx.PackageName, Content.PM.PackageInfoFlags.MetaData).Icon;
+            }
+        }
+
+        private void CreateNotificationChannel()
+        {
+            try
+            {
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                {
+                    var channelName = "YourChannel";
+                    var ChannelDescription = "Channel for notification";
+                    var channel = new NotificationChannel("local_notification", channelName, NotificationImportance.Default)
+                    {
+                        Description = ChannelDescription
+                    };
+                    
+                    var cNotificationManager = (NotificationManager)Ctx.GetSystemService(Context.NotificationService);
+                    cNotificationManager.CreateNotificationChannel(channel);
+                }
+            }
+            catch (Exception oExp)
+            {
+
             }
         }
     }

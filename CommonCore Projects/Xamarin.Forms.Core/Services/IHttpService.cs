@@ -8,6 +8,7 @@ namespace Xamarin.Forms.Core
 {
     public interface IHttpService
     {
+        string json { get; set; }
         void AddTokenHeader(string token);
         void AddTokenHeader(AuthenticationModel coreAuth);
         void AddNetworkCredentials(NetworkCredential cred);

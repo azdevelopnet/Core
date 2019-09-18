@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Net;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using System.Collections.Specialized;
 
 #if __ANDROID__
 using Android.OS;
@@ -100,6 +101,15 @@ namespace Xamarin.Forms.Core
                 lst.Add(item);
             lst.Add(obj);
             return lst.ToArray();
+        }
+
+        public static string BuildQueryString(this NameValueCollection collection)
+        {
+            var array = (from key in collection.AllKeys
+                         from value in collection.GetValues(key)
+                         select string.Format("{0}={1}", WebUtility.UrlEncode(key), WebUtility.UrlEncode(value)))
+                        .ToArray();
+            return "?" + string.Join("&", array);
         }
 
 
@@ -1097,15 +1107,21 @@ namespace Xamarin.Forms.Core
             return formattedString;
         }
 
-        public static FormattedString AddTextSpan(this FormattedString formattedString, string text, Style style)
-        {
-            formattedString.Spans.Add(new Span() { Text = text, Style = style });
-            return formattedString;
-        }
+        //public static FormattedString AddTextSpan(this FormattedString formattedString, string text, Style style)
+        //{
+        //    formattedString.Spans.Add(new Span() { Text = text, Style = style });
+        //    return formattedString;
+        //}
 
-        public static FormattedString AddTextSpan(this FormattedString formattedString, Style style)
+        //public static FormattedString AddTextSpan(this FormattedString formattedString, Style style)
+        //{
+        //    formattedString.Spans.Add(new Span() { Style = style });
+        //    return formattedString;
+        //}
+
+        public static FormattedString AddSpan(this FormattedString formattedString, Span span)
         {
-            formattedString.Spans.Add(new Span() { Style = style });
+            formattedString.Spans.Add(span);
             return formattedString;
         }
 

@@ -82,6 +82,12 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
             return view;
         }
 
+        public static TView BindCommandParameter<TView>(this TView view, BindableProperty targetProperty, View element, string path) where TView : Element
+        {
+            view.SetBinding(targetProperty, new Binding() { Source = element, Path = path });
+            return view;
+        }
+
         public static TView Bind<TView>(this TView view, BindableProperty targetProperty, string sourcePropertyName = bindingContextPropertyName, BindingMode mode = BindingMode.Default, IValueConverter converter = null, object converterParameter = null, string stringFormat = null, object source = null) where TView : Element
         {
             if (source != null || converterParameter != null)
@@ -200,15 +206,33 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
             return gestureElement;
         }
 
-        public static TView BindTap<TView>(this TView view, string commandName) where TView : View
+        //public static TView BindTap<TView>(this TView view, string commandName) where TView : View
+        //{
+        //    var gesture = new TapGestureRecognizer();
+        //    gesture.SetBinding(TapGestureRecognizer.CommandProperty, commandName);
+        //    view.GestureRecognizers.Add(gesture);
+        //    return view;
+        //}
+
+        public static TGestureElement BindTap<TGestureElement>(this TGestureElement gestureElement, string commandName) where TGestureElement : GestureElement
         {
             var gesture = new TapGestureRecognizer();
             gesture.SetBinding(TapGestureRecognizer.CommandProperty, commandName);
+            gestureElement.GestureRecognizers.Add(gesture);
+            return gestureElement;
+        }
+
+        public static TGestureElement BindTap<TGestureElement>(this TGestureElement view, Action action) where TGestureElement : GestureElement
+        {
+            var gesture = new TapGestureRecognizer()
+            {
+                Command = new Command(() => { action?.Invoke(); })
+            };
             view.GestureRecognizers.Add(gesture);
             return view;
         }
 
-        public static TView BindTap<TView>(this TView view, Action action) where TView : View
+        public static TView BindViewTap<TView>(this TView view, Action action) where TView : View
         {
             var gesture = new TapGestureRecognizer()
             {
@@ -461,8 +485,8 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
             switch (view)
             {
                 case Button button: if (fontSize.HasValue) button.FontSize = fontSize.Value; if (attributes.HasValue) button.FontAttributes = attributes.Value; if (family != null) button.FontFamily = family; break;
-                case Label  label : if (fontSize.HasValue) label .FontSize = fontSize.Value; if (attributes.HasValue) label .FontAttributes = attributes.Value; if (family != null) label .FontFamily = family; break;
-                case Entry  entry : if (fontSize.HasValue) entry .FontSize = fontSize.Value; if (attributes.HasValue) entry .FontAttributes = attributes.Value; if (family != null) entry .FontFamily = family; break;
+                case Label label: if (fontSize.HasValue) label.FontSize = fontSize.Value; if (attributes.HasValue) label.FontAttributes = attributes.Value; if (family != null) label.FontFamily = family; break;
+                case Entry entry: if (fontSize.HasValue) entry.FontSize = fontSize.Value; if (attributes.HasValue) entry.FontAttributes = attributes.Value; if (family != null) entry.FontFamily = family; break;
                 case Picker picker: if (fontSize.HasValue) picker.FontSize = fontSize.Value; if (attributes.HasValue) picker.FontAttributes = attributes.Value; if (family != null) picker.FontFamily = family; break;
             }
             return view;

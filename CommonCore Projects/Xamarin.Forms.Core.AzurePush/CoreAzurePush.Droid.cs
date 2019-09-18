@@ -1,18 +1,25 @@
 ﻿#if __ANDROID__
 using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Gms.Common;
 using Android.OS;
 using Android.Util;
 using Plugin.CurrentActivity;
+using WindowsAzure.Messaging;
 
 namespace Xamarin.Forms.Core.AzurePush
 {
     public class CoreAzurePush
     {
-        private static string notificationChannelName = CoreSettings.Config.AzurePushSettings.NotificationChannelName;
-        private static string debugTag = CoreSettings.Config.AzurePushSettings.DebugTag;
+        static string listenConnectionString = CoreSettings.Config.AzurePushSettings.ListenConnectionString;
+        static string NotificationHubName = CoreSettings.Config.AzurePushSettings.NotificationHubName;
+        static string debugTag = CoreSettings.Config.AzurePushSettings.DebugTag;
+        static string fcmTemplateBody = CoreSettings.Config.AzurePushSettings.FCMTemplateBody;
+
+        static string notificationChannelName = CoreSettings.Config.AzurePushSettings.NotificationChannelName;
+
 
         public static Context Ctx
         {
@@ -30,7 +37,9 @@ namespace Xamarin.Forms.Core.AzurePush
             }
             else
             {
-                CreateNotificationChannel();
+
+               CreateNotificationChannel();
+
             }
         }
 
@@ -48,6 +57,35 @@ namespace Xamarin.Forms.Core.AzurePush
                 return false;
             }
             return true;
+        }
+
+        public static async Task RegisterNotificationHub(string[] tags)
+        {
+            await Task.Run(() =>
+            {
+                if (!string.IsNullOrEmpty(CoreSettings.DeviceToken))
+                {
+                    try
+                    {
+                        //tags = new string[] { "tony@starkindustries.com" };
+                        NotificationHub hub = new NotificationHub(NotificationHubName, listenConnectionString, Ctx);
+
+                        // register device with Azure Notification Hub using the token from FCM
+                        Registration reg = hub.Register(CoreSettings.DeviceToken, tags);
+
+                        // subscribe to the SubscriptionTags list with a simple template.
+                        string pnsHandle = reg.PNSHandle;
+                        var temp = hub.RegisterTemplate(pnsHandle, "defaultTemplate", fcmTemplateBody, tags);
+                        CreateNotificationChannel();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(debugTag, $"Error registering device: {e.Message}");
+
+                    }
+                }
+            });
+
         }
 
         private static void CreateNotificationChannel()

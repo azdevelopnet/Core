@@ -1,18 +1,35 @@
 ﻿<Properties StartupConfiguration="{1AF410B9-5A69-4AE5-89C0-D06C6BE49574}|Default">
   <MonoDevelop.Ide.ItemProperties.Animations FirstBuild="True" />
   <MonoDevelop.Ide.ItemProperties.Animations.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Animations/Animations.Android/MainApplication.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Animations/Animations/Views/SomePage.cs">
     <Files>
-      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/CoreClasses/BaseNotify.cs" Line="1" Column="1" />
       <File FileName="Animations/Animations/ViewModels/SomeViewModel.cs" />
-      <File FileName="Animations/Animations/App.xaml.cs" Line="17" Column="1" />
-      <File FileName="Animations/Animations.Android/MainActivity.cs" Line="1" Column="1" />
-      <File FileName="Animations/Animations.Android/MainApplication.cs" Line="4" Column="23" />
+      <File FileName="Animations/Animations/App.xaml.cs" />
+      <File FileName="Animations/Animations/Views/SomePage.cs" Line="120" Column="18" />
+      <File FileName="Animations/Animations.Android/MainActivity.cs" />
+      <File FileName="Animations/Animations.Android/MainApplication.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Animations" expanded="True" />
+          <Node name="Animations" expanded="True">
+            <Node name="Animations" expanded="True">
+              <Node name="Partials" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="SomePage.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="Xamarin.Forms.Core" expanded="True">
+              <Node name="CoreClasses" expanded="True" />
+              <Node name="UI" expanded="True">
+                <Node name="Animations" expanded="True">
+                  <Node name="Base" expanded="True" />
+                  <Node name="Triggers" expanded="True" />
+                </Node>
+                <Node name="Controls" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>

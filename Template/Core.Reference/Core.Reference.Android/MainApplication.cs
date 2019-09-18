@@ -2,7 +2,6 @@
 using Android.App;
 using Android.OS;
 using Android.Runtime;
-using Firebase;
 using Plugin.CurrentActivity;
 using Xamarin.Forms.Core;
 

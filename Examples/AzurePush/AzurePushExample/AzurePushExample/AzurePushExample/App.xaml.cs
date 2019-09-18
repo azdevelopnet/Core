@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
+using Xamarin.Forms.Core.AzurePush;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -11,6 +12,8 @@ namespace AzurePushExample
         public App()
         {
             InitializeComponent();
+
+            CoreAzurePush.Init();
 
             MainPage = new NavigationPage(new SomePage());
         }
