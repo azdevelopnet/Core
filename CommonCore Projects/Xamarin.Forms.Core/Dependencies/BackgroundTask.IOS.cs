@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Foundation;
 using Newtonsoft.Json;
-using Plugin.Settings;
 using UIKit;
 using Xamarin.Forms;
 using System.Linq;
 using Xamarin.Forms.Core;
+using Xamarin.Essentials;
 
 [assembly: Dependency(typeof(BackgroundTask))]
 namespace Xamarin.Forms.Core
@@ -22,11 +22,11 @@ namespace Xamarin.Forms.Core
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault("BackgroundInterval", UIApplication.BackgroundFetchIntervalMinimum);
+                return Preferences.Get("BackgroundInterval", UIApplication.BackgroundFetchIntervalMinimum);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue("BackgroundInterval", value);
+                Preferences.Set("BackgroundInterval", value);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Xamarin.Forms.Core
             if (entry!=null)
             {
                 dict.Remove(entry);
-                CrossSettings.Current.AddOrUpdateValue("backgroundList", JsonConvert.SerializeObject(dict));
+                Preferences.Set("backgroundList", JsonConvert.SerializeObject(dict));
             }
         }
 
@@ -143,12 +143,12 @@ namespace Xamarin.Forms.Core
                 dict.Add(new ExecutionData() { Key = key, Data = data });
             }
 
-            CrossSettings.Current.AddOrUpdateValue("backgroundList", JsonConvert.SerializeObject(dict));
+            Preferences.Set("backgroundList", JsonConvert.SerializeObject(dict));
         }
 
         private static List<ExecutionData> GetAllSettings()
         {
-            var jsonList = CrossSettings.Current.GetValueOrDefault("backgroundList", null);
+            var jsonList = Preferences.Get("backgroundList", null);
             List<ExecutionData> dict = jsonList == null ? new List<ExecutionData>() : (List<ExecutionData>)JsonConvert.DeserializeObject<List<ExecutionData>>(jsonList);
             return dict;
         }

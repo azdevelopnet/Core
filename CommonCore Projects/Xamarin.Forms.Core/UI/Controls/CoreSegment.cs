@@ -3,10 +3,11 @@ using Xamarin.Forms;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Xamarin.Forms.Core
 {
-
+    [DesignTimeVisible(true)]
     public class CoreSegmentControl : ContentView
     {
         private StackLayout _layout;

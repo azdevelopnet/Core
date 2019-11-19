@@ -46,6 +46,8 @@ namespace Xamarin.Forms.Core
 
                     var config = new WKWebViewConfiguration { UserContentController = userController };
                     webView = new WKWebView(Frame, config);
+
+                   
                     webView.UIDelegate = new CoreWebViewUIDelegate();
                     SetNativeControl(webView);
                 }
@@ -69,7 +71,7 @@ namespace Xamarin.Forms.Core
                 else
                 {
                     var source = (HtmlWebViewSource)Element.Source;
-                    Control.LoadHtmlString(source.Html, null);
+                    Control.LoadHtmlString(source.Html, new NSUrl(source.BaseUrl, true));
                 }
             }
         }

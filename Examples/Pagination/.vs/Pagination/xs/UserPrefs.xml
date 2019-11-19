@@ -1,22 +1,38 @@
 ﻿<Properties StartupConfiguration="{1A648B44-D0AC-4652-9B66-15F080250FB6}|Default">
-  <MonoDevelop.Ide.ItemProperties.Pagination.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.ItemProperties.Pagination.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.6C371BE7-5E9A-476E-896C-AC614916863C" />
   <MonoDevelop.Ide.ItemProperties.Pagination.Android PreferredExecutionTarget="Android.n81" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pagination/Pagination.Android/MainApplication.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pagination/Pagination.iOS/AppDelegate.cs">
     <Files>
-      <File FileName="Pagination/Pagination/ViewModels/SomeViewModel.cs" Line="13" Column="1" />
-      <File FileName="Pagination/Pagination/Views/SomePage.cs" />
-      <File FileName="Pagination/Pagination/Config/settings/config.dev.json" />
-      <File FileName="Pagination/Pagination/Models/SomeModel.cs" />
-      <File FileName="Pagination/Pagination/Views/RandomUserCell.cs" />
-      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/Dependencies/DialogPrompt.IOS.cs" />
-      <File FileName="Pagination/Pagination.iOS/AppDelegate.cs" />
-      <File FileName="Pagination/Pagination.Android/MainApplication.cs" Line="4" Column="23" />
-      <File FileName="Pagination/Pagination/App.xaml.cs" Line="16" Column="10" />
+      <File FileName="Pagination/Pagination/Views/SomePage.cs" Line="37" Column="35" />
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/UI/Controls/CoreListView.cs" />
+      <File FileName="Pagination/Pagination/Config/settings/config.dev.json" Line="1" Column="1" />
+      <File FileName="Pagination/Pagination.iOS/AppDelegate.cs" Line="52" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Pagination" expanded="True" selected="True" />
+          <Node name="Pagination" expanded="True">
+            <Node name="Pagination.iOS" expanded="True" />
+            <Node name="Pagination" expanded="True">
+              <Node name="Config" expanded="True">
+                <Node name="settings" expanded="True" />
+              </Node>
+              <Node name="Converters" selected="True" />
+              <Node name="Views" expanded="True" />
+            </Node>
+            <Node name="Xamarin.Forms.Core" expanded="True">
+              <Node name="CoreClasses" expanded="True" />
+              <Node name="FluentMarkup" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="Collections" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
+              <Node name="UI" expanded="True">
+                <Node name="Controls" expanded="True" />
+                <Node name="Pages" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>

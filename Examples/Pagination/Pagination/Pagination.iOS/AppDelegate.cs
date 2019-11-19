@@ -41,13 +41,13 @@ namespace Pagination.iOS
         private void InitBuildSettings()
         {
             //add the pound symbol to make it a directive
-            //if DEBUG
-            //            CoreSettings.CurrentBuild = "dev";
-            //elif QA
-            //            CoreSettings.CurrentBuild = "qa";
-            //elif RELEASE
-            //            CoreSettings.CurrentBuild = "prod";
-            //endif
+#if DEBUG
+            CoreSettings.CurrentBuild = "dev";
+#elif QA
+            CoreSettings.CurrentBuild = "qa";
+#elif RELEASE
+            CoreSettings.CurrentBuild = "prod";
+#endif
         }
     }
 }

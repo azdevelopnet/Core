@@ -1,27 +1,21 @@
 ﻿<Properties StartupConfiguration="{E9C24A81-BE75-4386-8146-B7703C34E89C}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.6934EA1B-32BC-43D2-8ED0-82B16DD2F9E9" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Reference.iOS/Properties/AssemblyInfo.cs">
-    <Files>
-      <File FileName="Core.Reference/Views/SomePage.cs" Line="7" Column="5" />
-      <File FileName="Core.Reference.Android/MainActivity.cs" />
-      <File FileName="Core.Reference.Android/MainApplication.cs" />
-      <File FileName="Core.Reference.iOS/Properties/AssemblyInfo.cs" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.3B5B646F-FD02-4A0F-853B-5FDAC69F14AB" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Core.Reference" expanded="True">
+          <Node name="Core.Reference" expanded="True" selected="True">
+            <Node name="Core.Reference.Android" expanded="True" />
             <Node name="Core.Reference.iOS" expanded="True">
-              <Node name="Properties" expanded="True">
-                <Node name="AssemblyInfo.cs" selected="True" />
-              </Node>
+              <Node name="References" expanded="True" />
+              <Node name="Packages" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Core.Reference.Android PreferredExecutionTarget="Android.n6p_phone" />
+  <MonoDevelop.Ide.ItemProperties.Core.Reference.Android PreferredExecutionTarget="Android.pixel_2_pie_9_0_api_28" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
     <String>../Xamarin.Forms.Core/Xamarin.Forms.Core.shproj</String>

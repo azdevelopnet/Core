@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
 {
+    [DesignTimeVisible(true)]
     public class CoreDatePicker : DatePicker
 	{
 		public static readonly BindableProperty EntryColorProperty =

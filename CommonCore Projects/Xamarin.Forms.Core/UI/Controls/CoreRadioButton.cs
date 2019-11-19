@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Xamarin.Forms.Core
 {
+    [DesignTimeVisible(true)]
     public class CoreRadioButton : View
     {
         public EventHandler<bool> CheckedChanged;

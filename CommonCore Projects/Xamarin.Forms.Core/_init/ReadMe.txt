@@ -10,6 +10,7 @@ Android SDK Manager - > Extras
  
 
 Required Nuget Installs
+ - XF.Material /*https://github.com/contrix09/XF-Material-Library*/
  - ModernHttpClient
  - Newtonsoft.Json
  - Plugin.Permissions /* https://blog.xamarin.com/plugin-permission-changes-ios-11/?utm_source=vs_developer_news&utm_medium=referral */

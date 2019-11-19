@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
+
 namespace Xamarin.Forms.Core
 {
+    [DesignTimeVisible(true)]
     public class CoreSwitch: Switch
     {
 		public static readonly BindableProperty TrueColorProperty =

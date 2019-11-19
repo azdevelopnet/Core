@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
 {
     public delegate void ScriptInvocation(string script);
+    [DesignTimeVisible(true)]
     public class CoreWebView : WebView
     {
 

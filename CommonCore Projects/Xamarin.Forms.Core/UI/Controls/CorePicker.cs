@@ -5,9 +5,11 @@ using Xamarin.Forms;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace Xamarin.Forms.Core
 {
+    [DesignTimeVisible(true)]
     public class CorePicker : Picker
     {
 

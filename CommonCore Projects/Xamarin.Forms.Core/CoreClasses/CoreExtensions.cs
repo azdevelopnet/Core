@@ -71,6 +71,16 @@ namespace Xamarin.Forms.Core
             return status;
         }
 
+        public static T OnIdiom<T>(this object call, params T[] parameters)
+        {
+            if (Device.Idiom == TargetIdiom.Phone)
+                return parameters[0];
+            if (Device.Idiom == TargetIdiom.Tablet)
+                return parameters[1];
+
+            return parameters[0];
+        }
+
         public static T On<T>(this object caller, params T[] parameters)
         {
             T obj = default(T);

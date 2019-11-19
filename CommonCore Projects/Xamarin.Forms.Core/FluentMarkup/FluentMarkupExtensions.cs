@@ -206,13 +206,15 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
             return gestureElement;
         }
 
-        //public static TView BindTap<TView>(this TView view, string commandName) where TView : View
-        //{
-        //    var gesture = new TapGestureRecognizer();
-        //    gesture.SetBinding(TapGestureRecognizer.CommandProperty, commandName);
-        //    view.GestureRecognizers.Add(gesture);
-        //    return view;
-        //}
+        public static TView BindViewTap<TView>(this TView view, string commandName, object parameter=null) where TView : View
+        {
+            var gesture = new TapGestureRecognizer();
+            gesture.SetBinding(TapGestureRecognizer.CommandProperty, commandName);
+            if(parameter!=null)
+             gesture.SetBinding(TapGestureRecognizer.CommandParameterProperty, new Binding() { Source = parameter });
+            view.GestureRecognizers.Add(gesture);
+            return view;
+        }
 
         public static TGestureElement BindTap<TGestureElement>(this TGestureElement gestureElement, string commandName) where TGestureElement : GestureElement
         {
@@ -441,6 +443,28 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
         public static TView CenterExpand<TView>(this TView view) where TView : View => view.CenterExpandH().CenterExpandV();
         public static TView FillExpand<TView>(this TView view) where TView : View => view.FillExpandH().FillExpandV();
 
+        /// <summary>
+        /// Accessibility extension
+        /// https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/accessibility/
+        /// </summary>
+        /// <typeparam name="TView"></typeparam>
+        /// <param name="view"></param>
+        /// <param name="name"></param>
+        /// <param name="helpText"></param>
+        /// <param name="isTabStop"></param>
+        /// <param name="tabIndex"></param>
+        /// <returns></returns>
+        public static TView SetAccessibility<TView>(this TView view, string name, string helpText, bool isTabStop = true, int? tabIndex = null) where TView: View 
+        {
+            AutomationProperties.SetIsInAccessibleTree(view, true);
+            AutomationProperties.SetName(view, name);
+            AutomationProperties.SetHelpText(view, helpText);
+            view.IsTabStop = isTabStop;
+            if (tabIndex.HasValue)
+                view.TabIndex = tabIndex.Value;
+            return view;
+        }
+
         public static TView Margin<TView>(this TView view, Thickness margin) where TView : View { view.Margin = margin; return view; }
         public static TView Margin<TView>(this TView view, double horizontal, double vertical) where TView : View { view.Margin = new Thickness(horizontal, vertical); return view; }
         public static TView Margins<TView>(this TView view, double left = 0, double top = 0, double right = 0, double bottom = 0) where TView : View { view.Margin = new Thickness(left, top, right, bottom); return view; }
@@ -485,8 +509,8 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
             switch (view)
             {
                 case Button button: if (fontSize.HasValue) button.FontSize = fontSize.Value; if (attributes.HasValue) button.FontAttributes = attributes.Value; if (family != null) button.FontFamily = family; break;
-                case Label label: if (fontSize.HasValue) label.FontSize = fontSize.Value; if (attributes.HasValue) label.FontAttributes = attributes.Value; if (family != null) label.FontFamily = family; break;
-                case Entry entry: if (fontSize.HasValue) entry.FontSize = fontSize.Value; if (attributes.HasValue) entry.FontAttributes = attributes.Value; if (family != null) entry.FontFamily = family; break;
+                case Label  label : if (fontSize.HasValue) label .FontSize = fontSize.Value; if (attributes.HasValue) label .FontAttributes = attributes.Value; if (family != null) label .FontFamily = family; break;
+                case Entry  entry : if (fontSize.HasValue) entry .FontSize = fontSize.Value; if (attributes.HasValue) entry .FontAttributes = attributes.Value; if (family != null) entry .FontFamily = family; break;
                 case Picker picker: if (fontSize.HasValue) picker.FontSize = fontSize.Value; if (attributes.HasValue) picker.FontAttributes = attributes.Value; if (family != null) picker.FontFamily = family; break;
             }
             return view;

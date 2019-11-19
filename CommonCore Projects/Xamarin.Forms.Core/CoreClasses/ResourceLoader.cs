@@ -27,7 +27,6 @@ namespace Xamarin.Forms.Core
                 return (null, result.Error);
             }
         }
-
         public static string GetFullResourceName(string resourceFileName)
         {
             var assembly = Assembly.GetAssembly(typeof(ResourceLoader));

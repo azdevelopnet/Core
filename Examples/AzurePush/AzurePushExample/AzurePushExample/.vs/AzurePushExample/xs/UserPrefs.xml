@@ -1,21 +1,22 @@
-﻿<Properties StartupConfiguration="{3D7C68B5-A16A-44BA-8399-07FEBB63A69C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="AzurePushExample.Android/MainActivity.cs">
-    <Files>
-      <File FileName="AzurePushExample/Views/SomePage.cs" Line="47" Column="6" />
-      <File FileName="AzurePushExample.iOS/AppDelegate.cs" Line="50" Column="10" />
-      <File FileName="AzurePushExample/App.xaml.cs" Line="15" Column="1" />
-      <File FileName="AzurePushExample.Android/MainActivity.cs" Line="5" Column="18" />
-    </Files>
+﻿<Properties StartupConfiguration="{08179D0F-4A52-46A4-B714-AC67186C9D04}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AzurePushExample" expanded="True">
-            <Node name="AzurePushExample.Android" expanded="True">
+            <Node name="AzurePushExample.Android" expanded="True" selected="True">
               <Node name="Properties" expanded="True" />
-              <Node name="MainActivity.cs" selected="True" />
+            </Node>
+            <Node name="AzurePushExample" expanded="True">
+              <Node name="App.xaml" expanded="True" />
+            </Node>
+            <Node name="Xamarin.Forms.Core" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="IBackgroundTask.cs" expanded="True" />
+              </Node>
             </Node>
             <Node name="Xamarin.Forms.Core.AzurePush" expanded="True">
-              <Node name="_init" expanded="True" />
+              <Node name="CoreAzurePush.Droid.cs" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -25,10 +26,13 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Xamarin.Forms.Core.AzurePush FirstBuild="True" HideGettingStarted="True" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.AzurePushExample.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1B0BD932-E675-4657-A072-238FB329A1F0" />
+  <MonoDevelop.Ide.ItemProperties.AzurePushExample.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.6C371BE7-5E9A-476E-896C-AC614916863C" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/lesliebrown/Projects/Core.ReferenceGuide/Examples/AzurePush/AzurePushExample/AzurePushExample/AzurePushExample/App.xaml.cs" relfile="AzurePushExample/App.xaml.cs" line="16" column="1" />
+      <Breakpoint file="/Users/lesliebrown/Projects/Core.ReferenceGuide/CommonCore Projects/Xamarin.Forms.Core.AzurePush/FirebaseRegistrationService.Droid.cs" line="28" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.AzurePushExample.Android PreferredExecutionTarget="Android.n6p_phone" />
+  <MonoDevelop.Ide.ItemProperties.AzurePushExample.Android PreferredExecutionTarget="Android.pixel_2_pie_9_0_api_28" />
 </Properties>

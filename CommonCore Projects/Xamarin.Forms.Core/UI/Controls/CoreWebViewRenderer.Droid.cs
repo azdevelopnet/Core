@@ -14,11 +14,11 @@ namespace Xamarin.Forms.Core
     public class CoreWebViewRenderer : WebViewRenderer
     {
         const string JavascriptFunction = "function invokeCSharpAction(data){jsBridge.invokeAction(data);}";
-        Context _context;
+
 
         public CoreWebViewRenderer(Context context) : base(context)
         {
-            _context = context;
+
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.WebView> e)
@@ -55,8 +55,7 @@ namespace Xamarin.Forms.Core
                 else
                 {
                     var source = (HtmlWebViewSource)Element.Source;
-                    Control.LoadData(source.Html, "text/html; charset=utf-8", "UTF-8");
-
+                    Control.LoadDataWithBaseURL(source.BaseUrl, source.Html, "text/html; charset=utf-8", "UTF-8", null);
                 }
             }
 

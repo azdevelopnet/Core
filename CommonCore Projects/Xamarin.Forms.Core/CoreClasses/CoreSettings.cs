@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Plugin.Settings;
-using Plugin.Settings.Abstractions;
 using Newtonsoft.Json;
 using System.Reflection;
+using Xamarin.Essentials;
 
 #if __ANDROID__
 using Android.Widget;
@@ -26,7 +25,6 @@ namespace Xamarin.Forms.Core
     }
     public partial class CoreSettings
     {
-        private static ISettings AppSettings => CrossSettings.Current;
         public static string CurrentBuild { get; set; } = "dev";
         public static INavigation AppNav { get; set; }
         public static Size ScreenSize
@@ -52,6 +50,16 @@ namespace Xamarin.Forms.Core
 
 
         public static List<string> NotificationTags { get; set; } = new List<string>();
+
+        public static T OnIdiom<T>(params T[] parameters)
+        {
+            if (Device.Idiom == TargetIdiom.Phone)
+                return parameters[0];
+            if (Device.Idiom == TargetIdiom.Tablet)
+                return parameters[1];
+
+            return parameters[0];
+        }
 
         public static T On<T>(params T[] parameters)
         {
@@ -88,13 +96,7 @@ namespace Xamarin.Forms.Core
 #endif
             }
         }
-        private static ISettings _appSettings
-        {
-            get
-            {
-                return CrossSettings.Current;
-            }
-        }
+
 
         public static CoreConfiguration Config
         {
@@ -109,17 +111,19 @@ namespace Xamarin.Forms.Core
         {
             get
             {
-                var id = _appSettings.GetValueOrDefault("InstallationId", null);
+                
+                var id = Preferences.Get("InstallationId", null);
 
                 if (string.IsNullOrEmpty(id))
                 {
+                
                     id = Guid.NewGuid().ToString();
-                    _appSettings.AddOrUpdateValue("InstallationId", id);
+                     Preferences.Set("InstallationId", id);
                 }
 
                 return id;
             }
-            set { _appSettings.AddOrUpdateValue("InstallationId", value); }
+            set { Preferences.Set("InstallationId", value); }
         }
 
 
@@ -131,17 +135,17 @@ namespace Xamarin.Forms.Core
         {
             get
             {
-                var id = _appSettings.GetValueOrDefault("SyncTimeStamp", 0L);
+                var id = Preferences.Get("SyncTimeStamp", 0L);
 
                 if (id == default(long))
                 {
                     id = DateTime.UtcNow.AddDays(-30).Ticks;
-                    _appSettings.AddOrUpdateValue("SyncTimeStamp", id);
+                    Preferences.Set("SyncTimeStamp", id);
                 }
 
                 return id;
             }
-            set { _appSettings.AddOrUpdateValue("SyncTimeStamp", value); }
+            set { Preferences.Set("SyncTimeStamp", value); }
         }
 
 
@@ -164,11 +168,11 @@ namespace Xamarin.Forms.Core
         {
             get
             {
-                return AppSettings.GetValueOrDefault("DeviceToken", null);
+                return Preferences.Get("DeviceToken", null);
             }
             set
             {
-                AppSettings.AddOrUpdateValue("DeviceToken", value);
+                Preferences.Set("DeviceToken", value);
             }
         }
 
@@ -183,7 +187,7 @@ namespace Xamarin.Forms.Core
         {
             get
             {
-                var tokenString = AppSettings.GetValueOrDefault("DeviceToken", null);
+                var tokenString = Preferences.Get("DeviceToken", null);
                 if(!string.IsNullOrEmpty(tokenString))
                     return new NSData(tokenString, NSDataBase64DecodingOptions.None);
 
@@ -192,7 +196,7 @@ namespace Xamarin.Forms.Core
             set
             {
                 var tokenStringBase64 = value.GetBase64EncodedString(NSDataBase64EncodingOptions.None);
-                AppSettings.AddOrUpdateValue("DeviceToken", tokenStringBase64);
+                Preferences.Set("DeviceToken", tokenStringBase64);
             }
         }
 

@@ -111,7 +111,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ContextMenuService.Droid.cs">
       <DependentUpon>IContextMenuService.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EncryptedPropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\util.Droid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\CoreDependencyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreBusiness.cs" />
@@ -357,6 +356,21 @@
       <DependentUpon>IBackgroundTask.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IBackgroundTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptedPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IClearCookies.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ClearCookies.Droid.cs">
+      <DependentUpon>IClearCookies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ClearCookies.IOS.cs">
+      <DependentUpon>IClearCookies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IKeyboardHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\KeyboardHelper.Droid.cs">
+      <DependentUpon>IKeyboardHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\KeyboardHelper.IOS.cs">
+      <DependentUpon>IKeyboardHelper.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -377,6 +391,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\" />
     <Folder Include="$(MSBuildThisFileDirectory)FluentMarkup\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Security\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />

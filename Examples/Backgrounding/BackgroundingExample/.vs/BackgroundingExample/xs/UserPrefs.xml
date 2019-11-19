@@ -9,7 +9,13 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="BackgroundingExample" expanded="True" />
+          <Node name="BackgroundingExample" expanded="True">
+            <Node name="BackgroundingExample" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="SomePage.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>

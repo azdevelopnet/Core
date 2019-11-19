@@ -35,16 +35,14 @@ namespace Xamarin.Forms.Core
         {
             if (backgroundImageSoure!=null)
             {
-                Task.Run(async () => { 
-                    var i = await backgroundImageSoure.ToUIImage();
+                Device.BeginInvokeOnMainThread(async () => { 
                     var size = new CoreGraphics.CGSize(0, 0);
-         
                     size.Height = (nfloat)CoreSettings.ScreenSize.Height;
                     size.Width = (nfloat)CoreSettings.ScreenSize.Width;
                 
                     UIGraphics.BeginImageContext(size);
+                    var i = await backgroundImageSoure.ToUIImage();
                     i = i.Scale(size);
-
                     this.View.BackgroundColor = UIColor.FromPatternImage(i);
                 });
             }

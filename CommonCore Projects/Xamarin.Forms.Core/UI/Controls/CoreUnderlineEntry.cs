@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
@@ -19,7 +20,8 @@ namespace Xamarin.Forms.Core
 		Continue
 	}
 
-	public class CoreUnderlineEntry : CoreMaskedEntry
+    [DesignTimeVisible(true)]
+    public class CoreUnderlineEntry : CoreMaskedEntry
 	{
 		public Action NextFocus { get; set; }
 

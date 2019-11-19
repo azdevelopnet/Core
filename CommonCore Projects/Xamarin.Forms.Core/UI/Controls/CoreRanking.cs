@@ -5,7 +5,8 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
 {
-	public class CoreRanking : StackLayout, IDisposable
+    [DesignTimeVisible(true)]
+    public class CoreRanking : StackLayout, IDisposable
 	{
 		private List<Grid> starList;
 		public List<Grid> StarList
