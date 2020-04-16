@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content;
-using Android.Support.Design.Widget;
 using Android.Telephony;
 using Android.Widget;
 using Droid = Android;

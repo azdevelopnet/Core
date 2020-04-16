@@ -1,14 +1,24 @@
 ﻿<Properties StartupConfiguration="{E9C24A81-BE75-4386-8146-B7703C34E89C}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.3B5B646F-FD02-4A0F-853B-5FDAC69F14AB" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument=".template.config/template.json">
+    <Files>
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/Dependencies/IAudioPlayer.cs" Line="1" Column="1" />
+      <File FileName="Core.Reference/Converters/SomeValueConverter.cs" />
+      <File FileName="Core.Reference/BusinessLogic/SomeBusinessLogic.cs" />
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/UI/Pages/Base/BasePages.cs" />
+      <File FileName="Core.Reference/App.xaml.cs" />
+      <File FileName="Core.Reference/Views/SomePage.cs" Line="14" Column="59" />
+      <File FileName=".template.config/template.json" Line="7" Column="35" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Core.Reference" expanded="True" selected="True">
+          <Node name="Core.Reference" expanded="True">
+            <Node name=".template.config" expanded="True" selected="True" />
             <Node name="Core.Reference.Android" expanded="True" />
-            <Node name="Core.Reference.iOS" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Packages" expanded="True" />
+            <Node name="Core.Reference.iOS" expanded="True" />
+            <Node name="Core.Reference" expanded="True">
+              <Node name="Views" expanded="True" />
             </Node>
           </Node>
         </State>

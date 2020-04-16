@@ -4,7 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.Android.AppCompat;
 using Views = Android.Views;
-using AToolbar = Android.Support.V7.Widget.Toolbar;
+using AToolbar = AndroidX.AppCompat.Widget.Toolbar;
 using System.Reflection;
 using Android.Content.Res;
 using Android.Widget;

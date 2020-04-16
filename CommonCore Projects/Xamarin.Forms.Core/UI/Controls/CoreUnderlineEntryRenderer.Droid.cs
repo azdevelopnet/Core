@@ -13,8 +13,9 @@ using System.ComponentModel;
 using Android.Views;
 using Plugin.CurrentActivity;
 using Ctx = Android.Content.Context;
-using Android.Support.V4.Content;
+//using Android.Support.V4.Content;
 using Android.Runtime;
+using AndroidX.Core.Content;
 
 [assembly: ExportRenderer(typeof(CoreUnderlineEntry), typeof(CoreUnderlineEntryRenderer))]
 namespace Xamarin.Forms.Core

@@ -2,8 +2,8 @@
 using System;
 using System.ComponentModel;
 using Android.Content;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.CardView.Widget;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.Android;

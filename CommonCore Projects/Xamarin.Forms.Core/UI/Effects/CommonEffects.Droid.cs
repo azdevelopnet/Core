@@ -8,7 +8,7 @@ using Graphics = Android.Graphics;
 using Android.Views;
 using OS = Android.OS;
 using Android.Graphics;
-using Android.Support.V7.Widget;
+//using Android.Support.V7.Widget;
 using Android.Runtime;
 using Android.Widget;
 

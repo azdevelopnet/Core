@@ -9,7 +9,9 @@ namespace Core.Reference
         public SomePage()
         {
             this.Title = "Some Page";
-            this.Visual = VisualMarker.Material;
+            //this.Visual = VisualMarker.Material;
+
+            this.BackgroundImageSource = ImageSource.FromFile("Background.png");
 
             Content = new StackLayout()
             {

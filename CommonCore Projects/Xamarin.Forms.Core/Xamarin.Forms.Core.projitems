@@ -212,20 +212,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreUnderlineEntryRenderer.IOS.cs">
       <DependentUpon>..\..\Controls\CoreUnderlineEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingActionButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingActionButtonRenderer.Droid.cs">
-      <DependentUpon>..\..\..\Controls\MaterialDesign\CoreFloatingActionButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingActionButtonRenderer.IOS.cs">
-      <DependentUpon>..\..\..\Controls\MaterialDesign\CoreFloatingActionButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingTextEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingTextEntryRenderer.Droid.cs">
-      <DependentUpon>..\..\..\Controls\MaterialDesign\CoreFloatingTextEntry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\CoreFloatingTextEntryRenderer.IOS.cs">
-      <DependentUpon>..\..\..\Controls\MaterialDesign\CoreFloatingTextEntry.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\Base\BasePageRenderer.Droid.cs">
       <DependentUpon>..\..\..\Pages\Base\BasePages.cs</DependentUpon>
     </Compile>
@@ -299,13 +285,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\CookieStore.Droid.cs">
       <DependentUpon>ICookieStore.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\MaterialFrame.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\MaterialFrameRenderer.Droid.cs">
-      <DependentUpon>MaterialFrame.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\MaterialDesign\MaterialFramerenderer.IOS.cs">
-      <DependentUpon>MaterialFrame.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\BaseUrl.Droid.cs">
       <DependentUpon>IBaseUrl.cs</DependentUpon>
     </Compile>
@@ -371,6 +350,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\KeyboardHelper.IOS.cs">
       <DependentUpon>IKeyboardHelper.cs</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Fonts\FontCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -392,11 +372,22 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\" />
     <Folder Include="$(MSBuildThisFileDirectory)FluentMarkup\" />
     <Folder Include="$(MSBuildThisFileDirectory)Security\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />
     <None Include="$(MSBuildThisFileDirectory)Dependencies\fileViewer_readme.txt">
       <DependentUpon>IFileViewer.cs</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\entypoplus.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\fontawesome.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\ionicons.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\material.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\meteocons.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\simplelineicons.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\typicons.ttf" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Fonts\weathericons.ttf" />
   </ItemGroup>
 </Project>

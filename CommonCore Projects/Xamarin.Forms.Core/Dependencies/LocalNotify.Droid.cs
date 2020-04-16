@@ -4,10 +4,12 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
+using AndroidX.Core.App;
 using Plugin.CurrentActivity;
 using Xamarin.Forms.Core;
 using Content = Android.Content;
 using DroidColor = Android.Graphics.Color;
+using NotificationCompatX = AndroidX.Core.App.NotificationCompat;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalNotify))]
 namespace Xamarin.Forms.Core
@@ -54,7 +56,7 @@ namespace Xamarin.Forms.Core
             }
             else
             {
-                NotificationCompat.Builder _Builder = new NotificationCompat.Builder(Ctx)
+                NotificationCompatX.Builder _Builder = new NotificationCompatX.Builder(Ctx)
                          .SetContentIntent(oPendingIntent)
                          .SetContentTitle(notification.Title)
                          .SetContentText(notification.Message)

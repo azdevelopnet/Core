@@ -6,7 +6,6 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using AndroidX.Work;
-
 using Plugin.CurrentActivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;

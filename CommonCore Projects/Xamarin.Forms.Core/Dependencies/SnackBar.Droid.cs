@@ -1,12 +1,12 @@
 ﻿#if __ANDROID__
 using System;
 using Android.App;
-using Android.Support.Design.Widget;
 using Id = Android.Resource.Id;
 using Xamarin.Forms.Platform.Android;
 using Android.Widget;
 using Android.Content;
 using Plugin.CurrentActivity;
+using Google.Android.Material.Snackbar;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Core.SnackBar))]
 namespace Xamarin.Forms.Core

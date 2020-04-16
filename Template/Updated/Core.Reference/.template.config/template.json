@@ -1,0 +1,43 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Les Brown",
+  "classifications": [],
+  "description": "Xamarin.Forms.Core Starter Project",
+  "name": "Core.Starter",
+  "defaultName": "Core.Reference",
+  "identity": "MyTemplate.Core.Reference.CSharp",
+  "groupIdentity": "Xamarin.Forms.Core.Reference",
+  "tags": {
+    "language": "C#",
+    "type": "project",
+    "vsmac-category": "multiplat/app/forms"
+  },
+  "shortName": "Core.Reference",
+  "sourceName": "Core.Reference",
+  "guids": [
+    "{E9C24A81-BE75-4386-8146-B7703C34E89C}",
+    "{D712D2DC-5F12-419A-A155-FD73389884E0}"
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            ".vs/**/*"
+          ]
+        }
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "Core.Reference.Android/Core.Reference.Android.csproj"
+    },
+    {
+      "path": "Core.Reference.iOS/Core.Reference.iOS.csproj"
+    },
+    {
+      "path": "Core.Reference/Core.Reference.shproj"
+    }
+  ]
+}

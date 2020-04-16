@@ -12,7 +12,6 @@ using DroidUri = Android.Net.Uri;
 using Java.Util;
 using Plugin.CurrentActivity;
 using Plugin.Permissions.Abstractions;
-using Android.Arch.Lifecycle;
 
 [assembly: Xamarin.Forms.Dependency(typeof(CalendarEvent))]
 namespace Xamarin.Forms.Core

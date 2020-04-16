@@ -16,10 +16,6 @@ namespace SlideOverKit.Droid
 
         internal IDragGesture GragGesture { get { return _dragGesture; } }
 
-        public SlideMenuDroidRenderer():base()
-        {
-
-        }
 
         public SlideMenuDroidRenderer (Context context):base(context)
         {

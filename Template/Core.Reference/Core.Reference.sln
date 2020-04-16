@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Reference.iOS", "Core.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Core.Reference", "Core.Reference\Core.Reference.shproj", "{7CDFD040-C131-4781-A906-E72C0A6516BE}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Xamarin.Forms.Core", "..\..\CommonCore Projects\Xamarin.Forms.Core\Xamarin.Forms.Core.shproj", "{9FBF1BE8-6CC0-4DC2-BC5B-AB11181D64E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
