@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{4382292C-ACFD-4CE6-BA40-B2E3B49FE4E7}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CoreReferenceExample</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.dev.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.prod.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.qa.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SomeValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SomeObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BusinessLogic\SomeBusinessLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\StylesPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\SettingsPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ConfigPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ExtensionsPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\FontDemo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\FontFamilyPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dashboard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Data\DataPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Auth\AuthPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Push\PushPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UI\UIPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AuthViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DataViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\UIViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Controls.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\OAuth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DashboardViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialXFM.cs">
+      <DependentUpon>ViewModelPartial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialDefault.cs">
+      <DependentUpon>ViewModelPartial.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Data\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\UI\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Push\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Auth\" />
+  </ItemGroup>
+</Project>

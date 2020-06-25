@@ -164,7 +164,7 @@ namespace Xamarin.Forms.Core
         }
 
 
-        private void RenderControl()
+        public void RenderControl()
         {
             if (ItemsSource != null)
             {

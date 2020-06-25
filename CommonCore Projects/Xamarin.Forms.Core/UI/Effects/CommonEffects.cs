@@ -22,10 +22,6 @@ namespace Xamarin.Forms.Core
 	{
 		public HideListSeparatorEffect() : base($"CoreEffects.{typeof(HideTableSeparator).Name}") { }
 	}
-	public class ViewShadowEffect : RoutingEffect
-	{
-		public ViewShadowEffect() : base($"CoreEffects.{typeof(ViewShadow).Name}") { }
-	}
     public class UnderlineColorEffect : RoutingEffect
     {
         public UnderlineColorEffect() : base($"CoreEffects.{typeof(UnderlineColor).Name}") { }

@@ -11,6 +11,7 @@ using Widget = Android.Widget;
 using Graphics = Android.Graphics;
 using Views = Android.Views;
 using Plugin.CurrentActivity;
+using Android.OS;
 
 [assembly: Xamarin.Forms.Dependency(typeof(OverlayDependency))]
 namespace Xamarin.Forms.Core
@@ -55,7 +56,16 @@ namespace Xamarin.Forms.Core
             var prg = new Widget.ProgressBar(Ctx);
             prg.Indeterminate = true;
 
-            prg.IndeterminateDrawable.SetColorFilter(Graphics.Color.White, PorterDuff.Mode.Multiply);
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
+            {
+                prg.IndeterminateDrawable.SetColorFilter(new BlendModeColorFilter(Graphics.Color.White, BlendMode.Multiply));
+            }
+            else
+            {
+                prg.IndeterminateDrawable.SetColorFilter(Graphics.Color.White, PorterDuff.Mode.Multiply);
+            }
+
+
             var parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WrapContent, LinearLayout.LayoutParams.WrapContent);
             parameters.Gravity = Views.GravityFlags.Center;
             parameters.SetMargins(0, 10, 0, 10);

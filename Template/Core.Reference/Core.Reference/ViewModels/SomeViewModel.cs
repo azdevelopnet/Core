@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Core.Reference.Views;
+using Xamarin.Forms;
 using Xamarin.Forms.Core;
 
 namespace Core.Reference
@@ -10,15 +12,19 @@ namespace Core.Reference
         public string SomeText { get; set; }
         public int TotalItems { get; set; }
         public ICommand SomeAction { get; set; }
+        public ICommand SeeFontAction { get; set; }
 
         public SomeViewModel()
         {
+
             SomeAction = new CoreCommand(async (obj) =>
             {
-                LoadingMessageHUD = "Some action...";
-                IsLoadingHUD = true;
+                this.ShowLoadingDialog("Some action...");
                 await Task.Delay(new TimeSpan(0, 0, 4));
-                IsLoadingHUD = false;
+                this.CloseLoadingDialog();
+            });
+            SeeFontAction = new Command(async() => {
+                await Navigation.PushAsync(new FontDemo());
             });
         }
 

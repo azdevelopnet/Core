@@ -1,25 +1,38 @@
 ﻿using System;
+using PView = Xamarin.Forms.PancakeView.PancakeView;
 
 namespace Xamarin.Forms.Core
 {
-	public interface IPopup
+    public class PopupBounds
     {
-        AbsoluteLayout Parent { get; set; }
-        Frame ParentObject { get; set; }
+        public PopupBounds(double percentHorizontal, double percentVertical, double percentWidth, double percentheight)
+        {
+            PercentHorizontal = percentHorizontal;
+            PercentVertical = percentVertical;
+            PercentWidth = percentWidth;
+            Percentheight = percentheight;
+        }
+        public PopupBounds()
+        {
+
+        }
+        public double PercentHorizontal { get; set; } = 0.5;
+        public double PercentVertical { get; set; } = 0.5;
+        public double PercentWidth { get; set; } = 0.85;
+        public double Percentheight { get; set; } = 0.5;
+
+        public Rectangle ToRectangle()
+        {
+            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, Percentheight);
+        }
     }
-    public class PopupView : ContentView, IPopup
+    public class PopupView : ContentView
     {
         public bool AnimateOpen { get; set; } = true;
         public float CornerRadius = 3;
         public bool HasShadow { get; set; } = true;
 		public Color BorderColor { get; set; } = Color.Gray;
         public new bool IsClippedToBounds { get; set; } = false;
-        public new AbsoluteLayout Parent { get; set; }
-        public Frame ParentObject { get; set; }
-        public virtual void Close()
-        {
-            this.Parent.Children.Remove(ParentObject);
-        }
     }
 
     public abstract class CoreAbsoluteLayoutPage<T> : CorePage<T>
@@ -27,7 +40,8 @@ namespace Xamarin.Forms.Core
     {
         private AbsoluteLayout layout;
         private View content;
-        private Frame wrapper;
+        private PView pView;
+        private StackLayout backDrop;
 
         public new View Content
         {
@@ -51,40 +65,60 @@ namespace Xamarin.Forms.Core
         }
 
 
-        public void ShowPopup(PopupView view, Rectangle bounds, int padding)
+        public void ShowPopup(PopupView view, PopupBounds bounds, int padding)
         {
-
-            wrapper = new Frame()
+            pView = new PView()
             {
                 Content = view,
-                HasShadow = view.HasShadow,
-				BorderColor = view.BorderColor,
-                IsClippedToBounds = view.IsClippedToBounds,
+                BorderColor = view.BorderColor,
                 CornerRadius = view.CornerRadius,
-                Padding = padding
+                IsClippedToBounds = view.IsClippedToBounds,
+                BackgroundColor = Color.White,
+                Padding = padding,
+                Shadow = new PancakeView.DropShadow()
+                {
+                    Color = Color.White,
+                    Offset = new Point(1, 1),
+                    BlurRadius = 1,
+                    Opacity = 0.7f
+                }
             };
-            ((IPopup)view).Parent = this.layout;
-            ((IPopup)view).ParentObject = this.wrapper;
+            backDrop = new StackLayout()
+            {
+                BackgroundColor = Color.Black,
+                Opacity= 0.5
+            };
 
-            AbsoluteLayout.SetLayoutBounds(wrapper, bounds);
-            AbsoluteLayout.SetLayoutFlags(wrapper, AbsoluteLayoutFlags.All);
-            this.layout.Children.Add(wrapper);
+
+            AbsoluteLayout.SetLayoutBounds(backDrop, new Rectangle(1,1,1,1));
+            AbsoluteLayout.SetLayoutFlags(backDrop, AbsoluteLayoutFlags.All);
+            this.layout.Children.Add(backDrop);
+
+            AbsoluteLayout.SetLayoutBounds(pView, bounds.ToRectangle());
+            AbsoluteLayout.SetLayoutFlags(pView, AbsoluteLayoutFlags.All);
+            this.layout.Children.Add(pView);
+
             view.BindingContext = this.BindingContext;
             if (view.AnimateOpen)
             {
-                wrapper.ScaleTo(0.99, 200).ContinueWith(async (t) =>
+                pView.ScaleTo(0.99, 200).ContinueWith(async (t) =>
                 {
-                    await wrapper.ScaleTo(1, 200);
+                    await pView.ScaleTo(1, 200);
                 });
             }
         }
 
         public void ClosePopup()
         {
-            if (wrapper != null)
+            if (pView != null)
             {
-                ((IPopup)wrapper).Parent = null;
-                this.layout.Children.Remove(wrapper);
+                this.layout.Children.Remove(pView);
+                pView = null;
+            }
+            if (backDrop != null)
+            {
+                this.layout.Children.Remove(backDrop);
+                backDrop = null;
             }
         }
 
@@ -119,7 +153,7 @@ namespace Xamarin.Forms.Core
     {
         private AbsoluteLayout layout;
         private View content;
-        private Frame wrapper;
+        private PView pView;
 
         public new View Content
         {
@@ -142,10 +176,10 @@ namespace Xamarin.Forms.Core
             set { layout = value; }
         }
 
-        public void ShowPopup(PopupView view, Rectangle bounds, int padding)
+        public void ShowPopup(PopupView view, PopupBounds bounds, int padding)
         {
 
-            wrapper = new Frame()
+            pView = new PView()
             {
                 Content = view,
                 HasShadow = view.HasShadow,
@@ -154,28 +188,26 @@ namespace Xamarin.Forms.Core
                 CornerRadius = view.CornerRadius,
                 Padding = padding
             };
-            ((IPopup)view).Parent = this.layout;
-            ((IPopup)view).ParentObject = this.wrapper;
 
-            AbsoluteLayout.SetLayoutBounds(wrapper, bounds);
-            AbsoluteLayout.SetLayoutFlags(wrapper, AbsoluteLayoutFlags.All);
-            this.layout.Children.Add(wrapper);
+            AbsoluteLayout.SetLayoutBounds(pView, bounds.ToRectangle());
+            AbsoluteLayout.SetLayoutFlags(pView, AbsoluteLayoutFlags.All);
+            this.layout.Children.Add(pView);
             view.BindingContext = this.BindingContext;
             if (view.AnimateOpen)
             {
-                wrapper.ScaleTo(0.99, 200).ContinueWith(async (t) =>
+                pView.ScaleTo(0.99, 200).ContinueWith(async (t) =>
                 {
-                    await wrapper.ScaleTo(1, 200);
+                    await pView.ScaleTo(1, 200);
                 });
             }
         }
 
         public void ClosePopup()
         {
-            if (wrapper != null)
+            if (pView != null)
             {
-                ((IPopup)wrapper).Parent = null;
-                this.layout.Children.Remove(wrapper);
+                this.layout.Children.Remove(pView);
+                pView = null;
             }
         }
 

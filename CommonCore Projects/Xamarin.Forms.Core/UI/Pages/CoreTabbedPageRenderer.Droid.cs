@@ -1,18 +1,15 @@
 ﻿#if __ANDROID__
 using System;
 using System.ComponentModel;
-using Android.Content;
 using Android.Content.Res;
-//using Android.Support.V4.View;
-using Google.Android.Material.Tabs;
 using Xamarin.Forms;
+using Attribute = Android.Resource.Attribute;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
-using Attribute = Android.Resource.Attribute;
-using Drawable = Android.Support.V4.Graphics.Drawable;
-using AndroidX.Core.Content;
-using AndroidX.Core.Graphics.Drawable;
+using Android.Content;
+using Google.Android.Material.Tabs;
+using DrawableX = AndroidX.Core.Graphics.Drawable;
 
 [assembly: ExportRenderer(typeof(CoreTabbedPage), typeof(CoreTabbedPageRenderer))]
 namespace Xamarin.Forms.Core
@@ -39,7 +36,6 @@ namespace Xamarin.Forms.Core
                 tabbedPage = (CoreTabbedPage)Element;
                 if (!tabbedPage.IsToolbarBottom)
                 {
-                   //var groupName = ViewGroup.GetChildAt(0).GetType().Name;
                     layout = (TabLayout)ViewGroup.GetChildAt(1);
                     setup = true;
 
@@ -58,8 +54,8 @@ namespace Xamarin.Forms.Core
                             var icon = tab.Icon;
                             if (icon != null)
                             {
-                                icon = DrawableCompat.Wrap(icon);
-                                DrawableCompat.SetTintList(icon, colors);
+                                icon = DrawableX.DrawableCompat.Wrap(icon);
+                                DrawableX.DrawableCompat.SetTintList(icon, colors);
                                 
                             }
                         }

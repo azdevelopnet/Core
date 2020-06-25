@@ -24,9 +24,7 @@ namespace Core.Reference.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
 
-            global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
-            
             InitBuildSettings();
             InitGlobalLibraries();
             LoadApplication(new App());
@@ -36,22 +34,28 @@ namespace Core.Reference.iOS
 
         private void InitGlobalLibraries()
         {
-            Xamarin.Forms.FormsMaterial.Init();
+            //Xamarin.Forms.FormsMaterial.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
         }
 
         private void InitBuildSettings()
         {
-            //add the pound symbol to make it a directive
-            //if DEBUG
-            //            CoreSettings.CurrentBuild = "dev";
-            //elif QA
-            //            CoreSettings.CurrentBuild = "qa";
-            //elif RELEASE
-            //            CoreSettings.CurrentBuild = "prod";
-            //endif
+
+//#if DEBUG
+//            CoreSettings.CurrentBuild = BuildEnv.Dev;
+//#elif QA
+//            CoreSettings.CurrentBuild = BuildEnv.Dev;
+//#elif UAT
+//            CoreSettings.CurrentBuild = BuildEnv.UAT;
+//#elif PROD
+//		    CoreSettings.CurrentBuild = BuildEnv.PROD;
+//#elif RELEASE
+
+//			CoreSettings.CurrentBuild = BuildEnv.PROD;
+//#endif
+
         }
 
-      
+
     }
 }

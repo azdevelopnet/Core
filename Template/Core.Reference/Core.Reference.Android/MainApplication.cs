@@ -76,14 +76,18 @@ namespace Core.Reference.Droid
         private void InitBuildSettings()
         {
 
-            //add the pound symbol to make it a directive
-            //if DEBUG
-            //            CoreSettings.CurrentBuild = "dev";
-            //elif QA
-            //            CoreSettings.CurrentBuild = "qa";
-            //elif RELEASE
-            //            CoreSettings.CurrentBuild = "prod";
-            //endif
+//#if DEBUG
+//            CoreSettings.CurrentBuild = BuildEnv.Dev;
+//#elif QA
+//            CoreSettings.CurrentBuild = BuildEnv.Dev;
+//#elif UAT
+//            CoreSettings.CurrentBuild = BuildEnv.UAT;
+//#elif PROD
+//		    CoreSettings.CurrentBuild = BuildEnv.PROD;
+//#elif RELEASE
+
+//			CoreSettings.CurrentBuild = BuildEnv.PROD;
+//#endif
 
         }
     }

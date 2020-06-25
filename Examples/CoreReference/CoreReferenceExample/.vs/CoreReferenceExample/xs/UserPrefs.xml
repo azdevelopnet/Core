@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{BA638103-5EE5-4B7A-AB2F-06E05058DD6D}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoreReferenceExample/CoreReferenceExample.Android/MainActivity.cs">
+    <Files>
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Views/Dashboard.cs" Line="9" Column="7" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Views/Push/PushPage.cs" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Views/Data/DataPage.cs" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Views/Auth/AuthPage.cs" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Views/UI/UIPage.cs" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample/Config/settings/config.prod.json" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample.iOS/Resources/LaunchScreen.storyboard" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample.iOS/Info.plist" />
+      <File FileName="CoreReferenceExample/CoreReferenceExample.Android/MainActivity.cs" Line="20" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CoreReferenceExample" expanded="True">
+            <Node name="CoreReferenceExample.Android" expanded="True">
+              <Node name="MainActivity.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.CoreReferenceExample FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.CoreReferenceExample.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.7FBA5A1F-1CE8-4ED8-93A6-A40620D59424" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.CoreReferenceExample.Android PreferredExecutionTarget="Android.pixel_2_q_10_0_-_api_29" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

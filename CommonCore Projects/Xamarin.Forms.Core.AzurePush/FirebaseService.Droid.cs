@@ -12,6 +12,14 @@ namespace Xamarin.Forms.Core.AzurePush
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class FirebaseService : FirebaseMessagingService
     {
+
+        public override void OnNewToken(string token)
+        {
+            CoreSettings.DeviceToken = token;
+            CoreDependencyService.SendViewModelMessage(CoreSettings.TokenReceived, token);
+
+            base.OnNewToken(token);
+        }
         public override void OnMessageReceived(RemoteMessage message)
         {
             base.OnMessageReceived(message);

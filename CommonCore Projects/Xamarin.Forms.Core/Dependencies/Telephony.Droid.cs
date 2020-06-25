@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content;
-using Android.Telephony;
-using Android.Widget;
-using Droid = Android;
-using Xamarin.Forms.Core;
 using Android.Content.PM;
 using Android.Support.V4.App;
+using Android.Telephony;
+using Android.Widget;
 using Plugin.CurrentActivity;
+using Xamarin.Forms.Core;
+using Droid = Android;
 
 [assembly: UsesPermission(Name = "android.permission.CALL_PHONE")]
 [assembly: UsesPermission(Name = "android.permission.READ_PHONE_STATE")]

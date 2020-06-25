@@ -11,7 +11,7 @@ namespace Core.Reference
             this.Title = "Some Page";
             //this.Visual = VisualMarker.Material;
 
-            this.BackgroundImageSource = ImageSource.FromFile("Background.png");
+            //this.BackgroundImageSource = ImageSource.FromFile("Background.png");
 
             Content = new StackLayout()
             {
@@ -31,16 +31,22 @@ namespace Core.Reference
                     {
                         Margin = 5
                     }.Bind(Label.TextProperty, nameof(SomeViewModel.SomeText), converter: CoreSettings.UpperText),
-                    new Button() // or use CoreButton
+                    new CoreButton() 
                     {
                         Text="Some Action",
-                        //Style = CoreStyles.LightOrange,
+                        Style = CoreStyles.LightOrange,
                         Margin=5,
                     }.Bind(Button.CommandProperty,nameof(SomeViewModel.SomeAction)),
                     new Label()
                     {
                         Margin = 5
-                    }.Bind(Label.TextProperty, nameof(SomeViewModel.TotalItems), stringFormat: "Total count is {0}")
+                    }.Bind(Label.TextProperty, nameof(SomeViewModel.TotalItems), stringFormat: "Total count is {0}"),
+                    new CoreButton()
+                    {
+                        Text="See Fonts",
+                        Style = CoreStyles.LightOrange,
+                        Margin=5,
+                    }.Bind(Button.CommandProperty,nameof(SomeViewModel.SeeFontAction)),
                 }
             };
         }

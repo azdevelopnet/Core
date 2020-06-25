@@ -13,7 +13,6 @@ using DroidContent = Android.Content;
 using DroidMimeTypeMap = Android.Webkit.MimeTypeMap;
 using Dir = System.IO.Directory;
 using Android.OS;
-//using Android.Support.V4.Content;
 using MimeTypeMap = Android.Webkit.MimeTypeMap;
 using AndroidX.Core.Content;
 

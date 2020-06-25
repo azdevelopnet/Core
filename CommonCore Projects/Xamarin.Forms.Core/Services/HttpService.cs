@@ -175,11 +175,11 @@ namespace Xamarin.Forms.Core
 
                 await new SynchronizationContextRemover();
 
-                var postResponse = await Client.PostAsync(url, content, token).ConfigureAwait(false);
+                var postResponse = await Client.PostAsync(url, content, token);
                 postResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 postResponse.EnsureSuccessStatusCode();
 
-                var raw = await postResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var raw = await postResponse.Content.ReadAsStringAsync();
                 if (raw != null)
                 {
                     return (raw, true, null);
@@ -211,9 +211,9 @@ namespace Xamarin.Forms.Core
 
                 await new SynchronizationContextRemover();
 
-                using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
+                using (var srvResponse = await Client.GetAsync(url, token))
                 {
-                    var jsonResult = await srvResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
                     if (srvResponse.StatusCode == HttpStatusCode.OK)
                     {
                         return (jsonResult, true, null);
@@ -247,9 +247,9 @@ namespace Xamarin.Forms.Core
 
                 await new SynchronizationContextRemover();
 
-                using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
+                using (var srvResponse = await Client.GetAsync(url, token))
                 {
-                    var jsonResult = await srvResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
                     if (srvResponse.StatusCode == HttpStatusCode.OK)
                     {
                         return (jsonResult, true, null);
@@ -285,12 +285,12 @@ namespace Xamarin.Forms.Core
 
                 await new SynchronizationContextRemover();
 
-                using (var srvResponse = await Client.GetAsync(url, token).ConfigureAwait(false))
+                using (var srvResponse = await Client.GetAsync(url, token))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
-                        json = await GetStringContent<T>(srvResponse).ConfigureAwait(false);
-                        var response = await DeserializeObject<T>(json).ConfigureAwait(false);
+                        json = await GetStringContent<T>(srvResponse);
+                        var response = await DeserializeObject<T>(json);
                         json = string.Empty;
                         return (response, true, null);
                     }
@@ -385,9 +385,9 @@ namespace Xamarin.Forms.Core
 
                 await new SynchronizationContextRemover();
                 var data = JsonConvert.SerializeObject(obj);
-                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token).ConfigureAwait(false))
+                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))
                 {
-                    var jsonResult = await srvResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
                     if (srvResponse.StatusCode == HttpStatusCode.OK)
                     {
                         return (jsonResult, true, null);
@@ -421,12 +421,12 @@ namespace Xamarin.Forms.Core
                 await new SynchronizationContextRemover();
 
                 var data = JsonConvert.SerializeObject(obj);
-                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json")).ConfigureAwait(false))
+                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json")))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
-                        json = await GetStringContent<T>(srvResponse).ConfigureAwait(false);
-                        var response = await DeserializeObject<T>(json).ConfigureAwait(false);
+                        json = await GetStringContent<T>(srvResponse);
+                        var response = await DeserializeObject<T>(json);
                         json = string.Empty;
                         return (response, true, null);
                     }
@@ -576,8 +576,7 @@ namespace Xamarin.Forms.Core
             {
                 IsConnected = true;
             }
-           // var access = e.NetworkAccess;
-           // var profiles = e.Profiles;
+
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Forms;
 using System.Linq;
+using System.Text.RegularExpressions;
 #if WINDOWS_UWP
 using System.Reflection;
 #endif
@@ -69,6 +70,41 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
 
             return defaultProperty;
         }
+
+        #region Headless Compression for Android
+        public static StackLayout IsHeadless(this StackLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static AbsoluteLayout IsHeadless(this AbsoluteLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static Grid IsHeadless(this Grid layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static RelativeLayout IsHeadless(this RelativeLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        #endregion
 
         public static TView BindEventCommand<TView>(this TView view, EventToCommandBehavior behaviorCommand) where TView : VisualElement
         {
@@ -544,7 +580,75 @@ namespace Xamarin.Forms.Core // Guidance at https://github.com/VincentH-Net/CSha
     }
 
     #region Use enum for Row / Col for better readability + avoid manual renumbering
+    public static class GridRowsAndColumnsExtensions
+    {
+        public static (GridLength length, bool Success) ParseGridLength(this string str)
+        {
+            var length = GridLength.Auto;
+            var success = false;
 
+            if (!string.IsNullOrEmpty(str))
+            {
+                if (str == "Auto")
+                {
+                    success = true;
+                }
+                else if (str.IndexOf("*") != -1)
+                {
+                    str = str.Replace("*", string.Empty);
+                    if (Regex.Matches(str, @"[a-zA-Z]").Count == 0)
+                    {
+                        var unitAmt = str == string.Empty ? 1.0d : double.Parse(str);
+                        length = new GridLength(unitAmt, GridUnitType.Star);
+                        success = true;
+                    }
+                }
+                else
+                {
+                    if (Regex.Matches(str, @"[a-zA-Z]").Count == 0)
+                    {
+                        length = new GridLength(double.Parse(str), GridUnitType.Absolute);
+                        success = true;
+                    }
+                }
+            }
+
+            return (length, success);
+        }
+    }
+    public static class GridRowsAndColumns
+    {
+        public static class Columns
+        {
+            public static string Auto = "Auto";
+            public static ColumnDefinitionCollection Define(params string[] rows)
+            {
+                var colDefinitions = new ColumnDefinitionCollection();
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    var result = rows[i].ParseGridLength();
+                    if (result.Success)
+                        colDefinitions.Add(new ColumnDefinition { Width = result.length });
+                }
+                return colDefinitions;
+            }
+        }
+        public static class Rows
+        {
+            public static string Auto = "Auto";
+            public static RowDefinitionCollection Define(params string[] rows)
+            {
+                var rowDefinitions = new RowDefinitionCollection();
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    var result = rows[i].ParseGridLength();
+                    if (result.Success)
+                        rowDefinitions.Add(new RowDefinition { Height = result.length });
+                }
+                return rowDefinitions;
+            }
+        }
+    }
     public static class EnumsForGridRowsAndColumns
     {
         public static GridLength Auto => GridLength.Auto;

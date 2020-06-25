@@ -9,7 +9,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportEffect(typeof(ViewShadow), "ViewShadow")]
 [assembly: ExportEffect(typeof(ListRemoveEmptyRows), "ListRemoveEmptyRows")]
 [assembly: ExportEffect(typeof(WKWebViewDisableScroll), "WKWebViewDisableScroll")]
 [assembly: ExportEffect(typeof(HideTableSeparator), "HideTableSeparator")]
@@ -65,34 +64,6 @@ namespace Xamarin.Forms.Core
 		protected override void OnDetached()
 		{
 
-		}
-	}
-	public class ViewShadow : PlatformEffect
-	{
-		protected override void OnAttached()
-		{
-			CreateShadow(Container);
-		}
-
-		protected override void OnDetached()
-		{
-			Container.Layer.ShadowOpacity = 0;
-		}
-
-		private void CreateShadow(UIView view)
-		{
-			// corner radius
-			view.Layer.CornerRadius = 3;
-
-			// border
-			//view.Layer.BorderWidth = 1.0f;
-			//view.Layer.BorderColor = UIColor.Black.CGColor;
-
-			// shadow
-			view.Layer.ShadowColor = UIColor.Gray.CGColor;
-			view.Layer.ShadowOffset = new CGSize(width: 3, height: 3);
-			view.Layer.ShadowOpacity = 0.7f;
-			view.Layer.ShadowRadius = 4.0f;
 		}
 	}
 

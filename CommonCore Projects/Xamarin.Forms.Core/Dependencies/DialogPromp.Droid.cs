@@ -25,6 +25,7 @@ namespace Xamarin.Forms.Core
             try
             {
                 var d = new AlertDialog.Builder(Ctx).Create();
+
                 d.SetTitle(prompt.Title);
                 d.SetMessage(prompt.Message);
                 if (prompt.ButtonTitles.Length > 2)

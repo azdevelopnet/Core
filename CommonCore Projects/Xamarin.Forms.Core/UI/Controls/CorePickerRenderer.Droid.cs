@@ -59,6 +59,12 @@ namespace Xamarin.Forms.Core
             {
                 element = (CorePicker)e.NewElement;
 
+                UpdatePickerPlaceholder();
+                if (element.SelectedIndex <= -1)
+                {
+                    UpdatePickerPlaceholder();
+                }
+
                 ((INotifyCollectionChanged)e.NewElement.Items).CollectionChanged += RowsCollectionChanged;
                 if (Control == null)
                 {
@@ -131,6 +137,14 @@ namespace Xamarin.Forms.Core
                 
                 UpdatePicker();
 
+            }
+
+            if (element != null)
+            {
+                if (e.PropertyName.Equals(CorePicker.PlaceholderProperty.PropertyName))
+                {
+                    UpdatePickerPlaceholder();
+                }
             }
 
         }
@@ -233,6 +247,15 @@ namespace Xamarin.Forms.Core
                 Control.Text = null;
             else
                 Control.Text = GetPickerDisplayValues()[Element.SelectedIndex];
+        }
+
+        void UpdatePickerPlaceholder()
+        {
+ 
+            if (element == null)
+                element = Element as CorePicker;
+            if (element.Placeholder != null)
+                Control.Hint = element.Placeholder;
         }
 
 

@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Specialized;
-using Xamarin.Forms;
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Xamarin.Forms.Core
 {
     [DesignTimeVisible(true)]
     public class CorePicker : Picker
     {
+
+        public static readonly BindableProperty PlaceholderProperty =
+            BindableProperty.Create("Placeholder",
+                                    typeof(string),
+                                    typeof(CorePicker),
+                                    string.Empty);
+
+        public string Placeholder
+        {
+            get { return (string)GetValue(PlaceholderProperty); }
+            set { SetValue(PlaceholderProperty, value); }
+        }
 
         public static readonly BindableProperty IsEntryUnderlineProperty =
             BindableProperty.Create("IsEntryUnderline",

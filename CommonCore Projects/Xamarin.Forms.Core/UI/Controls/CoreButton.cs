@@ -4,9 +4,11 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
 {
+
     [DesignTimeVisible(true)]
     public class CoreButton : Button, IDisposable
     {
+
         /// <summary>
         /// Start color for the gradient (top) color
         /// </summary>

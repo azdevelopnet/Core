@@ -1,6 +1,8 @@
 ﻿using System;
+
 namespace Xamarin.Forms.Core
 {
+
     public abstract class CorePage<T> : BasePages
 		where T : CoreViewModel
 	{

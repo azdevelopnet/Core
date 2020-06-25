@@ -62,40 +62,36 @@ namespace Xamarin.Forms.Core.AzurePush
 
                     Hub = new SBNotificationHub(listenConnection, notificationName);
 
-                    // update registration with Azure Notification Hub
-                    Hub.UnregisterAllAsync(CoreSettings.DeviceToken, (error) =>
-                    {
-                        if (error != null)
+                    Device.BeginInvokeOnMainThread(async() => {
+                        try
                         {
-                            Debug.WriteLine($"Unable to call unregister {error}");
+                            await Hub.UnregisterAllAsync(CoreSettings.DeviceToken);
+                            var nsTags = new NSSet(tags);
+                            try
+                            {
+                                await Hub.RegisterNativeAsync(CoreSettings.DeviceToken, nsTags);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"RegisterNativeAsync error: {ex.Message}");
+                            }
+                            
 
+                            var templateExpiration = DateTime.Now.AddDays(120).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+                            try
+                            {
+                                await Hub.RegisterTemplateAsync(CoreSettings.DeviceToken, "defaultTemplate", apnsTemplate, templateExpiration, nsTags);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"RegisterTemplateAsync error: {ex.Message}");
+                            }
                         }
-
-                        var nsTags = new NSSet(tags);
-                        Hub.RegisterNativeAsync(CoreSettings.DeviceToken, nsTags, (errorCallback) =>
+                        catch (Exception ex)
                         {
-                            if (errorCallback != null)
-                            {
-                                Debug.WriteLine($"RegisterNativeAsync error: {errorCallback}");
-
-                            }
-                        });
-
-                        var templateExpiration = DateTime.Now.AddDays(120).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
-                        Hub.RegisterTemplateAsync(CoreSettings.DeviceToken, "defaultTemplate", apnsTemplate, templateExpiration, nsTags, (errorCallback) =>
-                        {
-                            if (errorCallback != null)
-                            {
-                                if (errorCallback != null)
-                                {
-                                    Debug.WriteLine($"RegisterTemplateAsync error: {errorCallback}");
-
-                                }
-                            }
-                        });
-
-
-
+                            Debug.WriteLine($"Unable to call unregister {ex.Message}");
+                        }
+                   
                     });
 
                 }

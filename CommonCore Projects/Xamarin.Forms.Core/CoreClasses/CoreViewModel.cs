@@ -10,11 +10,6 @@ namespace Xamarin.Forms.Core
     /// </summary>
     public abstract partial class CoreViewModel : BaseNotify
     {
-        private bool isLoadingHUD;
-        private bool isLoadingOverlay;
-
-        public string LoadingMessageOverlay { get; set; }
-        public string LoadingMessageHUD { get; set; }
 
         #region ReadOnly AppData Settings
         [JsonIgnore]
@@ -156,24 +151,7 @@ namespace Xamarin.Forms.Core
         {
             get { return DependencyService.Get<IOverlayDependency>(); }
         }
-        /// <summary>
-        /// DependencyService for IProgressIndicator.
-        /// </summary>
-        /// <value>The audio player.</value>
-        [JsonIgnore]
-        public IProgressIndicator ProgressIndicator
-        {
-            get { return DependencyService.Get<IProgressIndicator>(); }
-        }
-        /// <summary>
-        /// DependencyService for ISnackBar.
-        /// </summary>
-        /// <value>The audio player.</value>
-        [JsonIgnore]
-        public ISnackBar SnackBar
-        {
-            get { return DependencyService.Get<ISnackBar>(); }
-        }
+
         /// <summary>
         /// DependencyService for IViewStack.
         /// </summary>
@@ -199,66 +177,68 @@ namespace Xamarin.Forms.Core
             set { CoreSettings.AppNav = value; }
         }
 
-        [JsonIgnore]
-        public bool IsLoadingOverlay
-        {
-            get
-            {
-                return isLoadingOverlay;
-            }
-
-            set
-            {
-
-                isLoadingOverlay = value;
-
-                //Ensure that this action is performed on the UI thread
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (value)
-                    {
-                        var color = Color.FromHex(CoreStyles.OverlayColor);
-                        OverlayDependency.ShowOverlay(LoadingMessageOverlay, color, CoreStyles.OverlayOpacity);
-                    }
-                    else
-                    {
-                        OverlayDependency.HideOverlay();
-                    }
-                });
 
 
-            }
-        }
+        //[JsonIgnore]
+        //public bool IsLoadingOverlay
+        //{
+        //    get
+        //    {
+        //        return isLoadingOverlay;
+        //    }
 
-        [JsonIgnore]
-        public bool IsLoadingHUD
-        {
-            get
-            {
-                return isLoadingHUD;
-            }
+        //    set
+        //    {
 
-            set
-            {
-                if (isLoadingHUD != value)
-                {
-                    isLoadingHUD = value;
+        //        isLoadingOverlay = value;
 
-                    //Ensure that this action is performed on the UI thread
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        if (value)
-                        {
-                            ProgressIndicator.ShowProgress(LoadingMessageHUD);
-                        }
-                        else
-                        {
-                            ProgressIndicator.Dismiss();
-                        }
-                    });
-                }
-            }
-        }
+        //        //Ensure that this action is performed on the UI thread
+        //        Device.BeginInvokeOnMainThread(() =>
+        //        {
+        //            if (value)
+        //            {
+        //                var color = Color.FromHex(CoreStyles.OverlayColor);
+        //                OverlayDependency.ShowOverlay(LoadingMessageOverlay, color, CoreStyles.OverlayOpacity);
+        //            }
+        //            else
+        //            {
+        //                OverlayDependency.HideOverlay();
+        //            }
+        //        });
+
+
+        //    }
+        //}
+
+        //[JsonIgnore]
+        //public bool IsLoadingHUD
+        //{
+        //    get
+        //    {
+        //        return isLoadingHUD;
+        //    }
+
+        //    set
+        //    {
+        //        if (isLoadingHUD != value)
+        //        {
+        //            isLoadingHUD = value;
+
+        //            //Ensure that this action is performed on the UI thread
+        //            Device.BeginInvokeOnMainThread(() =>
+        //            {
+        //                if (value)
+        //                {
+        //                    ProgressIndicator.ShowProgress(LoadingMessageHUD);
+        //                }
+        //                else
+        //                {
+        //                    ProgressIndicator.Dismiss();
+        //                }
+        //            });
+        //        }
+        //    }
+        //}
 
 
         protected void ShowNotification(LocalNotification notification)

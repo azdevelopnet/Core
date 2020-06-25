@@ -36,16 +36,25 @@ namespace Xamarin.Forms.Core
                 {
                     Control.BorderStyle = UITextBorderStyle.None;
                 }
+
+                UpdatePickerPlaceholder();
+                if (element.SelectedIndex <= -1)
+                {
+                    UpdatePickerPlaceholder();
+                }
+
                 pickerView = (UIPickerView)Control.InputView;
-                
-                var font = UIFont.FromName(element.FontFamily, (nfloat)element.FontSize);
-                Control.Font = font;
+
+                if (!string.IsNullOrEmpty(element.FontFamily))
+                {
+                    var font = UIFont.FromName(element.FontFamily, (nfloat)element.FontSize);
+                    Control.Font = font;
+                }
             }
         }
         private void FocusChangedEvent(object sender, FocusEventArgs args){
             if(args.IsFocused && !string.IsNullOrEmpty(element.EmptyDataMessage))
             {
-     
                 var cnt = element.Items.Count();
                 if (cnt == 0)
                 {
@@ -104,6 +113,14 @@ namespace Xamarin.Forms.Core
                 Element.FontSize = ((CorePicker)sender).FontSize;
             }
 
+            if (element != null)
+            {
+                if (e.PropertyName.Equals(CorePicker.PlaceholderProperty.PropertyName))
+                {
+                    UpdatePickerPlaceholder();
+                }
+            }
+
             base.OnElementPropertyChanged(sender, e);
 
         }
@@ -141,6 +158,14 @@ namespace Xamarin.Forms.Core
             bottomBorder.BackgroundColor = controlColor;
             Control.Layer.AddSublayer(bottomBorder);
 
+        }
+
+        private void UpdatePickerPlaceholder()
+        {
+            if (element == null)
+                element = Element as CorePicker;
+            if (element.Placeholder != null)
+                Control.Placeholder = element.Placeholder;
         }
 
     }

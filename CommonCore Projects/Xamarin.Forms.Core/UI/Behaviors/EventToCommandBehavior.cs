@@ -163,14 +163,15 @@ namespace Xamarin.Forms.Core
 			if (Command != null)
 			{
 				object parameter;
-				if (EventArgsConverter != null)
+
+				if (CommandParameter != null)
 				{
-					parameter = EventArgsConverter.Convert(sender, typeof(object),
-									e, CultureInfo.CurrentUICulture);
+					parameter = CommandParameter;
 				}
 				else
 				{
-					parameter = CommandParameter;
+					parameter = e;
+
 				}
 
 				if (Command.CanExecute(parameter))

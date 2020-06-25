@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Core
             }
             else
             {
-                NotificationCompatX.Builder _Builder = new NotificationCompatX.Builder(Ctx)
+                NotificationCompatX.Builder _Builder = new NotificationCompatX.Builder(Ctx, "local_notification")
                          .SetContentIntent(oPendingIntent)
                          .SetContentTitle(notification.Title)
                          .SetContentText(notification.Message)

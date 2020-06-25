@@ -30,20 +30,6 @@ namespace Xamarin.Forms.Core
                 new Setter(){Property=Label.MarginProperty ,Value=new Thickness(5,0,2,0)}
             }
         };
-
-
-        public static Style FontLabel { get; } = new Style(typeof(Label))
-        {
-            Setters =
-            {
-                new Setter(){Property=Label.TextProperty ,Value=Color.Gray},
-                new Setter(){Property=Label.FontSizeProperty ,Value=24},
-                new Setter(){Property=Label.MarginProperty ,Value=10},
-                new Setter(){Property=Label.HorizontalOptionsProperty ,Value=LayoutOptions.Center},
-                new Setter(){Property=Label.HorizontalTextAlignmentProperty ,Value=TextAlignment.Center},
-                new Setter(){Property=Label.FontFamilyProperty ,Value=CoreSettings.On<string>("Boxise","BoxiseFont.otf#Boxise")}
-            }
-        };
         
 	}
 }

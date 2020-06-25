@@ -85,6 +85,10 @@ namespace Xamarin.Forms.Core
 
         }
 
+        public async Task DeleteSecureData(string name)
+        {
+            var result = await FileStore.DeleteAsync(name);
+        }
     }
 }
 

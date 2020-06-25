@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Xamarin.Forms.Core
 {
-    public partial class CoreBusiness : IDisposable
+    public partial class CoreBusiness
     {
         #region ReadOnly AppData Settings
         [JsonIgnore]
@@ -71,10 +71,5 @@ namespace Xamarin.Forms.Core
         }
 
 		#endregion
-
-		public virtual void Dispose()
-		{
-
-		}
     }
 }

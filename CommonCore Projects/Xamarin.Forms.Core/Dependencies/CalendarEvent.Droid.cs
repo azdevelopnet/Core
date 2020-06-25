@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Android.Content;
 using Android.Database;
 using Android.OS;
-using Xamarin.Forms.Core;
-using Provider = Android.Provider;
-using RemindersMethod = Android.Provider.RemindersMethod;
-using DroidUri = Android.Net.Uri;
 using Java.Util;
 using Plugin.CurrentActivity;
-using Plugin.Permissions.Abstractions;
+using Xamarin.Essentials;
+using Xamarin.Forms.Core;
+using DroidUri = Android.Net.Uri;
+using Provider = Android.Provider;
+using RemindersMethod = Android.Provider.RemindersMethod;
 
 [assembly: Xamarin.Forms.Dependency(typeof(CalendarEvent))]
 namespace Xamarin.Forms.Core
@@ -39,7 +39,8 @@ namespace Xamarin.Forms.Core
                 if (Looper.MyLooper() == null)
                     Looper.Prepare();
 
-                var status = await this.RequestPermissions(Permission.Calendar, "Permissions", dialogMessage);
+                var status = await Permissions.RequestAsync<Permissions.CalendarWrite>();
+                
                 if (status == PermissionStatus.Granted)
                 {
                     if (calEvent.DeviceCalendar != null)
@@ -93,7 +94,7 @@ namespace Xamarin.Forms.Core
                 if (Looper.MyLooper() == null)
                     Looper.Prepare();
 
-                var status = await this.RequestPermissions(Permission.Calendar, "Permissions", dialogMessage);
+                var status = await Permissions.RequestAsync<Permissions.CalendarWrite>();
                 if (status == PermissionStatus.Granted)
                 {
 
@@ -153,7 +154,7 @@ namespace Xamarin.Forms.Core
                 if (Looper.MyLooper() == null)
                     Looper.Prepare();
 
-                var status = await this.RequestPermissions(Permission.Calendar, "Permissions", dialogMessage);
+                var status = await Permissions.RequestAsync<Permissions.CalendarRead>();
                 if (status == PermissionStatus.Granted)
                 {
 
@@ -227,7 +228,7 @@ namespace Xamarin.Forms.Core
                 if (Looper.MyLooper() == null)
                     Looper.Prepare();
 
-                var status = await this.RequestPermissions(Permission.Calendar, "Permissions", dialogMessage);
+                var status = await Permissions.RequestAsync<Permissions.CalendarRead>();
                 if (status == PermissionStatus.Granted)
                 {
 
@@ -281,7 +282,7 @@ namespace Xamarin.Forms.Core
                 if(Looper.MyLooper()==null)
                     Looper.Prepare();
 
-                var status = await this.RequestPermissions(Permission.Calendar, "Permissions", dialogMessage);
+                var status = await Permissions.RequestAsync<Permissions.CalendarRead>();
                 if (status == PermissionStatus.Granted)
                 {
                     var calendarsUri = Provider.CalendarContract.Calendars.ContentUri;

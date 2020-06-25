@@ -6,6 +6,7 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 using Xamarin.Forms.Core;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: Xamarin.Forms.Dependency(typeof(DialogPrompt))]
 namespace Xamarin.Forms.Core

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{8A0D1B1D-A18C-4DCA-A84C-8255E1501CF6}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Xamarin.Forms.CoreExcel</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Excel\ExcelCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Excel\ExcelSheet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Excel\ExcelRow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Excel\ExcelFile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)_init\" />
+  </ItemGroup>
+</Project>

@@ -10,14 +10,16 @@ Android SDK Manager - > Extras
  
 
 Required Nuget Installs
- - XF.Material /*https://github.com/contrix09/XF-Material-Library*/
  - ModernHttpClient
  - Newtonsoft.Json
- - Plugin.Permissions /* https://blog.xamarin.com/plugin-permission-changes-ios-11/?utm_source=vs_developer_news&utm_medium=referral */
- - Xam.Plugins.Settings
+ - Xam.Plugins.Permissions
  - Xamarin.FFImageLoading.Forms
  - Xamarin.FFImageLoading.Transformations
  - Xamarin.Essentials
+ - NodaTime
+
+Highly Suggested
+ - XF.Material /*https://github.com/contrix09/XF-Material-Library*/
 
 (Optional - if you are using Microsoft Authentication)
  - Microsoft.Identity.Client
@@ -36,17 +38,12 @@ Required Nuget Installs
     - iOS   -> BTProgressHud
             -> TTGSnackbar
     - Droid -> AndHud
-            -> Refractored.FloatingActionButton
             -> Plugin.CurrentActivity
 
 Suggested
-- Iconize /* https://github.com/jsmarcus/Xamarin.Plugins/tree/master/Iconize */
-- CarouselView.FormsPlugin /* see https://github.com/alexrainman/CarouselView to implement */
 - Humanizer /* Displaying strings, enums, dates, times, timespans */
 - Plugin.Fingerprint /* https://github.com/smstuebe/xamarin-fingerprint */
 - Plugin.Share
-- NodaTime /* Date and time API */
-- Refractored.XamForms.PullToRefresh
 - FluentFTP /* if you want to use FTP as a transfer protocol
 - AIDatePickerController /* IOS DateTime Picker */
 - Microcharts.Forms /* https://github.com/aloisdeniel/Microcharts */
@@ -101,32 +98,8 @@ Step 5 (Setup Fody) ->  Make sure the FodyWeavers.xml file installed from Proper
     <PropertyChanged/>
 </Weavers>
 
-Step 6 (Optional) -> You may want to setup the Forms Application page to include the following within override lifecyle methods:
 
-        protected override void OnStart()
-        {
-            CoreSettings.ScreenSize = new Size(MainPage.Width, MainPage.Height);
-            MainPage.SizeChanged += AppScreenSizeChanged;
-        }
-
-        protected override void OnSleep()
-        {
-            MainPage.SizeChanged -= AppScreenSizeChanged;
-        }
-
-        protected override void OnResume()
-        {
-            MainPage.SizeChanged += AppScreenSizeChanged;
-        }
-
-       
-        private void AppScreenSizeChanged(object sender, EventArgs args)
-        {
-            CoreSettings.ScreenSize = new Size(MainPage.Width, MainPage.Height);
-        }
-
-
-Step 7 (Optional) -> In order to use differnet configuration files across dev environments, you need to modify build settings.
+Step 6 (Optional) -> In order to use differnet configuration files across dev environments, you need to modify build settings.
     * Right click on the solution and selection options
     * In the dialog box under Build select Configuration
     * Out of the box there should be Debug and Release.  You can add QA or any other custom name you want.
@@ -144,7 +117,7 @@ Step 7 (Optional) -> In order to use differnet configuration files across dev en
             CoreSettings.CurrentBuid = "prod";
         #endif
 
-Step 8 (XAML projects only)
+Step 7 (XAML projects only)
     * Projects Options -> Output-> Assembly Name (make the same for both Android and iOS projects)
     * Add the following xmlns to your pages:
         xmlns:core="clr-namespace:Xamarin.Forms.Core;assembly=yourassemblyname" 
@@ -223,7 +196,10 @@ Alter Host File
 and then save....Open Terminal use the following commands in the terminal:
 
 sudo nano /etc/hosts
+*****************
 
+*** ANDROID Helps  ***
+Use 10.0.2.2 for Android Simulator
 *****************
 
 

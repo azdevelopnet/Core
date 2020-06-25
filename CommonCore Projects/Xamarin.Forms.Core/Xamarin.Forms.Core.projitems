@@ -16,13 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\DialogPrompt.IOS.cs">
       <DependentUpon>IDialogPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IProgressIndicator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ProgressIndicator.Droid.cs">
-      <DependentUpon>IProgressIndicator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ProgressIndicator.IOS.cs">
-      <DependentUpon>IProgressIndicator.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\HttpService.cs">
       <DependentUpon>IHttpService.cs</DependentUpon>
     </Compile>
@@ -82,13 +75,6 @@
       <DependentUpon>IEncryptionService.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\AuthenticationModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ISnackBar.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\SnackBar.Droid.cs">
-      <DependentUpon>ISnackBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\SnackBar.IOS.cs">
-      <DependentUpon>ISnackBar.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IViewStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ViewStack.IOS.cs">
       <DependentUpon>IViewStack.cs</DependentUpon>
@@ -146,7 +132,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreCardViewRenderer.IOS.cs">
       <DependentUpon>..\..\Controls\CoreCardView.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreContainers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreContentView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreContentViewRenderer.Droid.cs">
       <DependentUpon>..\..\Controls\CoreContentView.cs</DependentUpon>
@@ -174,14 +159,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CorePickerRenderer.IOS.cs">
       <DependentUpon>..\..\Controls\CorePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRadioButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRadioButtonRenderer.Droid.cs">
-      <DependentUpon>..\..\Controls\CoreRadioButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRadioButtonRenderer.iOS.cs">
-      <DependentUpon>..\..\Controls\CoreRadioButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRadioGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRanking.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreSegment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreStackLayout.cs" />
@@ -292,27 +269,6 @@
       <DependentUpon>IBaseUrl.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IBaseUrl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\ISlideOverKitPageRendererDroid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\MenuContainerPageDroidRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\SlideMenuDroidRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\SlideOverKitDroidHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\SlidePopupViewRendererDroid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\ISlideOverKitPageRendereriOS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\MenuContainerPageiOSRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\SlideOVerKit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\SlideOverKitiOSHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\SlidePopupViewRendereriOS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IMenuContainerPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IPopupContainerPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\MenuContainerPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\PopupViewAttached.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\ScreenSizeHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\SlideMenuView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\SlidePopupView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\DragGestureFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\HorizontalGestures.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IDragGesture.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\VerticalGestures.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IFileViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\FileViewer.Droid.cs">
       <DependentUpon>IFileViewer.cs</DependentUpon>
@@ -336,21 +292,43 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IBackgroundTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptedPropertyAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IClearCookies.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ClearCookies.Droid.cs">
-      <DependentUpon>IClearCookies.cs</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ITextMeter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\TextMeter.Droid.cs">
+      <DependentUpon>ITextMeter.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ClearCookies.IOS.cs">
-      <DependentUpon>IClearCookies.cs</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\TextMeter.IOS.cs">
+      <DependentUpon>ITextMeter.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IKeyboardHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\KeyboardHelper.Droid.cs">
-      <DependentUpon>IKeyboardHelper.cs</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IOpenSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OpenSettings.cs">
+      <DependentUpon>IOpenSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\KeyboardHelper.IOS.cs">
-      <DependentUpon>IKeyboardHelper.cs</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NotifyModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fonts\FontCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Version\LatestVersion.android.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Version\ILatestVersion.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Version\LatestVersion.ios.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Version\Exceptions.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Version\CrossLatestVersion.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IWatermark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.Droid.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.IOS.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\CloseApplication.Droid.cs">
+      <DependentUpon>ICloseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\CloseApplication.IOS.cs">
+      <DependentUpon>ICloseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ICloseApplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ImageResource.IOS..cs">
+      <DependentUpon>IImageResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IImageResource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\SlideLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -367,12 +345,8 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Behaviors\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Animations\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\Collections\" />
-    <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\" />
-    <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\Droid\" />
-    <Folder Include="$(MSBuildThisFileDirectory)UI\Pages\SlideOver\IOS\" />
     <Folder Include="$(MSBuildThisFileDirectory)FluentMarkup\" />
     <Folder Include="$(MSBuildThisFileDirectory)Security\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />

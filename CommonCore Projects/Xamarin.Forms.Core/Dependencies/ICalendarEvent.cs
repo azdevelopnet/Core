@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Might consider using NUGET
+/// https://github.com/TheAlmightyBob/Calendars
+/// https://www.nuget.org/packages/CClarke.Plugin.Calendars
+/// </summary>
 namespace Xamarin.Forms.Core
 {
     public class CalendarAccount

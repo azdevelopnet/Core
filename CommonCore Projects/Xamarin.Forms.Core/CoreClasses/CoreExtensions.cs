@@ -15,8 +15,6 @@ using System.Linq.Expressions;
 using System.Windows.Input;
 using System.Net.Http;
 using System.Net;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using System.Collections.Specialized;
 
 #if __ANDROID__
@@ -28,7 +26,7 @@ namespace Xamarin.Forms.Core
 
     public static partial class CoreExtensions
     {
-        
+
         private static IEncryptionService Encryption
         {
             get
@@ -45,31 +43,6 @@ namespace Xamarin.Forms.Core
             }
         }
 
-        public static async Task<PermissionStatus> RequestPermissions(this object caller, Permission permission, string dialogTitle,string dialogMessage)
-        {
-            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
-
-            if (status != PermissionStatus.Granted)
-            {
-                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(permission))
-                {
-                    CoreDependencyService.GetDependency<IDialogPrompt>().ShowMessage(new Prompt()
-                    {
-                        Title = dialogTitle,
-                        Message = dialogMessage
-                    });
-                }
-
-                var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { permission});
-#if __ANDROID__
-                if (Looper.MyLooper() == null)
-                    Looper.Prepare();
-#endif
-                status = results[permission];
-            }
-
-            return status;
-        }
 
         public static T OnIdiom<T>(this object call, params T[] parameters)
         {
@@ -146,7 +119,7 @@ namespace Xamarin.Forms.Core
             Task.Run(async () =>
             {
                 var result = await CoreDependencyService.GetService<IFileStore, FileStore>(true)?.GetAsync<T>(typeof(T).FullName);
-                if (result.Error==null)
+                if (result.Error == null)
                 {
                     foreach (var prop in typeof(T).GetProperties())
                     {
@@ -959,10 +932,10 @@ namespace Xamarin.Forms.Core
         /// <returns>The or default.</returns>
         /// <param name="taskCollection">Task collection.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static async Task<T> FirstOrDefault<T>(this Task<(List<T> Response,Exception Error)> taskCollection)
+        public static async Task<T> FirstOrDefault<T>(this Task<(List<T> Response, Exception Error)> taskCollection)
         {
             var result = await taskCollection;
-            if (result.Error==null)
+            if (result.Error == null)
                 return result.Response.FirstOrDefault();
             else
                 return default(T);
@@ -973,30 +946,64 @@ namespace Xamarin.Forms.Core
         /// <returns>The observable.</returns>
         /// <param name="taskList">List.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static async Task<ObservableCollection<T>> ToObservable<T>(this Task<List<T>> taskList)
+        public static async Task<ObservableCollection<T>> ToObservable<T>(this Task<List<T>> taskList, bool deepCopy = false) where T : new()
         {
             var result = await taskList;
-            var collection = new ObservableCollection<T>();
-            result?.ForEach((item) => collection.Add(item));
-            return collection;
+            return result.ToObservable(deepCopy);
         }
 
 
 
-        public static ObservableCollection<T> ToObservable<T>(this IList list)
+        public static ObservableCollection<T> ToObservable<T>(this IList list, bool deepCopy = false) where T : new()
         {
             var collection = new ObservableCollection<T>();
             for (var x = 0; x < list.Count; x++)
             {
-                collection.Add((T)list[x]);
+                var obj = (T)list[x];
+
+                if (deepCopy)
+                {
+                    collection.Add(obj.DeepCopy());
+                }
+                else
+                {
+                    collection.Add(obj);
+                }
             }
             return collection;
         }
 
-        public static ObservableCollection<T> ToObservable<T>(this List<T> list)
+        public static ObservableCollection<T> ToObservable<T>(this IEnumerable<T> list, bool deepCopy = false) where T : new()
         {
             var collection = new ObservableCollection<T>();
-            list?.ForEach((item) => collection.Add(item));
+            foreach (var obj in list)
+            {
+                if (deepCopy)
+                {
+                    collection.Add(obj.DeepCopy());
+                }
+                else
+                {
+                    collection.Add(obj);
+                }
+            }
+            return collection;
+        }
+
+        public static ObservableCollection<T> ToObservable<T>(this List<T> list, bool deepCopy = false) where T : new()
+        {
+            var collection = new ObservableCollection<T>();
+            foreach (var obj in list)
+            {
+                if (deepCopy)
+                {
+                    collection.Add(obj.DeepCopy());
+                }
+                else
+                {
+                    collection.Add(obj);
+                }
+            }
             return collection;
         }
 
@@ -1006,12 +1013,19 @@ namespace Xamarin.Forms.Core
         /// <returns>The observable.</returns>
         /// <param name="query">Query.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static ObservableCollection<T> ToObservable<T>(this IQueryable<T> query)
+        public static ObservableCollection<T> ToObservable<T>(this IQueryable<T> query, bool deepCopy = false) where T : new()
         {
             var collection = new ObservableCollection<T>();
-            foreach (var item in query.AsEnumerable<T>())
+            foreach (var obj in query.AsEnumerable<T>())
             {
-                collection.Add(item);
+                if (deepCopy)
+                {
+                    collection.Add(obj.DeepCopy());
+                }
+                else
+                {
+                    collection.Add(obj);
+                }
             }
             return collection;
         }
@@ -1022,13 +1036,40 @@ namespace Xamarin.Forms.Core
         /// <returns>The observable.</returns>
         /// <param name="array">Array.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static ObservableCollection<T> ToObservable<T>(this T[] array)
+        public static ObservableCollection<T> ToObservable<T>(this T[] array, bool deepCopy = false) where T : new()
         {
+
             var collection = new ObservableCollection<T>();
             for (int x = 0; x < array.Length; x++)
-                collection.Add(array[x]);
+            {
+                if (deepCopy)
+                {
+                    collection.Add(array[x].DeepCopy());
+                }
+                else
+                {
+                    collection.Add(array[x]);
+                }
+
+            }
+
             return collection;
         }
+
+
+        public static T DeepCopy<T>(this T obj) where T : new()
+        {
+            var newObj = new T();
+            foreach (var prop in typeof(T).GetProperties())
+            {
+                if (prop.CanRead && prop.CanWrite)
+                {
+                    prop.SetValue(newObj, prop.GetValue(obj));
+                }
+            }
+            return newObj;
+        }
+
         /// <summary>
         /// Removes the animations from page.
         /// </summary>
@@ -1113,7 +1154,7 @@ namespace Xamarin.Forms.Core
 
         public static FormattedString AddTextSpan(this FormattedString formattedString, string text, double lineHeight)
         {
-            formattedString.Spans.Add(new Span() { Text = text, LineHeight=lineHeight  });
+            formattedString.Spans.Add(new Span() { Text = text, LineHeight = lineHeight });
             return formattedString;
         }
 
@@ -1336,13 +1377,13 @@ namespace Xamarin.Forms.Core
             return $"{monthName} {date.Year}";
         }
 
-        public static Style EditStyle(this Style style, BindableProperty prop, object value, bool retainInstance=false)
+        public static Style EditStyle(this Style style, BindableProperty prop, object value, bool retainInstance = false)
         {
             Style ns = null;
             if (!retainInstance)
             {
                 ns = new Style(style.TargetType);
-                foreach(var setter in style.Setters)
+                foreach (var setter in style.Setters)
                 {
                     ns.Setters.Add(new Setter() { Property = setter.Property, Value = setter.Value });
                 }
@@ -1353,7 +1394,7 @@ namespace Xamarin.Forms.Core
             }
 
             var existingProp = ns.Setters.FirstOrDefault(x => x.Property == prop);
-            if (existingProp!=null)
+            if (existingProp != null)
             {
                 existingProp.Value = value;
             }

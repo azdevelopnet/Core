@@ -6,6 +6,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using AndroidX.Work;
+
 using Plugin.CurrentActivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
@@ -30,7 +31,8 @@ namespace Xamarin.Forms.Core
                 .AddTag(tag)
                 .Build();
 
-            WorkManager.Instance.EnqueueUniqueWork(tag, ExistingWorkPolicy.Keep, otwr);
+
+            WorkManager.GetInstance(Xamarin.Essentials.Platform.AppContext).EnqueueUniqueWork(tag, ExistingWorkPolicy.Keep, otwr);
         }
 
         public void RegisterPeriodicBackgroundProcess<T>(int repeatMins, BackgroundTaskMetadata metaData) where T : ICoreJob, new()
@@ -68,7 +70,7 @@ namespace Xamarin.Forms.Core
                 .AddTag(tag)
                 .Build();
 
-            WorkManager.Instance.EnqueueUniquePeriodicWork(tag, ExistingPeriodicWorkPolicy.Keep, pwr);
+            WorkManager.GetInstance(Xamarin.Essentials.Platform.AppContext).EnqueueUniquePeriodicWork(tag, ExistingPeriodicWorkPolicy.Keep, pwr);
 
             periodic.Add(tag, pwr.Id);
         }
@@ -78,7 +80,7 @@ namespace Xamarin.Forms.Core
             var tag = typeof(T).Name;
             if (periodic.ContainsKey(tag))
             {
-                WorkManager.Instance.CancelWorkById(periodic[tag]);
+                WorkManager.GetInstance(Xamarin.Essentials.Platform.AppContext).CancelWorkById(periodic[tag]);
             }
         }
 

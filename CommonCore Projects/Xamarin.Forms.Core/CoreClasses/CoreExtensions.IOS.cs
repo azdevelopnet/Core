@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Reflection;
 using Xamarin.Forms.Platform.iOS;
 using System.Threading.Tasks;
+using NodaTime;
 
 namespace Xamarin.Forms.Core
 {
@@ -164,7 +165,14 @@ namespace Xamarin.Forms.Core
         /// <remarks>
         /// It also has calls for NIX reference point 1970 but appears to be problematic
         /// </remarks>
-        private static DateTime nsRef = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0, 0)); // last zero is milliseconds
+        ///
+        private static DateTime nsRef = new LocalDateTime(2001, 1, 1, 0, 0, 0, 0).ToDateTime();
+
+        public static DateTime ToDateTime(this LocalDateTime ldt)
+        {
+            return new DateTime(ldt.Year, ldt.Month, ldt.Day, ldt.Hour, ldt.Minute, ldt.Second);
+        }
+
 
         #endregion
 
