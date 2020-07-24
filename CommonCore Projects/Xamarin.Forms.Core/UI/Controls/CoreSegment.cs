@@ -208,8 +208,11 @@ namespace Xamarin.Forms.Core
                     var view = new Xamarin.Forms.PancakeView.PancakeView()
                     {
                         CornerRadius = cornerRadius,
-                        BorderColor = this.SelectedBackground,
-                        BorderThickness = 1,
+                        Border = new PancakeView.Border()
+                        {
+                            Color = this.SelectedBackground,
+                            Thickness = 1
+                        },
                         BackgroundColor = backgroundColor,
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         Content = new StackLayout()

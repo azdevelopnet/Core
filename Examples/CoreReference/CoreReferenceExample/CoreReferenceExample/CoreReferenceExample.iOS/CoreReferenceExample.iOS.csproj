@@ -181,9 +181,10 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Json" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1142" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.8</Version>
@@ -198,7 +199,7 @@
       <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.PancakeView">
-      <Version>1.4.2</Version>
+      <Version>2.0.1.698</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
@@ -207,16 +208,22 @@
       <Version>3.0.0</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp">
-      <Version>1.68.3</Version>
+      <Version>2.80.1</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.3</Version>
+      <Version>2.80.1</Version>
     </PackageReference>
     <PackageReference Include="XF.Material">
       <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="BTProgressHUD">
       <Version>1.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>2.80.1</Version>
+    </PackageReference>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -227,30 +234,28 @@
     <BundleResource Include="Resources\splash%402x.png" />
     <BundleResource Include="Resources\splash%403x.png" />
     <BundleResource Include="Resources\monkeyHead.png" />
-    <BundleResource Include="Resources\XFMaterial\loading_animation.json" />
-    <BundleResource Include="Resources\XFMaterial\xf_arrow_dropdown.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_arrow_dropdown%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_arrow_dropdown%403x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_selected.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_selected%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_selected%403x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_unselected.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_unselected%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_checkbox_unselected%403x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_error.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_error%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_error%403x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_selected.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_selected%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_selected%403x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_unselected.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_unselected%402x.png" />
-    <BundleResource Include="Resources\XFMaterial\xf_radio_button_unselected%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\XFMaterial\" />
+    <BundleResource Include="Resources\loading_animation.json" />
+    <BundleResource Include="Resources\xf_arrow_dropdown.png" />
+    <BundleResource Include="Resources\xf_arrow_dropdown%402x.png" />
+    <BundleResource Include="Resources\xf_arrow_dropdown%403x.png" />
+    <BundleResource Include="Resources\xf_checkbox_selected.png" />
+    <BundleResource Include="Resources\xf_checkbox_selected%402x.png" />
+    <BundleResource Include="Resources\xf_checkbox_selected%403x.png" />
+    <BundleResource Include="Resources\xf_checkbox_unselected.png" />
+    <BundleResource Include="Resources\xf_checkbox_unselected%402x.png" />
+    <BundleResource Include="Resources\xf_checkbox_unselected%403x.png" />
+    <BundleResource Include="Resources\xf_error.png" />
+    <BundleResource Include="Resources\xf_error%402x.png" />
+    <BundleResource Include="Resources\xf_error%403x.png" />
+    <BundleResource Include="Resources\xf_radio_button_selected.png" />
+    <BundleResource Include="Resources\xf_radio_button_selected%402x.png" />
+    <BundleResource Include="Resources\xf_radio_button_selected%403x.png" />
+    <BundleResource Include="Resources\xf_radio_button_unselected.png" />
+    <BundleResource Include="Resources\xf_radio_button_unselected%402x.png" />
+    <BundleResource Include="Resources\xf_radio_button_unselected%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="..\..\..\..\..\CommonCore Projects\Xamarin.Forms.Core.Charting\Xamarin.Forms.Core.Charting.projitems" Label="Shared" Condition="Exists('..\..\..\..\..\CommonCore Projects\Xamarin.Forms.Core.Charting\Xamarin.Forms.Core.Charting.projitems')" />
   <Import Project="..\..\..\..\..\CommonCore Projects\Xamarin.Forms.Core\Xamarin.Forms.Core.projitems" Label="Shared" Condition="Exists('..\..\..\..\..\CommonCore Projects\Xamarin.Forms.Core\Xamarin.Forms.Core.projitems')" />
   <Import Project="..\CoreReferenceExample\CoreReferenceExample.projitems" Label="Shared" />
 </Project>

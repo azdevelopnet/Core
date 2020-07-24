@@ -1,28 +1,29 @@
-﻿<Properties StartupConfiguration="{BA638103-5EE5-4B7A-AB2F-06E05058DD6D}|Default">
-  <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.7FBA5A1F-1CE8-4ED8-93A6-A40620D59424" />
+﻿<Properties StartupConfiguration="{183E7402-D309-4AF9-A334-F9B95209A652}|Default">
+  <MonoDevelop.Ide.ItemProperties.Core.Reference.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.BF47431A-7A6A-41EB-AC74-5EBC7D5D0B9B" />
   <MonoDevelop.Ide.ItemProperties.Core.Reference FirstBuild="True" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Reference/Partials/ViewModelPartialDefault.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../CommonCore Projects/Xamarin.Forms.Core/_init/ReadMe.txt">
     <Files>
-      <File FileName="Core.Reference/ViewModels/SomeViewModel.cs" Line="21" Column="14" />
-      <File FileName="Core.Reference/Partials/ViewModelPartialDefault.cs" Line="48" Column="4" />
-      <File FileName="Core.Reference/Partials/ViewModelPartialXFM.cs" Line="1" Column="1" />
-      <File FileName="Core.Reference/Partials/ViewModelPartial.cs" />
+      <File FileName="Core.Reference/ViewModels/SomeViewModel.cs" Line="22" Column="58" />
+      <File FileName="Core.Reference/Partials/ViewModelPartial.cs" Line="1" Column="1" />
       <File FileName="Core.Reference/Partials/ConfigPartial.cs" />
       <File FileName="Core.Reference/Partials/SettingsPartial.cs" />
       <File FileName="Core.Reference.iOS/AppDelegate.cs" />
       <File FileName="Core.Reference.Android/MainApplication.cs" />
-      <File FileName="Core.Reference/Partials/StylesPartial.cs" Line="11" Column="22" />
+      <File FileName="Core.Reference/Partials/StylesPartial.cs" />
+      <File FileName="Core.Reference/App.xaml.cs" />
+      <File FileName="Core.Reference/Views/SomePage.cs" />
+      <File FileName="Core.Reference/Views/FontDemo.cs" />
+      <File FileName="Core.Reference/Dialog/CoreMaterialDialog.cs" />
+      <File FileName="Core.Reference/Partials/ExtensionsPartial.cs" Line="18" Column="1" />
+      <File FileName="Core.Reference/Dialog/CoreDefaultDialog.cs" Line="1" Column="1" />
+      <File FileName="../../CommonCore Projects/Xamarin.Forms.Core/_init/ReadMe.txt" Line="50" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Core.Reference" expanded="True">
-            <Node name="Core.Reference" expanded="True">
-              <Node name="Partials" expanded="True">
-                <Node name="ViewModelPartial.cs" expanded="True">
-                  <Node name="ViewModelPartialDefault.cs" selected="True" />
-                </Node>
-              </Node>
+            <Node name="Xamarin.Forms.Core" expanded="True">
+              <Node name="_init" expanded="True" />
             </Node>
           </Node>
         </State>

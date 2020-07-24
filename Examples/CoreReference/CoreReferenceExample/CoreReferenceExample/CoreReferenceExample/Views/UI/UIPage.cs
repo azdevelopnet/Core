@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
+using Xamarin.Forms.Markup;
 
 namespace CoreReferenceExample
 {

@@ -2,14 +2,15 @@
 //using Xamarin.Essentials;
 //using XF.Material.Forms.UI.Dialogs;
 //using XF.Material.Forms.UI.Dialogs.Configurations;
+
 //namespace Xamarin.Forms.Core
 //{
-//    public partial class CoreViewModel
+//    public class CoreMaterialDialog
 //    {
-//        private IMaterialModalPage loadingModalPage;
-//        private string _loadingIndicatorText;
+//        private static IMaterialModalPage loadingModalPage;
+//        private static string _loadingIndicatorText;
 
-//        public string LoadingIndicatorText
+//        public static string LoadingIndicatorText
 //        {
 //            get
 //            {
@@ -24,7 +25,7 @@
 //                }
 //            }
 //        }
-//        public void ShowLoadingDialog(string msg)
+//        public static void ShowLoadingDialog(string msg)
 //        {
 //            MainThread.BeginInvokeOnMainThread(async () =>
 //            {
@@ -42,7 +43,7 @@
 
 //        }
 
-//        public void CloseLoadingDialog()
+//        public static void CloseLoadingDialog()
 //        {
 //            MainThread.BeginInvokeOnMainThread(async () =>
 //            {
@@ -56,11 +57,11 @@
 
 //        }
 
-//        public void ShowLoadingPercentDialog(string message, double percent)
+//        public static void ShowLoadingPercentDialog(string message, double percent)
 //        {
 
 //        }
-//        public void CloseLoadingPercentDialog()
+//        public static void CloseLoadingPercentDialog()
 //        {
 
 //        }

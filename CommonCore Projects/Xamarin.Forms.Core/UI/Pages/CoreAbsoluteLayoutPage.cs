@@ -70,7 +70,10 @@ namespace Xamarin.Forms.Core
             pView = new PView()
             {
                 Content = view,
-                BorderColor = view.BorderColor,
+                Border = new PancakeView.Border()
+                {
+                    Color = view.BorderColor
+                },
                 CornerRadius = view.CornerRadius,
                 IsClippedToBounds = view.IsClippedToBounds,
                 BackgroundColor = Color.White,
@@ -182,12 +185,25 @@ namespace Xamarin.Forms.Core
             pView = new PView()
             {
                 Content = view,
-                HasShadow = view.HasShadow,
-				BorderColor = view.BorderColor,
+                Border = new PancakeView.Border()
+                {
+                    Color = view.BorderColor
+                },
                 IsClippedToBounds = view.IsClippedToBounds,
                 CornerRadius = view.CornerRadius,
                 Padding = padding
             };
+
+            if (view.HasShadow)
+            {
+                pView.Shadow = new PancakeView.DropShadow()
+                {
+                    Color = Color.White,
+                    Offset = new Point(1, 1),
+                    BlurRadius = 1,
+                    Opacity = 0.7f
+                };
+            }
 
             AbsoluteLayout.SetLayoutBounds(pView, bounds.ToRectangle());
             AbsoluteLayout.SetLayoutFlags(pView, AbsoluteLayoutFlags.All);

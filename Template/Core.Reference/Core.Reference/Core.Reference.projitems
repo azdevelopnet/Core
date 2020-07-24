@@ -31,11 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Partials\ExtensionsPartial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\FontDemo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Partials\FontFamilyPartial.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialDefault.cs">
-      <DependentUpon>ViewModelPartial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialXFM.cs">
-      <DependentUpon>ViewModelPartial.cs</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialog\CoreDefaultDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dialog\CoreMaterialDialog.cs" />
   </ItemGroup>
 </Project>

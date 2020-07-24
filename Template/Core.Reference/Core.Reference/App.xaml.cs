@@ -11,6 +11,7 @@ namespace Core.Reference
         public App()
         {
             InitializeComponent();
+            Device.SetFlags(new string[] { "Markup_Experimental" });
 
             MainPage = new NavigationPage(new SomePage());
         }

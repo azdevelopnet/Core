@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Net.Http;
 using System.Net;
 using System.Collections.Specialized;
+using Xamarin.Forms.Core;
 
 #if __ANDROID__
 using Android.OS;
@@ -1406,6 +1407,58 @@ namespace Xamarin.Forms.Core
             return ns;
         }
 
+    }
+}
+
+namespace Xamarin.Forms.Markup
+{
+    public static class CoreMarkupExtensions
+    {
+
+        public static TView BindTap<TView>(this TView view, Action action) where TView : View
+        {
+            var gesture = new TapGestureRecognizer()
+            {
+                Command = new Command(() => { action?.Invoke(); })
+            };
+            view.GestureRecognizers.Add(gesture);
+            return view;
+        }
+
+        #region Headless Compression for Android
+        public static StackLayout IsHeadless(this StackLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static AbsoluteLayout IsHeadless(this AbsoluteLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static Grid IsHeadless(this Grid layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        public static RelativeLayout IsHeadless(this RelativeLayout layout)
+        {
+            if (CoreSettings.OS == DeviceOS.ANDROID)
+            {
+                CompressedLayout.SetIsHeadless(layout, true);
+            }
+            return layout;
+        }
+        #endregion
     }
 }
 

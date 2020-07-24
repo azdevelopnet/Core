@@ -32,7 +32,7 @@ Highly Suggested
         - Microsoft.AppCenter
         - Microsoft.AppCenter.Analytics
         - Microsoft.AppCenter.Crashes
-        - Microsoft.AppCenter.Distribute         - Microsoft.AppCenter.Push
+        - Microsoft.AppCenter.Distribute 
 
  - Platform Specific Installs:
     - iOS   -> BTProgressHud

@@ -3,12 +3,10 @@ using FFImageLoading.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.PancakeView;
-using RowCreate = Xamarin.Forms.Core.GridRowsAndColumns.Rows;
-using ColCreate = Xamarin.Forms.Core.GridRowsAndColumns.Columns;
+using Xamarin.Forms.Markup;
 
 namespace CoreReferenceExample
 {
-
     #region DashboardButton
     public class DashboardButton : ContentView
     {
@@ -54,12 +52,12 @@ namespace CoreReferenceExample
                                     }
                                 },
 
-                            }.BindViewTap(async() =>
-                            {
-                                await this.ScaleTo(.9,75);
-                                await this.ScaleTo(1,75);
+                            }.BindTap(async () => {
+                                await this.ScaleTo(.9, 75);
+                                await this.ScaleTo(1, 75);
                                 action?.Invoke();
                             }),
+
                             new Label()
                             {
                                 Text=title,
@@ -82,7 +80,6 @@ namespace CoreReferenceExample
             Content = new Grid()
             {
                 BackgroundColor = Color.FromHex(CoreStyles.BackgroundColor),
-                ColumnDefinitions = ColCreate.Define("*","*","*"),
                 Children =
                 {
                     new StackLayout()
@@ -102,11 +99,11 @@ namespace CoreReferenceExample
                                 Text = "BACK",
                                 TextColor = Color.WhiteSmoke,
                                 VerticalTextAlignment = TextAlignment.Center
-                            }.BindViewTap(async()=>{
-                                await Navigation.PopAsync();
+                            }.BindTap(async () => {
+                                 await Navigation.PopAsync();
                             })
                         }
-                    }.IsHeadless().Row(0).Col(0),
+                    }.IsHeadless().Row(0).Column(0),
                     new StackLayout()
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -114,20 +111,18 @@ namespace CoreReferenceExample
                         {
                             new CachedImage()
                             {
-                                //Margin = 5,
                                 Source = ImageSource.FromFile("monkeyHead.png"),
                                 HeightRequest = 25,
                                 Aspect = Aspect.AspectFit
                             },
                             new Label()
                             {
-                                //Margin=new Thickness(0,5,5,5),
                                 Text = title,
                                 TextColor = Color.WhiteSmoke,
                                 VerticalTextAlignment = TextAlignment.Center
                             }
                         }
-                    }.IsHeadless().Row(0).Col(1),
+                    }.IsHeadless().Row(0).Column(1),
                     new StackLayout()
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -143,7 +138,7 @@ namespace CoreReferenceExample
                                 FontSize = 22
                             },
                         }
-                    }.IsHeadless().Row(0).Col(2),
+                    }.IsHeadless().Row(0).Column(2),
 
                 }
             };

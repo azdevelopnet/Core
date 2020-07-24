@@ -276,7 +276,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\FileViewer.IOS.cs">
       <DependentUpon>IFileViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)FluentMarkup\FluentMarkupExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreWebView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreWebViewRenderer.Droid.cs">
       <DependentUpon>CoreWebView.cs</DependentUpon>
@@ -310,13 +309,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Version\LatestVersion.ios.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Version\Exceptions.shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Version\CrossLatestVersion.shared.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IWatermark.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.Droid.cs">
-      <DependentUpon>IWatermark.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.IOS.cs">
-      <DependentUpon>IWatermark.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\CloseApplication.Droid.cs">
       <DependentUpon>ICloseApplication.cs</DependentUpon>
     </Compile>
@@ -345,7 +337,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Behaviors\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Animations\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\Collections\" />
-    <Folder Include="$(MSBuildThisFileDirectory)FluentMarkup\" />
     <Folder Include="$(MSBuildThisFileDirectory)Security\" />
   </ItemGroup>
   <ItemGroup>

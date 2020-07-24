@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{DD5605E7-9492-427B-8CD8-3F0622E39248}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Xamarin.Forms.Core.Charting</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)MyClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\BarChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\DonutChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\LineChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\PieChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\PointChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\RadarChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Charts\RadialGuageChart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\Orientation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CanvasExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EaseHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\RadialHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\IntervalTimer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\WeakEventHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Chart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ChartInput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ChartView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IWatermark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.Droid.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.IOS.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)_init\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Charts\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Enums\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Utilities\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Dependencies\" />
+  </ItemGroup>
+</Project>

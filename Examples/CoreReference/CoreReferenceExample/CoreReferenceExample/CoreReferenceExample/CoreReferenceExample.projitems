@@ -41,17 +41,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\OAuth.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DashboardViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialXFM.cs">
-      <DependentUpon>ViewModelPartial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartialDefault.cs">
-      <DependentUpon>ViewModelPartial.cs</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialog\CoreDefaultDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dialog\CoreMaterialDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\UI\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Push\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Auth\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Dialog\" />
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@ namespace CoreReferenceExample
         {
             InitializeComponent();
             XF.Material.Forms.Material.Init(this);
+            Device.SetFlags(new string[] { "Markup_Experimental" });
+
             /*
              In order for the status bar to reflect color change in iOS add the following to info.plist
              -  Status bar style  - White

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Markup;
 
 namespace Xamarin.Forms.Core
 {
@@ -71,7 +72,7 @@ namespace Xamarin.Forms.Core
             {
                 Children =
                 {
-                    new StackLayout().Assign(out MainContent).Row(0).Col(0),
+                    new StackLayout().Assign(out MainContent).Row(0).Column(0),
                     new StackLayout()
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -85,11 +86,10 @@ namespace Xamarin.Forms.Core
                                WidthRequest = RightSlideLayout.PanelWidth,
                             }.Assign(out SlideContent)
                         }
-                    }.BindViewTap(async()=>{
-                        await ClosePanel();
-                    })
-                    .Assign(out SlideContainer).Row(0).Col(0),
-
+                    }.Assign(out SlideContainer).Row(0).Column(0)
+                    //.BindViewTap(async()=>{
+                    //    await ClosePanel();
+                    //})
                 }
             }.Assign(out ContentGrid);
 
