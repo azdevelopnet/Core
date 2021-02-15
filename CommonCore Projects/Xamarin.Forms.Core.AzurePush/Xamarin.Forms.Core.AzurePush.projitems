@@ -9,9 +9,6 @@
     <Import_RootNamespace>Xamarin.Forms.Core.AzurePush</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)FirebaseRegistrationService.Droid.cs">
-      <DependentUpon>CoreAzurePush.Droid.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FirebaseService.Droid.cs">
       <DependentUpon>CoreAzurePush.Droid.cs</DependentUpon>
     </Compile>

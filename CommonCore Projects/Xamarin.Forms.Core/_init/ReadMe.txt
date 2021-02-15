@@ -50,6 +50,10 @@ Suggested
 - Xamarin.Plugin.ImageEdit /* https://github.com/muak/Xamarin.Plugin.ImageEdit */
 - Android Bottom Tabs /* https://medium.com/naxam-blogs/bottomtabbedpage-bottom-navigation-for-xamarin-forms-on-android-325a1506e216 */
 
+Backgrounding
+- Use Shiny
+    https://allancritchie.net/posts/shinyjobs
+
 Setup Tasks:
 
 Step 1: 

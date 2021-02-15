@@ -22,6 +22,7 @@ namespace Xamarin.Forms.Core
         void ShowMessage(Prompt prompt);
         void ShowActionSheet(string title, string subTitle, string[] list, Action<int> callBack, PromptMetaData metaData = null);
         void ShowToast(string message);
+        void ShowInputMessage(string title, string message, string placeholder, string defaultValue, Action<string> callBack);
     }
 }
 

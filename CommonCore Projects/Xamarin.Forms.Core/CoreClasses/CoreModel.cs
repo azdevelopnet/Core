@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
+using PropertyChanged;
 
 namespace Xamarin.Forms.Core
 {
- 
-    public abstract class CoreModel : BaseNotify, ICloneable
+
+    [AddINotifyPropertyChangedInterface]
+    public abstract class CoreModel : ICloneable
     {
         public object Clone()
         {

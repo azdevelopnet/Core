@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using PropertyChanged;
 
 namespace Xamarin.Forms.Core
 {
     /// <summary>
     /// Observable view model.
     /// </summary>
-    public abstract partial class CoreViewModel : BaseNotify
+    [AddINotifyPropertyChangedInterface]
+    public abstract partial class CoreViewModel
     {
 
         #region ReadOnly AppData Settings
@@ -22,6 +22,18 @@ namespace Xamarin.Forms.Core
 
         #region Injection Services
 
+
+        /// <summary>
+        /// The Image manger service to get image sizes
+        /// </summary>
+        [JsonIgnore]
+        protected IImageManager ImageManager
+        {
+            get
+            {
+                return (IImageManager)CoreDependencyService.GetService<IImageManager, ImageManager>(true);
+            }
+        }
 
         /// <summary>
         /// Service that provides network calls over http.
@@ -77,10 +89,10 @@ namespace Xamarin.Forms.Core
         #endregion
 
         #region Dependencies
+
         /// <summary>
         /// DependencyService for IAudioPlayer.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public IAudioPlayer AudioPlayer
         {
@@ -90,7 +102,6 @@ namespace Xamarin.Forms.Core
         /// <summary>
         /// DependencyService for IBlurOverlay.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public IBlurOverlay BlurOverlay
         {
@@ -99,16 +110,23 @@ namespace Xamarin.Forms.Core
         /// <summary>
         /// DependencyService for ICalendarEvent.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public ICalendarEvent CalendarEvent
         {
             get { return DependencyService.Get<ICalendarEvent>(); }
         }
+
+        /// <summary>
+        /// DependencyService for ICalendarEvent.
+        /// </summary>
+        public IFileViewer FileViewer
+        {
+            get { return DependencyService.Get<IFileViewer>(); }
+        }
+
         /// <summary>
         /// DependencyService for ICommunication.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public ITelephony Communication
         {
@@ -118,44 +136,42 @@ namespace Xamarin.Forms.Core
         /// <summary>
         /// DependencyService for IDialogPrompt.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public IDialogPrompt DialogPrompt
         {
             get { return DependencyService.Get<IDialogPrompt>(); }
         }
+
         /// <summary>
-        /// DependencyService for ILocalNotify.
+        /// DependencyService for INotificationManager.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
-        public ILocalNotify LocalNotify
+        public INotificationManager NotificationManager
         {
-            get { return DependencyService.Get<ILocalNotify>(); }
+            get { return DependencyService.Get<INotificationManager>(); }
         }
+
         /// <summary>
         /// DependencyService for IMapNavigate.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public IMapNavigate MapNavigate
         {
             get { return DependencyService.Get<IMapNavigate>(); }
         }
+
         /// <summary>
         /// DependencyService for IOverlayDependency.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
-        public IOverlayDependency OverlayDependency
+        public IOverlayService OverlayService
         {
-            get { return DependencyService.Get<IOverlayDependency>(); }
+            get { return DependencyService.Get<IOverlayService>(); }
         }
 
         /// <summary>
         /// DependencyService for IViewStack.
         /// </summary>
-        /// <value>The audio player.</value>
         [JsonIgnore]
         public IViewStack ViewStack
         {
@@ -173,88 +189,31 @@ namespace Xamarin.Forms.Core
         [JsonIgnore]
         public INavigation Navigation
         {
-            get { return CoreSettings.AppNav; }
-            set { CoreSettings.AppNav = value; }
-        }
-
-
-
-        //[JsonIgnore]
-        //public bool IsLoadingOverlay
-        //{
-        //    get
-        //    {
-        //        return isLoadingOverlay;
-        //    }
-
-        //    set
-        //    {
-
-        //        isLoadingOverlay = value;
-
-        //        //Ensure that this action is performed on the UI thread
-        //        Device.BeginInvokeOnMainThread(() =>
-        //        {
-        //            if (value)
-        //            {
-        //                var color = Color.FromHex(CoreStyles.OverlayColor);
-        //                OverlayDependency.ShowOverlay(LoadingMessageOverlay, color, CoreStyles.OverlayOpacity);
-        //            }
-        //            else
-        //            {
-        //                OverlayDependency.HideOverlay();
-        //            }
-        //        });
-
-
-        //    }
-        //}
-
-        //[JsonIgnore]
-        //public bool IsLoadingHUD
-        //{
-        //    get
-        //    {
-        //        return isLoadingHUD;
-        //    }
-
-        //    set
-        //    {
-        //        if (isLoadingHUD != value)
-        //        {
-        //            isLoadingHUD = value;
-
-        //            //Ensure that this action is performed on the UI thread
-        //            Device.BeginInvokeOnMainThread(() =>
-        //            {
-        //                if (value)
-        //                {
-        //                    ProgressIndicator.ShowProgress(LoadingMessageHUD);
-        //                }
-        //                else
-        //                {
-        //                    ProgressIndicator.Dismiss();
-        //                }
-        //            });
-        //        }
-        //    }
-        //}
-
-
-        protected void ShowNotification(LocalNotification notification)
-        {
-            LocalNotify.RequestPermission((permit) =>
+            get
             {
-                if (permit)
+                if (Application.Current.MainPage is NavigationPage)
                 {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        LocalNotify.Show(notification);
-                    });
-
+                    return ((NavigationPage)Application.Current.MainPage).Navigation;
                 }
-            });
+                if(Application.Current.MainPage is TabbedPage)
+                {
+                    var tab = (TabbedPage)Application.Current.MainPage;
+                    if (tab.CurrentPage is INavigation)
+                        return ((NavigationPage)tab.CurrentPage).Navigation;
+                    else
+                        return null;
+                }
+                if(Application.Current.MainPage is FlyoutPage)
+                {
+                    var md = (FlyoutPage)Application.Current.MainPage;
+                    if (md.Detail is NavigationPage)
+                        return ((NavigationPage)md.Detail).Navigation;
+                    else
+                        return null;
+                }
 
+                return null;
+            }
         }
 
 

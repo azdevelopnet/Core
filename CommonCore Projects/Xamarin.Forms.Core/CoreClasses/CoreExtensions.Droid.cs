@@ -13,6 +13,9 @@ using Plugin.CurrentActivity;
 using Android.Runtime;
 using Android.App;
 using App = Android.App;
+using DroidBitMap = Android.Graphics.Bitmap;
+using System.Threading.Tasks;
+using XFPlatform = Xamarin.Forms.Platform.Android.Platform;
 
 namespace Xamarin.Forms.Core
 {
@@ -32,18 +35,31 @@ namespace Xamarin.Forms.Core
             }
         }
 
-        public static IVisualElementRenderer GetRenderer(this BindableObject bindableObject)
+        public static IVisualElementRenderer GetOrCreateRenderer(this VisualElement bindable)
         {
-            var value = bindableObject.GetValue(RendererProperty);
-            return (IVisualElementRenderer)bindableObject.GetValue(RendererProperty);
+            var renderer = XFPlatform.GetRenderer(bindable);
+            if (renderer == null)
+            {
+                renderer = XFPlatform.CreateRendererWithContext(bindable, CrossCurrentActivity.Current.Activity);
+                XFPlatform.SetRenderer(bindable, renderer);
+            }
+            return renderer;
         }
+
 
         public static Views.View GetNativeView(this BindableObject bindableObject)
         {
-            var renderer = bindableObject.GetRenderer();
+            var renderer = (IVisualElementRenderer)bindableObject.GetValue(RendererProperty);
             var viewGroup = renderer.View;
             return viewGroup;
         }
+
+        public static Task<DroidBitMap> ToBitmap(this ImageSource imageSource)
+        {
+            var handler = imageSource.GetHandler();
+            return handler.LoadImageAsync(imageSource, Ctx);
+        }
+
         public static ImeAction GetValueFromDescription(this ReturnKeyTypes value)
         {
             var type = typeof(ImeAction);
@@ -90,23 +106,7 @@ namespace Xamarin.Forms.Core
             }
             return null;
         }
-        public static IImageSourceHandler GetHandler(this ImageSource source)
-        {
-            IImageSourceHandler returnValue = null;
-            if (source is UriImageSource)
-            {
-                returnValue = new ImageLoaderSourceHandler();
-            }
-            else if (source is FileImageSource)
-            {
-                returnValue = new FileImageSourceHandler();
-            }
-            else if (source is StreamImageSource)
-            {
-                returnValue = new StreamImagesourceHandler();
-            }
-            return returnValue;
-        }
+
 
         public static void RegisterUnhandledExceptions(this Application app, Action<Exception> action)
         {

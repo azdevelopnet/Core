@@ -44,9 +44,39 @@ namespace Xamarin.Forms.Core
                 return false;
         }
 
+        public INavigation Navigation
+        {
+            get
+            {
+                if (Application.Current.MainPage is NavigationPage)
+                {
+                    return ((NavigationPage)Application.Current.MainPage).Navigation;
+                }
+                if (Application.Current.MainPage is TabbedPage)
+                {
+                    var tab = (TabbedPage)Application.Current.MainPage;
+                    if (tab.CurrentPage is INavigation)
+                        return ((NavigationPage)tab.CurrentPage).Navigation;
+                    else
+                        return null;
+                }
+                if (Application.Current.MainPage is FlyoutPage)
+                {
+                    var md = (FlyoutPage)Application.Current.MainPage;
+                    if (md.Detail is NavigationPage)
+                        return ((NavigationPage)md.Detail).Navigation;
+                    else
+                        return null;
+                }
+
+                return null;
+            }
+        }
+
         public new void OnClick(Views.View v)
         {
-            if (IsMasterDetail() && CoreSettings.AppNav.NavigationStack.Count <= 1)
+
+            if (IsMasterDetail() && Navigation.NavigationStack.Count <= 1)
             {
                 CoreDependencyService.InvokeMasterDetailEvent();
                 return;
@@ -61,9 +91,9 @@ namespace Xamarin.Forms.Core
             }
             else
             {
-                if (curPage.NeedOverrideSoftBackButton)
-                    curPage.OnSoftBackButtonPressed();
-                else
+                //if (curPage.NeedOverrideSoftBackButton)
+                //    curPage.OnSoftBackButtonPressed();
+                //else
                     Element.PopAsync();
             }
         }

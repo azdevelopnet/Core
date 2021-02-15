@@ -9,13 +9,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.iOS;
 
+
 [assembly: ExportEffect(typeof(ListRemoveEmptyRows), "ListRemoveEmptyRows")]
 [assembly: ExportEffect(typeof(WKWebViewDisableScroll), "WKWebViewDisableScroll")]
 [assembly: ExportEffect(typeof(HideTableSeparator), "HideTableSeparator")]
 namespace Xamarin.Forms.Core
 {
 
-    public class ListRemoveEmptyRows : PlatformEffect
+	public class ListRemoveEmptyRows : PlatformEffect
 	{
 		protected override void OnAttached()
 		{
@@ -24,6 +25,20 @@ namespace Xamarin.Forms.Core
 				var table = Control as UITableView;
 				table.TableFooterView = new UIView();
 			}
+		}
+
+		protected override void OnDetached()
+		{
+
+		}
+	}
+
+
+	public class EntryTransparent : PlatformEffect
+	{
+		protected override void OnAttached()
+		{
+			//DONT HAVE TO DO ANYTHING
 		}
 
 		protected override void OnDetached()

@@ -16,11 +16,15 @@ namespace Xamarin.Forms.Core
         Task<(T Response, bool Success, Exception Error)> Get<T>(string url, CancellationToken? ct = null) where T : class, new();
         Task<(T Response, bool Success, Exception Error)> Post<T>(string url, object obj, CancellationToken? ct = null) where T : class, new();
         Task<(T Response, bool Success, Exception Error)> Put<T>(string url, object obj, CancellationToken? ct = null) where T : class, new();
+        Task<(string Response, bool Success, Exception Error)> PutRaw(string url, string data, CancellationToken? ct = null);
         Task<string> GetStringContent<T>(HttpResponseMessage response) where T : class, new();
         Task<(string Response, bool Success, Exception Error)> GetRaw(string url, CancellationToken? ct = null);
         Task<(string Response, bool Success, Exception Error)> PostRaw(string url, object obj, CancellationToken? ct = null);
+        Task<(string Response, bool Success, Exception Error)> PostRaw(string url, string data, CancellationToken? ct = null);
         Task<(bool Success, Exception Error)> UploadFile(string url, byte[] obj, string fileName, CancellationToken? ct = null);
-        Task<byte[]> DownloadFile(string url, Action<double> percentChanged, Action<Exception> error, string token = null, CancellationToken? ct = null);
+        Task<byte[]> DownloadFile(string url, Action<double> percentChanged, Action<Exception> error);
+        Task<(bool response, Exception ex)> DownloadFile(string url, string localPath, Action<double> percentChanged);
+        Task<(bool Success, Exception Error)> Delete(string url, CancellationToken? ct = null);
         HttpClient Client { get; set; }
         void AddHeader(string name, string value);
         void RemoveHeader(string name);

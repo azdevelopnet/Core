@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 namespace Xamarin.Forms.Core
 {
 	public interface IBlurOverlay
 	{
-		void Hide();
-		void Show();
-	}
+        Task BlurAsync();
+        void Unblur();
+    }
 }

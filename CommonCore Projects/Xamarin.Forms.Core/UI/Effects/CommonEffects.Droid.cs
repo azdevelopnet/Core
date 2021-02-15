@@ -1,22 +1,42 @@
 ﻿#if __ANDROID__
 using Android.Content.Res;
 using Android.Graphics.Drawables;
+using Android.Widget;
 using AndroidX.Core.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.Android;
 using Graphics = Android.Graphics;
 
+
+[assembly: ExportEffect(typeof(EntryTransparent), "EntryTransparent")]
 [assembly: ExportEffect(typeof(HideTableSeparator), "HideTableSeparator")]
 [assembly: ExportEffect(typeof(ListRemoveEmptyRows), "ListRemoveEmptyRows")]
 namespace Xamarin.Forms.Core
 {
 
-    public class ListRemoveEmptyRows : PlatformEffect
+
+	public class ListRemoveEmptyRows : PlatformEffect
 	{
 		protected override void OnAttached()
 		{
 
+		}
+
+		protected override void OnDetached()
+		{
+
+		}
+	}
+
+	public class EntryTransparent : PlatformEffect
+	{
+		protected override void OnAttached()
+		{
+            if (Control != null)
+            {
+				Control.SetBackgroundColor(Graphics.Color.Transparent);
+            }
 		}
 
 		protected override void OnDetached()

@@ -12,6 +12,24 @@ namespace Xamarin.Forms.Core
             get { return CoreDependencyService.GetViewModel<T>(true); }
         }
 
+        /// <summary>
+        /// Default state is true
+        /// </summary>
+        public bool IsSingleton
+        {
+            get
+            {
+                return CoreDependencyService.IsRegistered<T>();
+            }
+            set
+            {
+                if(!value && CoreDependencyService.IsRegistered<T>())
+                {
+                    CoreDependencyService.DeRegister<T>();
+                }
+            }
+        }
+
 		public CorePage()
 		{
             

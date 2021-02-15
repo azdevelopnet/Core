@@ -1,0 +1,43 @@
+﻿{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Les Brown",
+    "classifications": [],
+    "description": "Create Core Project",
+    "name": "Core.Template",
+    "defaultName": "Core.Template",
+    "identity": "MyTemplate.Core.Template.CSharp",
+    "groupIdentity": "Xamarin.Forms.Core.Template",
+    "tags": {
+        "language": "C#",
+        "type": "project",
+        "vsmac-category": "multiplat/app/forms"
+    },
+    "shortName": "Core.Template",
+    "sourceName": "Core.Template",
+    "guids": [
+        "{910E4C8C-85ED-40A1-8568-054BE9B272BB}",
+        "{E7D1FB56-031C-4870-899A-37C51900A78D}"
+    ],
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "exclude": [
+                        ".vs/**/*"
+                    ]
+                }
+            ]
+        }
+    ],
+    "primaryOutputs": [
+        {
+            "path": "Core.Template.Android/Core.Template.Android.csproj"
+        },
+        {
+            "path": "Core.Template.iOS/Core.Template.iOS.csproj"
+        },
+        {
+            "path": "Core.Template.Core/Core.Template.Core.shproj"
+        }
+    ]
+}

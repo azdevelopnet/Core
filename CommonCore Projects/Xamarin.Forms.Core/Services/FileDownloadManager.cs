@@ -12,9 +12,11 @@ namespace Xamarin.Forms.Core
 	{
         private string _bearerToken;
         public WebClient Client { get; set; }
+        public Action<(bool response, Exception ex)> LocalDownloadcompleted { get; set; }
         public Action<byte[]> DownloadCompleted { get; set; }
         public Action<double> ProgressChanged { get; set; }
         public string DownloadUrl { get; set; }
+        public string LocalPath { get; set; }
         public string BearerToken
         {
             get { return _bearerToken; }
@@ -48,6 +50,25 @@ namespace Xamarin.Forms.Core
 
 		}
 
+        public async Task StartLocalDownload()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    Client.DownloadProgressChanged += DownprogressChanged;
+                    Client.DownloadFileCompleted += LocalDownloadCompleted;
+                    Client.DownloadFileAsync(new Uri(DownloadUrl), LocalPath);
+                });
+            }
+            catch (Exception ex)
+            {
+                LocalDownloadcompleted?.Invoke((false,ex));
+            }
+
+
+        }
+
         public void Dispose()
         {
             if (Client != null)
@@ -56,7 +77,22 @@ namespace Xamarin.Forms.Core
                 Client.DownloadDataCompleted -= DownloadComplete;
             }
         }
-		private void DownloadComplete(object sender, DownloadDataCompletedEventArgs args)
+        private void LocalDownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            try
+            {
+                var success = e.Error == null ? true : false;
+                LocalDownloadcompleted?.Invoke((success,e.Error));
+            }
+            catch (Exception ex)
+            {
+                var token = Client.Headers[HttpRequestHeader.Authorization];
+                var im = ex.InnerException.Message;
+            }
+
+        }
+
+        private void DownloadComplete(object sender, DownloadDataCompletedEventArgs args)
 		{
             try
             {
@@ -66,7 +102,6 @@ namespace Xamarin.Forms.Core
             {
                 var token = Client.Headers[HttpRequestHeader.Authorization];
                 var im = ex.InnerException.Message;
-                var x = ex;
             }
             
 		}

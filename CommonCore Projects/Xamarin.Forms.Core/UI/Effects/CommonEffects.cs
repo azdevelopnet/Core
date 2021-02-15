@@ -4,9 +4,15 @@
 namespace Xamarin.Forms.Core
 {
 
+
     public class RemoveEmptyRowsEffect : RoutingEffect
     {
         public RemoveEmptyRowsEffect() : base($"CoreEffects.{typeof(ListRemoveEmptyRows).Name}") { }
+    }
+
+    public class EntryTransparentEffect : RoutingEffect
+    {
+        public EntryTransparentEffect() : base($"CoreEffects.{typeof(EntryTransparent).Name}") { }
     }
 
 #if __IOS__

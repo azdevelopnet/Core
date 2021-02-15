@@ -7,6 +7,9 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms.Core;
 using Xamarin.Forms.Platform.iOS;
+using Xamarin.Essentials;
+
+using IOSPlatform = Xamarin.Forms.Platform.iOS.Platform;
 
 [assembly: Xamarin.Forms.Dependency(typeof(DialogPrompt))]
 namespace Xamarin.Forms.Core
@@ -15,7 +18,6 @@ namespace Xamarin.Forms.Core
     {
         NSTimer alertDelay;
         UIAlertController alert;
-
         public void ShowMessage(Prompt prompt)
         {
             if (prompt.ButtonTitles == null || prompt.ButtonTitles.Length == 0)
@@ -30,6 +32,42 @@ namespace Xamarin.Forms.Core
                     prompt.Callback?.Invoke(prompt.ButtonTitles.IndexOf(txt));
                 }));
             }
+
+            //if (Device.Idiom == TargetIdiom.Tablet && DeviceDisplay.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+            //{
+            //    var presentationPopover = alert.PopoverPresentationController;
+
+            //    presentationPopover.SourceView = controller.View;
+            //    presentationPopover.SourceRect = new CGRect(controller.View.Bounds.GetMidX(), controller.View.Bounds.GetMidY(), 0, 0);
+            //}
+
+            controller.PresentViewController(alert, true, null);
+        }
+
+
+        public void ShowInputMessage(string title, string message, string placeholder, string defaultValue, Action<string> callBack)
+        {
+
+            var controller = GetUIController();
+            var alert = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            alert.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, action =>
+            {
+                callBack.Invoke(alert.TextFields[0].Text);
+            }));
+            alert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Default, action =>
+            {
+                callBack.Invoke(null);
+            }));
+
+            alert.AddTextField((obj) => {
+                //callBack?.Invoke(obj.Text);
+            });
+
+            if (!string.IsNullOrEmpty(placeholder))
+                alert.TextFields[0].Placeholder = placeholder;
+
+            if (!string.IsNullOrEmpty(defaultValue))
+                alert.TextFields[0].Text = defaultValue;
 
             controller.PresentViewController(alert, true, null);
         }
@@ -78,6 +116,11 @@ namespace Xamarin.Forms.Core
 
                         presentationPopover.SourceView = ctrl;
                         presentationPopover.PermittedArrowDirections = UIPopoverArrowDirection.Up;
+                    }
+                    else
+                    {
+                        presentationPopover.SourceView = controller.View;
+                        presentationPopover.SourceRect = new CGRect(controller.View.Bounds.GetMidX(), controller.View.Bounds.GetMidY(), 0, 0);
                     }
 
                 }

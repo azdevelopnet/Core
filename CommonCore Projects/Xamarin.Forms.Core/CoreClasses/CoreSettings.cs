@@ -4,15 +4,17 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Reflection;
 using Xamarin.Essentials;
+using System.IO;
+using System.Linq;
 
 #if __ANDROID__
 using Android.Widget;
 using App = Android.App;
+using Plugin.CurrentActivity;
 #endif
 #if __IOS__
 using Foundation;
 using UIKit;
-using Xamarin.Essentials;
 #endif
 
 namespace Xamarin.Forms.Core
@@ -25,8 +27,35 @@ namespace Xamarin.Forms.Core
     }
     public partial class CoreSettings
     {
+        private static CoreConfiguration _config;
+
+        public const string NetworkConnectivityChanged = "NetworkConnectivityChanged";
+
+        public const string RemoteNotificationReceived = "RemoteNotificationReceived";
+
+        public const string TokenReceived = "TokenReceived";
+
         public static string CurrentBuild { get; set; } = "dev";
-        public static INavigation AppNav { get; set; }
+
+        //public static INavigation AppNav { get; set; }
+
+        public static string JsonEncryptionKey { get; set; }
+
+        public static string Version
+        {
+            get
+            {
+                var num = typeof(CoreSettings).Assembly.GetName().Version;
+                var buildVersion = "0.0.0";
+                if (num.Build > 1000)
+                {
+                    var date = new DateTime(2000, 1, 1).AddDays(num.Build).AddSeconds(num.Revision * 2);
+                    buildVersion = $"{date.Month}.{date.Day}.{date.ToString("HHmm")}";
+                }
+                return $"{CoreSettings.CurrentBuild} (v.{VersionTracking.CurrentBuild}.{buildVersion})";
+            }
+        }
+
         public static Size ScreenSize
         {
             get
@@ -47,7 +76,6 @@ namespace Xamarin.Forms.Core
 
             }
         }
-
 
         public static List<string> NotificationTags { get; set; } = new List<string>();
 
@@ -84,7 +112,6 @@ namespace Xamarin.Forms.Core
             return obj;
         }
 
-
         public static DeviceOS OS
         {
             get
@@ -97,16 +124,12 @@ namespace Xamarin.Forms.Core
             }
         }
 
-
         public static CoreConfiguration Config
         {
-            get { return AppData.Settings; }
+            get { return _config; }
+            set { _config = value; }
         }
 
-        /// <summary>
-        /// Application Installation ID
-        /// </summary>
-        /// <value>The installation identifier.</value>
         public static string InstallationId
         {
             get
@@ -126,11 +149,6 @@ namespace Xamarin.Forms.Core
             set { Preferences.Set("InstallationId", value); }
         }
 
-
-        /// <summary>
-        /// Application Data Sync Time for offline sync with sql
-        /// </summary>
-        /// <value>The installation identifier.</value>
         public static long SyncTimeStamp
         {
             get
@@ -148,7 +166,6 @@ namespace Xamarin.Forms.Core
             set { Preferences.Set("SyncTimeStamp", value); }
         }
 
-
         public static bool HasDeviceToken
         {
             get
@@ -160,7 +177,6 @@ namespace Xamarin.Forms.Core
 #endif
             }
         }
-
 
 #if __ANDROID__
 
@@ -177,9 +193,9 @@ namespace Xamarin.Forms.Core
         }
 
         public static int AppIcon { get; set; }
+
         public static int SearchView { get; set; }
         
-        public static Type MainActivity { get; set; }
 #endif
 
 #if __IOS__
@@ -202,53 +218,71 @@ namespace Xamarin.Forms.Core
 
 #endif
 
-        internal class AppData
+        public static void GlobalInit()
         {
-
-            static AppData()
-            {
-                Load();
-            }
-
-            public static void Reload()
-            {
-                CoreDependencyService.DisposeServices();
-                CoreDependencyService.ReleaseViewModelResources();
-                Load();
-                CoreDependencyService.InitViewModelResources();
-            }
-
-            public static CoreConfiguration Settings { get; private set; }
-
-
-            private static void Load()
-            {
-                Settings = new CoreConfiguration();
-                string fileName = null;
-                fileName = $"config.{CoreSettings.CurrentBuild}.json";
-
-                var response = ResourceLoader.GetEmbeddedResourceString(Assembly.GetAssembly(typeof(ResourceLoader)), fileName);
-                if (response.Error == null)
-                {
-                    try
-                    {
-                        var root = JsonConvert.DeserializeObject<CoreConfiguration>(response.Response);
-                        if (root != null)
-                            Settings = root;
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.ConsoleWrite();
-                    }
-
-                }
-                else
-                {
-                    response.Error?.ConsoleWrite();
-                }
-            }
+            Load();
         }
 
+        public static void GlobalInit(CoreConfiguration config)
+        {
+            Config = config;
+        }
+
+        public static void GlobalRefresh()
+        {
+            CoreDependencyService.DisposeAllServices();
+            CoreDependencyService.ReleaseViewModelResources();
+            Load();
+            CoreDependencyService.InitViewModelResources();
+        }
+
+        public static void GlobalRefresh(CoreConfiguration config)
+        {
+            CoreDependencyService.DisposeAllServices();
+            CoreDependencyService.ReleaseViewModelResources();
+            Config = config;
+            CoreDependencyService.InitViewModelResources();
+        }
+
+        private static void Load()
+        {
+            string fileName = null;
+            fileName = $"config.{CoreSettings.CurrentBuild}.json";
+
+            var response = ResourceLoader.GetEmbeddedResourceString(Assembly.GetAssembly(typeof(ResourceLoader)), fileName);
+            if (response.Error == null)
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(response.Response))
+                    {
+                        if (string.IsNullOrEmpty(JsonEncryptionKey))
+                        {
+                            Config = JsonConvert.DeserializeObject<CoreConfiguration>(response.Response);
+                        }
+                        else
+                        {
+                            Config = JsonConvert.DeserializeObject<CoreConfiguration>(response.Response, new JsonSerializerSettings()
+                            {
+                                ContractResolver = new EncryptedStringPropertyResolver(JsonEncryptionKey)
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.ConsoleWrite();
+                }
+
+            }
+            else
+            {
+                response.Error?.ConsoleWrite();
+            }
+
+            if(Config==null)
+                Config = new CoreConfiguration();
+        }
     }
 
 }

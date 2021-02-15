@@ -4,22 +4,6 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Core
 {
-	public enum ReturnKeyTypes : int
-	{
-		Default,
-		Go,
-		Google,
-		Join,
-		Next,
-		Route,
-		Search,
-		Send,
-		Yahoo,
-		Done,
-		EmergencyCall,
-		Continue
-	}
-
     [DesignTimeVisible(true)]
     public class CoreUnderlineEntry : CoreMaskedEntry
 	{

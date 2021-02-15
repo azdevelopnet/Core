@@ -32,13 +32,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Telephony.IOS.cs">
       <DependentUpon>ITelephony.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IOverlayDependency.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OverlayDependency.Droid.cs">
-      <DependentUpon>IOverlayDependency.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OverlayDependency.IOS.cs">
-      <DependentUpon>IOverlayDependency.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\CalendarEvent.Droid.cs">
       <DependentUpon>ICalendarEvent.cs</DependentUpon>
     </Compile>
@@ -53,13 +46,6 @@
       <DependentUpon>IMapNavigate.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IMapNavigate.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ILocalNotify.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\LocalNotify.Droid.cs">
-      <DependentUpon>ILocalNotify.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\LocalNotify.IOS.cs">
-      <DependentUpon>ILocalNotify.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IBlurOverlay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\BlurOverlay.IOS.cs">
       <DependentUpon>IBlurOverlay.cs</DependentUpon>
@@ -89,7 +75,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ITelephony.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EmailMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SynchronizationContextRemover.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileDownloadManager.cs">
       <DependentUpon>IHttpService.cs</DependentUpon>
     </Compile>
@@ -98,12 +83,10 @@
       <DependentUpon>IContextMenuService.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\util.Droid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\CoreDependencyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreBusiness.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreStyles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\BaseNotify.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreExtensions.Droid.cs">
       <DependentUpon>CoreExtensions.cs</DependentUpon>
@@ -146,7 +129,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreDatePickerRenderer.IOS.cs">
       <DependentUpon>..\..\Controls\CoreDatePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreDisclosureViewCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreListView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreMaskedEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreNoCaretPickerRenderer.IOS.cs">
@@ -159,7 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CorePickerRenderer.IOS.cs">
       <DependentUpon>..\..\Controls\CorePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRanking.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreRating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreSegment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreStackLayout.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreStackLayoutRenderer.Droid.cs">
@@ -201,12 +183,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreMasterDetailPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CorePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreTabbedPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreTabbedPageRenderer.Droid.cs">
-      <DependentUpon>..\..\Pages\CoreTabbedPage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreTabbedPageRenderer.IOS.cs">
-      <DependentUpon>..\..\Pages\CoreTabbedPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreTelephonyPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreTelephonyPageRenderer.Droid.cs">
       <DependentUpon>..\..\Pages\CoreTelephonyPage.cs</DependentUpon>
@@ -234,27 +210,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Behaviors\PhoneMaskBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Behaviors\PropertyChangedBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Behaviors\RegExBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\Base\AnimationBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\Behaviors\BeginAnimationBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreBounceInAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreFadeAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreFlipAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreJumpAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CorePulseAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreRotateAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreScaleAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreShakeAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreStoryBoard.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreTranslateAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\CoreTurnstileAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\EasingType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\Extensions\AnimationExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\Helpers\EasingHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Animations\Triggers\CoreTriggerAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\ISearchProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Collections\GroupedObservableCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Collections\OptimizedObservableCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Collections\RefreshingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ICookieStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\CookieStore.IOS.cs">
       <DependentUpon>ICookieStore.cs</DependentUpon>
@@ -302,7 +258,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OpenSettings.cs">
       <DependentUpon>IOpenSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Models\NotifyModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fonts\FontCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Version\LatestVersion.android.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Version\ILatestVersion.shared.cs" />
@@ -316,11 +271,91 @@
       <DependentUpon>ICloseApplication.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ICloseApplication.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ImageResource.IOS..cs">
-      <DependentUpon>IImageResource.cs</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IImageResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\SlideLayout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreDependencyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CorePinchZoom.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreEntryRenderer.IOS.cs">
+      <DependentUpon>CoreEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreEntryRenderer.Droid.cs">
+      <DependentUpon>CoreEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IWatermark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.Droid.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Watermark.IOS.cs">
+      <DependentUpon>IWatermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreSearchBar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreSearchBarRenderer.IOS.cs">
+      <DependentUpon>CoreSearchBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreSearchBarRenderer.Droid.cs">
+      <DependentUpon>CoreSearchBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\DataTemplates\CoreTemplateModelSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PhoneDialerHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreMarkupExtensions.cs">
+      <DependentUpon>CoreExtensions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptingJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptedStringPropertyResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\INotificationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\NotificationManager.Droid.cs">
+      <DependentUpon>INotificationManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\NotificationManager.IOS.cs">
+      <DependentUpon>INotificationManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Toolkit\Behaviors\MaskedBehavior.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Toolkit\Behaviors\BaseBehavior.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreCircularProgressbar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ReturnKeyTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IImageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ImageManager.IOS.cs">
+      <DependentUpon>IImageManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ImageManager.Droid.cs">
+      <DependentUpon>IImageManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreLabel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreLabelRenderer.Droid.cs">
+      <DependentUpon>CoreLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreLabelRenderer.IOS.cs">
+      <DependentUpon>CoreLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IOverlayService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OverlayService.Droid.cs">
+      <DependentUpon>IOverlayService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\OverlayService.IOS.cs">
+      <DependentUpon>IOverlayService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IVisualElementLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\VisualElementLocation.Droid.cs">
+      <DependentUpon>IVisualElementLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\VisualElementLocation.IOS.cs">
+      <DependentUpon>IVisualElementLocation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IKeyboard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Keyboard.Droid.cs">
+      <DependentUpon>IKeyboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dependencies\Keyboard.IOS.cs">
+      <DependentUpon>IKeyboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\TabbarEffect.Droid.cs">
+      <DependentUpon>CoreTabbedPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\TabbarEffect.IOS.cs">
+      <DependentUpon>CoreTabbedPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AccessbilityEnums.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
@@ -335,9 +370,9 @@
     <Folder Include="$(MSBuildThisFileDirectory)UI\Effects\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Converters\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\Behaviors\" />
-    <Folder Include="$(MSBuildThisFileDirectory)UI\Animations\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\Collections\" />
     <Folder Include="$(MSBuildThisFileDirectory)Security\" />
+    <Folder Include="$(MSBuildThisFileDirectory)UI\DataTemplates\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Toolkit\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)_init\ReadMe.txt" />

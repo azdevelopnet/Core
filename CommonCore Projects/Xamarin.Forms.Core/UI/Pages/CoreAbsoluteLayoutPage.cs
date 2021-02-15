@@ -1,133 +1,83 @@
 ﻿using System;
-using PView = Xamarin.Forms.PancakeView.PancakeView;
+using System.Linq;
 
 namespace Xamarin.Forms.Core
 {
-    public class PopupBounds
+    public enum DisplayPosition
     {
-        public PopupBounds(double percentHorizontal, double percentVertical, double percentWidth, double percentheight)
-        {
-            PercentHorizontal = percentHorizontal;
-            PercentVertical = percentVertical;
-            PercentWidth = percentWidth;
-            Percentheight = percentheight;
-        }
-        public PopupBounds()
-        {
-
-        }
+        Above,
+        Below
+    }
+    public class PopupParameter
+    {
+        public bool UseParentBindingContext { get; set; } = true;
+        public bool IsAnimatedOpen { get; set; } = true;
+        public bool IsAnimatedClose { get; set; } = true;
+        public string ContainerAutomationId { get; set; } = "CorePopupAutomationId";
         public double PercentHorizontal { get; set; } = 0.5;
         public double PercentVertical { get; set; } = 0.5;
         public double PercentWidth { get; set; } = 0.85;
-        public double Percentheight { get; set; } = 0.5;
+        public double PercentHeight { get; set; } = 0.5;
 
-        public Rectangle ToRectangle()
+        public bool HasBackgroundOverlay { get; set; } = false;
+        public string OverlayAutomationId { get; set; } = "CoreContainerBackdropId";
+        public double OverlayOpacity { get; set; } = 1;
+        public Color OverlayColor { get; set; } = Color.FromHex("#80000000");
+        public View AnchorView { get; set; }
+        public DisplayPosition DisplayPosition { get; set; } = DisplayPosition.Below;
+
+        public Rectangle ToPercentRectange()
         {
-            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, Percentheight);
+            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, PercentWidth);
         }
-    }
-    public class PopupView : ContentView
-    {
-        public bool AnimateOpen { get; set; } = true;
-        public float CornerRadius = 3;
-        public bool HasShadow { get; set; } = true;
-		public Color BorderColor { get; set; } = Color.Gray;
-        public new bool IsClippedToBounds { get; set; } = false;
+        public Rectangle ToAbsoluteRectange(Page page, View popup)
+        {
+
+            if (AnchorView != null && page != null)
+            {
+                var coord = DependencyService.Get<IVisualElementLocation>().GetCoordinates(AnchorView);
+                PercentHorizontal = coord.X;
+                if (DisplayPosition == DisplayPosition.Below)
+                {
+                    PercentVertical = coord.Y + AnchorView.Height;
+                }
+                else
+                {
+                    PercentVertical = coord.Y - popup.HeightRequest;
+                }
+            
+                PercentWidth = page.Width * PercentWidth;
+                PercentHeight = page.Height * PercentHeight;
+            }
+            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, PercentWidth);
+        }
     }
 
     public abstract class CoreAbsoluteLayoutPage<T> : CorePage<T>
      where T : CoreViewModel, new()
     {
-        private AbsoluteLayout layout;
-        private View content;
-        private PView pView;
-        private StackLayout backDrop;
+        private AbsoluteLayout _layout;
+        private View _content;
 
         public new View Content
         {
-            get { return this.content; }
+            get { return _content; }
             set
             {
-                if (this.content != null)
-                    this.layout.Children.Remove(this.content);
-
-                this.content = value;
-                AbsoluteLayout.SetLayoutBounds(content, new Rectangle(1, 1, 1, 1));
-                AbsoluteLayout.SetLayoutFlags(content, AbsoluteLayoutFlags.All);
-                this.layout.Children.Add(this.content);
-            }
-        }
-
-        public AbsoluteLayout AbsoluteLayer
-        {
-            get { return layout; }
-            set { layout = value; }
-        }
-
-
-        public void ShowPopup(PopupView view, PopupBounds bounds, int padding)
-        {
-            pView = new PView()
-            {
-                Content = view,
-                Border = new PancakeView.Border()
+                if (value != null)
                 {
-                    Color = view.BorderColor
-                },
-                CornerRadius = view.CornerRadius,
-                IsClippedToBounds = view.IsClippedToBounds,
-                BackgroundColor = Color.White,
-                Padding = padding,
-                Shadow = new PancakeView.DropShadow()
-                {
-                    Color = Color.White,
-                    Offset = new Point(1, 1),
-                    BlurRadius = 1,
-                    Opacity = 0.7f
+                    _content = value;
+                    if (_layout == null)
+                        _layout = new AbsoluteLayout();
+
+                    AbsoluteLayout.SetLayoutBounds(_content, new Rectangle(1, 1, 1, 1));
+                    AbsoluteLayout.SetLayoutFlags(_content, AbsoluteLayoutFlags.All);
+                    _layout.Children.Add(this._content);
+
+                    if (base.Content == null)
+                        base.Content = _layout;
                 }
-            };
-            backDrop = new StackLayout()
-            {
-                BackgroundColor = Color.Black,
-                Opacity= 0.5
-            };
-
-
-            AbsoluteLayout.SetLayoutBounds(backDrop, new Rectangle(1,1,1,1));
-            AbsoluteLayout.SetLayoutFlags(backDrop, AbsoluteLayoutFlags.All);
-            this.layout.Children.Add(backDrop);
-
-            AbsoluteLayout.SetLayoutBounds(pView, bounds.ToRectangle());
-            AbsoluteLayout.SetLayoutFlags(pView, AbsoluteLayoutFlags.All);
-            this.layout.Children.Add(pView);
-
-            view.BindingContext = this.BindingContext;
-            if (view.AnimateOpen)
-            {
-                pView.ScaleTo(0.99, 200).ContinueWith(async (t) =>
-                {
-                    await pView.ScaleTo(1, 200);
-                });
             }
-        }
-
-        public void ClosePopup()
-        {
-            if (pView != null)
-            {
-                this.layout.Children.Remove(pView);
-                pView = null;
-            }
-            if (backDrop != null)
-            {
-                this.layout.Children.Remove(backDrop);
-                backDrop = null;
-            }
-        }
-
-        public CoreAbsoluteLayoutPage()
-        {
-            base.Content = this.layout = new AbsoluteLayout() { };
         }
 
         protected override void OnAppearing()
@@ -154,84 +104,29 @@ namespace Xamarin.Forms.Core
 
     public abstract class CoreAbsoluteLayoutPage: CorePage
     {
-        private AbsoluteLayout layout;
-        private View content;
-        private PView pView;
+        private AbsoluteLayout _layout;
+        private View _content;
 
         public new View Content
         {
-            get { return this.content; }
+            get { return _content; }
             set
             {
-                if (this.content != null)
-                    this.layout.Children.Remove(this.content);
-
-                this.content = value;
-                AbsoluteLayout.SetLayoutBounds(content, new Rectangle(1, 1, 1, 1));
-                AbsoluteLayout.SetLayoutFlags(content, AbsoluteLayoutFlags.All);
-                this.layout.Children.Add(this.content);
-            }
-        }
-
-        public AbsoluteLayout AbsoluteLayer
-        {
-            get { return layout; }
-            set { layout = value; }
-        }
-
-        public void ShowPopup(PopupView view, PopupBounds bounds, int padding)
-        {
-
-            pView = new PView()
-            {
-                Content = view,
-                Border = new PancakeView.Border()
+                if (value != null)
                 {
-                    Color = view.BorderColor
-                },
-                IsClippedToBounds = view.IsClippedToBounds,
-                CornerRadius = view.CornerRadius,
-                Padding = padding
-            };
+                    _content = value;
+                    if (_layout == null)
+                        _layout = new AbsoluteLayout();
 
-            if (view.HasShadow)
-            {
-                pView.Shadow = new PancakeView.DropShadow()
-                {
-                    Color = Color.White,
-                    Offset = new Point(1, 1),
-                    BlurRadius = 1,
-                    Opacity = 0.7f
-                };
-            }
+                    AbsoluteLayout.SetLayoutBounds(_content, new Rectangle(1, 1, 1, 1));
+                    AbsoluteLayout.SetLayoutFlags(_content, AbsoluteLayoutFlags.All);
+                    _layout.Children.Add(this._content);
 
-            AbsoluteLayout.SetLayoutBounds(pView, bounds.ToRectangle());
-            AbsoluteLayout.SetLayoutFlags(pView, AbsoluteLayoutFlags.All);
-            this.layout.Children.Add(pView);
-            view.BindingContext = this.BindingContext;
-            if (view.AnimateOpen)
-            {
-                pView.ScaleTo(0.99, 200).ContinueWith(async (t) =>
-                {
-                    await pView.ScaleTo(1, 200);
-                });
+                    if (base.Content == null)
+                        base.Content = _layout;
+                }
             }
         }
-
-        public void ClosePopup()
-        {
-            if (pView != null)
-            {
-                this.layout.Children.Remove(pView);
-                pView = null;
-            }
-        }
-
-        public CoreAbsoluteLayoutPage()
-        {
-            base.Content = this.layout = new AbsoluteLayout() { };
-        }
-
         protected override void OnAppearing()
         {
             this.SizeChanged += PageSizeChanged;
@@ -249,6 +144,119 @@ namespace Xamarin.Forms.Core
         public void Dispose()
         {
             this.SizeChanged -= PageSizeChanged;
+        }
+    }
+
+    public static class CoreAbsoluteLayoutPageExtensions
+    {
+        public static void ShowPopup(this Page page, View popup, PopupParameter parameters)
+        {
+            if (popup == null || parameters == null)
+                return;
+
+            var layout = page.GetAbsoluteLayout();
+            if (layout != null)
+            {
+
+                if (parameters.HasBackgroundOverlay)
+                {
+                    var overlay = new StackLayout()
+                    {
+                        AutomationId = parameters.OverlayAutomationId,
+                        BackgroundColor = parameters.OverlayColor,
+                        Opacity = parameters.OverlayOpacity
+                    };
+
+                    AbsoluteLayout.SetLayoutBounds(overlay, new Rectangle(1, 1, 1, 1));
+                    AbsoluteLayout.SetLayoutFlags(overlay, AbsoluteLayoutFlags.All);
+                    layout.Children.Add(overlay);
+                }
+
+
+                popup.AutomationId = parameters.ContainerAutomationId;
+                if (parameters.UseParentBindingContext)
+                    popup.BindingContext = layout.BindingContext;
+
+                if (parameters.AnchorView != null)
+                {
+                    AbsoluteLayout.SetLayoutBounds(popup, parameters.ToAbsoluteRectange(page, popup));
+                }
+                else
+                {
+                    AbsoluteLayout.SetLayoutBounds(popup, parameters.ToPercentRectange());
+                    AbsoluteLayout.SetLayoutFlags(popup, AbsoluteLayoutFlags.All);
+                }
+                layout.Children.Add(popup);
+
+                if (parameters.IsAnimatedOpen)
+                {
+                    popup.ScaleTo(0.99, 200).ContinueWith(async (t) =>
+                    {
+                        await popup.ScaleTo(1, 200);
+                    });
+                }
+            }
+        }
+
+        public static void ClosePopup(this Page page, PopupParameter parameters)
+        {
+            if (parameters == null)
+                return;
+
+            var layout = page.GetAbsoluteLayout();
+            if (layout != null)
+            {
+                var overlay = layout.Children.FirstOrDefault(x => x.AutomationId == parameters.OverlayAutomationId);
+                var popup = layout.Children.FirstOrDefault(x => x.AutomationId == parameters.ContainerAutomationId);
+
+                if (popup != null)
+                {
+                    layout.Children.Remove(popup);
+                }
+                if (overlay != null)
+                {
+                    layout.Children.Remove(overlay);
+                    overlay = null;
+                }
+            }
+        }
+
+        private static AbsoluteLayout GetAbsoluteLayout(this Page page)
+        {
+            if (page is ContentPage)
+            {
+                var contentPage = (ContentPage)page;
+                if (contentPage.Content is AbsoluteLayout)
+                    return (AbsoluteLayout)contentPage.Content;
+                else
+                    return null;
+            }
+            if (page is NavigationPage)
+            {
+                var nav = (NavigationPage)page;
+                if (nav.CurrentPage is ContentPage)
+                {
+                    var contentPage = (ContentPage)nav.CurrentPage;
+                    return contentPage.GetAbsoluteLayout();
+                }
+            }
+            if (page is CarouselPage)
+            {
+                var carouselPage = (CarouselPage)page;
+                return carouselPage.CurrentPage.GetAbsoluteLayout();
+            }
+            if (page is TabbedPage)
+            {
+                var tabbedPage = (TabbedPage)page;
+                return tabbedPage.CurrentPage.GetAbsoluteLayout();
+            }
+            if (page is FlyoutPage)
+            {
+                var flyoutPage = (FlyoutPage)page;
+                return flyoutPage.Detail.GetAbsoluteLayout();
+            }
+
+            return null;
         }
     }
 }

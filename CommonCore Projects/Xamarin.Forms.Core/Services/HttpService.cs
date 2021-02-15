@@ -12,9 +12,20 @@ using ModernHttpClient;
 
 namespace Xamarin.Forms.Core
 {
+    public class NetworkException : ApplicationException
+    {
+        public NetworkException()
+        {
 
+        }
+        public NetworkException(string message):base(message)
+        {
+
+        }
+    }
     public class HttpService : IHttpService, IDisposable
     {
+        private string _token;
         private HttpClient httpClient;
         private HttpMessageHandler handler;
         private JsonSerializer _serializer;
@@ -137,6 +148,8 @@ namespace Xamarin.Forms.Core
         }
         public void AddTokenHeader(string token)
         {
+            _token = token;
+
             if (Client.DefaultRequestHeaders.Authorization != null)
                 Client.DefaultRequestHeaders.Remove("Authorization");
 
@@ -145,6 +158,8 @@ namespace Xamarin.Forms.Core
 
         public void AddTokenHeader(AuthenticationModel coreAuth)
         {
+            _token = coreAuth.Token;
+
             if (Client.DefaultRequestHeaders.Authorization != null)
                 Client.DefaultRequestHeaders.Remove("Authorization");
 
@@ -166,15 +181,12 @@ namespace Xamarin.Forms.Core
 
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
-
                 var postResponse = await Client.PostAsync(url, content, token);
                 postResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 postResponse.EnsureSuccessStatusCode();
@@ -202,51 +214,12 @@ namespace Xamarin.Forms.Core
         {
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
-
-                using (var srvResponse = await Client.GetAsync(url, token))
-                {
-                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
-                    if (srvResponse.StatusCode == HttpStatusCode.OK)
-                    {
-                        return (jsonResult, true, null);
-                    }
-                    else
-                    {
-                        return (null, false, new ApplicationException(jsonResult));
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ex.ConsoleWrite();
-                return (null, false, ex);
-            }
-
-        }
-
-        public async Task<(string Response, bool Success, Exception Error)> PostRaw(string url, CancellationToken? ct = null)
-        {
-            if (!IsConnected)
-            {
-                return (null, false, new ApplicationException("Network Connection Error"));
-            }
-
-            try
-            {
-                var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
-
                 using (var srvResponse = await Client.GetAsync(url, token))
                 {
                     var jsonResult = await srvResponse.Content.ReadAsStringAsync();
@@ -272,23 +245,19 @@ namespace Xamarin.Forms.Core
 
         public async Task<(T Response, bool Success, Exception Error)> Get<T>(string url, CancellationToken? ct = null) where T : class, new()
         {
-
-
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
-
                 using (var srvResponse = await Client.GetAsync(url, token))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
+                        srvResponse.EnsureSuccessStatusCode();
                         json = await GetStringContent<T>(srvResponse);
                         var response = await DeserializeObject<T>(json);
                         json = string.Empty;
@@ -344,18 +313,41 @@ namespace Xamarin.Forms.Core
 
         }
 
-
-        public async Task<byte[]> DownloadFile(string url, Action<double> percentChanged, Action<Exception> error, string token = null, CancellationToken? ct = null)
+        public async Task<(bool response, Exception ex)> DownloadFile(string url, string localPath, Action<double> percentChanged)
         {
             try
             {
-                var ctoken = ct ?? CancellationToken.None;
+                return await Task.Run(async () =>
+                {
+                    using (var dwn = new FileDownloadManager())
+                    {
+                        var taskCompletionSource = new TaskCompletionSource<(bool response, Exception ex)>();
+                        dwn.BearerToken = _token;
+                        dwn.LocalPath = localPath;
+                        dwn.DownloadUrl = url;
+                        dwn.LocalDownloadcompleted = (obj) => taskCompletionSource.SetResult(obj);
+                        dwn.ProgressChanged = percentChanged;
+                        await dwn.StartLocalDownload();
+                        return await taskCompletionSource.Task;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return (false, ex);
+            }
+        }
+
+        public async Task<byte[]> DownloadFile(string url, Action<double> percentChanged, Action<Exception> error)
+        {
+            try
+            {
                 return await Task.Run(async () =>
                 {
                     using (var dwn = new FileDownloadManager())
                     {
                         var taskCompletionSource = new TaskCompletionSource<byte[]>();
-                        dwn.BearerToken = token;
+                        dwn.BearerToken = _token;
                         dwn.DownloadUrl = url;
                         dwn.DownloadCompleted = (obj) => taskCompletionSource.SetResult(obj);
                         dwn.ProgressChanged = percentChanged;
@@ -376,14 +368,12 @@ namespace Xamarin.Forms.Core
         {
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))
                 {
@@ -407,24 +397,89 @@ namespace Xamarin.Forms.Core
             }
 
         }
-        public async Task<(T Response, bool Success, Exception Error)> Post<T>(string url, object obj, CancellationToken? ct = null) where T : class, new()
+
+        public async Task<(string Response, bool Success, Exception Error)> PostRaw(string url, string data, CancellationToken? ct = null)
         {
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
+                using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))
+                {
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
+                    if (srvResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        return (jsonResult, true, null);
+                    }
+                    else
+                    {
+                        return (null, false, new ApplicationException(jsonResult));
+                    }
 
-                await new SynchronizationContextRemover();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                ex.ConsoleWrite();
+                return (null, false, ex);
+            }
+
+        }
+
+        public async Task<(string Response, bool Success, Exception Error)> PostRaw(string url, CancellationToken? ct = null)
+        {
+            if (!IsConnected)
+            {
+                return (null, false, new NetworkException("Network Connection Error"));
+            }
+
+            try
+            {
+                var token = ct ?? CancellationToken.None;
+                using (var srvResponse = await Client.GetAsync(url, token))
+                {
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
+                    if (srvResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        return (jsonResult, true, null);
+                    }
+                    else
+                    {
+                        return (null, false, new ApplicationException(jsonResult));
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ConsoleWrite();
+                return (null, false, ex);
+            }
+
+        }
+
+        public async Task<(T Response, bool Success, Exception Error)> Post<T>(string url, object obj, CancellationToken? ct = null) where T : class, new()
+        {
+            if (!IsConnected)
+            {
+                return (null, false, new NetworkException("Network Connection Error"));
+            }
+
+            try
+            {
+                var token = ct ?? CancellationToken.None;
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json")))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
+                        srvResponse.EnsureSuccessStatusCode();
                         json = await GetStringContent<T>(srvResponse);
                         var response = await DeserializeObject<T>(json);
                         json = string.Empty;
@@ -446,24 +501,23 @@ namespace Xamarin.Forms.Core
             }
 
         }
+
         public async Task<(T Response, bool Success, Exception Error)> Put<T>(string url, object obj, CancellationToken? ct = null) where T : class, new()
         {
             if (!IsConnected)
             {
-                return (null, false, new ApplicationException("Network Connection Error"));
+                return (null, false, new NetworkException("Network Connection Error"));
             }
 
             try
             {
                 var token = ct ?? CancellationToken.None;
-
-                await new SynchronizationContextRemover();
-
                 var data = JsonConvert.SerializeObject(obj);
                 using (var srvResponse = await Client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))
                 {
                     if (CoreSettings.Config.HttpSettings.DisplayRawJson)
                     {
+                        srvResponse.EnsureSuccessStatusCode();
                         json = await GetStringContent<T>(srvResponse);
                         var response = await DeserializeObject<T>(json);
                         json = string.Empty;
@@ -484,6 +538,70 @@ namespace Xamarin.Forms.Core
                 return (null, false, ex);
             }
 
+        }
+
+        public async Task<(string Response, bool Success, Exception Error)> PutRaw(string url, string data, CancellationToken? ct = null)
+        {
+            if (!IsConnected)
+            {
+                return (null, false, new NetworkException("Network Connection Error"));
+            }
+
+            try
+            {
+                var token = ct ?? CancellationToken.None;
+                using (var srvResponse = await Client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json"), token))
+                {
+                    var jsonResult = await srvResponse.Content.ReadAsStringAsync();
+                    if (srvResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        return (jsonResult, true, null);
+                    }
+                    else
+                    {
+                        return (null, false, new ApplicationException(jsonResult));
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ConsoleWrite();
+                return (null, false, ex);
+            }
+
+        }
+
+        public async Task<(bool Success, Exception Error)> Delete(string url, CancellationToken? ct = null)
+        {
+            if (!IsConnected)
+            {
+                return (false, new NetworkException("Network Connection Error"));
+            }
+            try
+            {
+                var token = ct ?? CancellationToken.None;
+                using (var srvResponse = await Client.DeleteAsync(url, token))
+                {
+                    if (CoreSettings.Config.HttpSettings.DisplayRawJson)
+                    {
+                        srvResponse.EnsureSuccessStatusCode();
+                        var strResponse = await srvResponse.Content.ReadAsStringAsync();
+                        return (true, null);
+                    }
+                    else
+                    {
+                        srvResponse.EnsureSuccessStatusCode();
+                        return (true, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ConsoleWrite(true);
+                return (false, ex);
+
+            }
         }
 
         public async Task<string> GetStringContent<T>(HttpResponseMessage response) where T : class, new()
@@ -577,6 +695,7 @@ namespace Xamarin.Forms.Core
                 IsConnected = true;
             }
 
+            CoreDependencyService.SendViewModelMessage(CoreSettings.NetworkConnectivityChanged, IsConnected);
         }
 
     }

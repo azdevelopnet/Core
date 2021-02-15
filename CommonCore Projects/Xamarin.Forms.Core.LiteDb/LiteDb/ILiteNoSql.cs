@@ -21,5 +21,6 @@ namespace Xamarin.Forms.Core
         Task<(bool Success, Exception Error)> Update<T>(T obj) where T : LiteDbModel, new();
         Task<(List<T> Response, Exception Error)> Get<T>(Expression<Func<T, bool>> exp) where T : LiteDbModel, new();
         Task BulkSync<T>(List<T> list) where T : LiteDbModel, new();
+        Task<(bool Success, Exception Error)> DeleteAll<T>() where T : LiteDbModel, new();
     }
 }

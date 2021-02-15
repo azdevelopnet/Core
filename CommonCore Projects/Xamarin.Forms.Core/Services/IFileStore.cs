@@ -11,5 +11,6 @@ namespace Xamarin.Forms.Core
 		Task<(bool Success, Exception Error)> SaveAsync<T>(string contentName, object obj);
         Task<(string Response, bool Success, Exception Error)> GetStringAsync(string contentName);
 		Task<(bool Success, Exception Error)> SaveStringAsync(string contentName, string obj);
+		Task<bool> FileExists(string contentName);
 	}
 }

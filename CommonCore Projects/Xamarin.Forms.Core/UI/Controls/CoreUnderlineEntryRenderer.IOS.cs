@@ -96,6 +96,7 @@ namespace Xamarin.Forms.Core
                     {
                         formControl.IsPassword = !formControl.IsPassword;
                         var fileName = formControl.IsPassword ? formControl.PasswordRevealIcon : formControl.PasswordHideIcon;
+                        
                         imgView.Image = new UIImage(fileName).ChangeImageColor(formControl.EntryColor.ToUIColor());
                     };
                     paddingView.AddSubview(btn);

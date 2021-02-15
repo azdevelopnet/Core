@@ -2,37 +2,45 @@
 using System;
 using Xamarin.Forms.Core;
 using UIKit;
+using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BlurOverlay))]
 namespace Xamarin.Forms.Core
 {
-    //https://blog.xamarin.com/adding-view-effects-in-ios-8/
 	public class BlurOverlay : IBlurOverlay
 	{
-		public static UIVisualEffectView visualEffectView;
+        public Task BlurAsync()
+        {
+            var controller = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            _blurredView = CreateBlurEffectView(controller);
+            controller.View.AddSubview(_blurredView);
 
-		public void Show()
-		{
-			var controller = GetUIController();
-			UIVisualEffect blurEffect = UIBlurEffect.FromStyle(UIBlurEffectStyle.Regular);
-			visualEffectView = new UIVisualEffectView(blurEffect);
-			visualEffectView.Frame = controller.View.Bounds;
-			controller.View.AddSubview(visualEffectView);
-		}
+            return Task.FromResult(true);
+        }
 
-		public void Hide()
-		{
-			visualEffectView?.RemoveFromSuperview();
-		}
+        public void Unblur()
+        {
+            if (_blurredView == null)
+            {
+                return;
+            }
 
-		private UIViewController GetUIController()
-		{
-			var win = UIApplication.SharedApplication.KeyWindow;
-			var vc = win.RootViewController;
-			while (vc.PresentedViewController != null)
-				vc = vc.PresentedViewController;
-			return vc;
-		}
-	}
+            _blurredView.RemoveFromSuperview();
+            _blurredView.Dispose();
+            _blurredView = null;
+        }
+
+        private UIVisualEffectView CreateBlurEffectView(UIViewController controller)
+        {
+            var blurEffect = UIBlurEffect.FromStyle(UIBlurEffectStyle.Light);
+            var blurEffectView = new UIVisualEffectView(blurEffect);
+            blurEffectView.Frame = controller.View.Bounds;
+            blurEffectView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+
+            return blurEffectView;
+        }
+
+        private UIVisualEffectView _blurredView;
+    }
 }
 #endif

@@ -6,6 +6,7 @@ using Xamarin.Forms.Core;
 using Xamarin.Forms;
 using Android.Content;
 using Plugin.CurrentActivity;
+using Android.Views;
 
 [assembly: Xamarin.Forms.Dependency(typeof(DialogPrompt))]
 namespace Xamarin.Forms.Core
@@ -72,21 +73,55 @@ namespace Xamarin.Forms.Core
             }
         }
 
+        public void ShowInputMessage(string title, string message, string placeholder, string defaultValue, Action<string> callBack)
+        {
+            var dlg = new AlertDialog.Builder(Ctx);
+            dlg.SetTitle(title);
+
+            var edit = new EditText(Ctx);
+            if (!string.IsNullOrEmpty(placeholder))
+                edit.Hint = placeholder;
+            if (!string.IsNullOrEmpty(defaultValue))
+                edit.Text = defaultValue;
+
+            var layout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
+            layout.SetMargins(30, 20, 30, 0);
+            edit.LayoutParameters = layout;
+           
+            dlg.SetView(edit);
+
+            dlg.SetNegativeButton("CANCEL", (s, a) => {
+                callBack?.Invoke(null);
+                ((AlertDialog)s).Dismiss();
+            });
+
+            dlg.SetPositiveButton("OK", (s, a) =>
+            {
+                callBack?.Invoke(edit.Text);
+                ((AlertDialog)s).Dismiss();
+            });
+
+            var dialog = dlg.Show();
+
+        }
+
         public void ShowActionSheet(string title, string subTitle, string[] list, Action<int> callBack, PromptMetaData metaData)
         {
+            int idx = -1;
             var dlg = new AlertDialog.Builder(Ctx);
             dlg.SetTitle(title);
             dlg.SetSingleChoiceItems(list, -1, (s, a) =>
             {
-
-                var index = list.IndexOf(list[a.Which]);
-                callBack?.Invoke(index);
-                ((AlertDialog)s).Dismiss();
-
+                idx = list.IndexOf(list[a.Which]);
             });
-            dlg.SetPositiveButton("Cancel", (s, a) =>
+            dlg.SetNegativeButton("CANCEL", (s, a) => {
+                callBack?.Invoke(-1);
+                ((AlertDialog)s).Dismiss();
+            });
+            dlg.SetPositiveButton("OK", (s, a) =>
             {
-
+                callBack?.Invoke(idx);
+                ((AlertDialog)s).Dismiss();
             });
 
             var dialog = dlg.Show();

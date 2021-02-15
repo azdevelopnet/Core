@@ -15,6 +15,10 @@ using Graphics = Android.Graphics;
 using Object = Java.Lang.Object;
 using Plugin.CurrentActivity;
 using Android.Content;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 
 [assembly: ExportRenderer(typeof(CoreDatePicker), typeof(CoreDatePickerRenderer))]
 namespace Xamarin.Forms.Core
@@ -23,6 +27,8 @@ namespace Xamarin.Forms.Core
     {
         DatePickerDialog _dialog;
         bool _disposed;
+
+        public CoreDatePicker ElementV2 => Element as CoreDatePicker;
 
         public CoreDatePickerRenderer(Context ctx) :base(ctx)
         {
@@ -46,7 +52,15 @@ namespace Xamarin.Forms.Core
 
         protected override EditText CreateNativeControl()
         {
-            return new EditText(Context) { Focusable = false, Clickable = true, Tag = this };
+            var control =  new EditText(Context) { Focusable = false, Clickable = true, Tag = this };
+            if (!ElementV2.IsEnterUnderline)
+            {
+                UpdateBackground(control);
+            }
+
+            LoadControlImage();
+
+            return control;
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<CoreDatePicker> e)
@@ -58,7 +72,7 @@ namespace Xamarin.Forms.Core
                 var textField = CreateNativeControl();
                 textField.SetSingleLine(true);
 
-                if (e.NewElement != null)
+                if (e.NewElement != null && ElementV2.IsEnterUnderline)
                 {
                     var ctrl = (CoreDatePicker)e.NewElement;
                     if (ctrl != null && ctrl.EntryColor != null && textField != null)
@@ -70,11 +84,14 @@ namespace Xamarin.Forms.Core
                 textField.SetOnClickListener(TextFieldClickHandler.Instance);
                 SetNativeControl(textField);
             }
+            
 
             SetDate(Element.Date);
 
             UpdateMinimumDate();
             UpdateMaximumDate();
+
+            LoadControlImage();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -82,11 +99,22 @@ namespace Xamarin.Forms.Core
             base.OnElementPropertyChanged(sender, e);
 
             if (e.PropertyName == CoreDatePicker.DateProperty.PropertyName || e.PropertyName == CoreDatePicker.FormatProperty.PropertyName)
+            {
                 SetDate(Element.Date);
-            else if (e.PropertyName == CoreDatePicker.MinimumDateProperty.PropertyName)
+            }
+            if (e.PropertyName == CoreDatePicker.MinimumDateProperty.PropertyName)
+            {
                 UpdateMinimumDate();
-            else if (e.PropertyName == CoreDatePicker.MaximumDateProperty.PropertyName)
+            }
+            if (e.PropertyName == CoreDatePicker.MaximumDateProperty.PropertyName)
+            {
                 UpdateMaximumDate();
+            }
+            if (e.PropertyName == CoreEntry.ImageProperty.PropertyName)
+            {
+                LoadControlImage();
+            }
+
 
         }
 
@@ -117,10 +145,7 @@ namespace Xamarin.Forms.Core
                 view.Date = e.Date;
                 ((IElementController)view).SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
                 Control.ClearFocus();
-
-
                 _dialog.CancelEvent -= OnCancelButtonClicked;
-
                 _dialog = null;
             }, year, month, day);
         }
@@ -178,6 +203,43 @@ namespace Xamarin.Forms.Core
             {
                 _dialog.DatePicker.MinDate = (long)Element.MinimumDate.ToUniversalTime().Subtract(DateTime.MinValue.AddYears(1969)).TotalMilliseconds;
             }
+        }
+
+        protected void UpdateBackground(EditText control)
+        {
+            if (control == null) return;
+
+            var gd = new GradientDrawable();
+            gd.SetColor(Element.BackgroundColor.ToAndroid());
+            gd.SetCornerRadius(Context.ToPixels(ElementV2.CornerRadius));
+            gd.SetStroke((int)Context.ToPixels(ElementV2.BorderThickness), ElementV2.BorderColor.ToAndroid());
+            control.SetPadding(15, 15, 15, 15);
+            control.SetBackground(gd);
+        }
+
+        private void LoadControlImage()
+        {
+            if (Control != null && Element != null)
+            {
+                if (ElementV2.Image != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        var bitMapDrawable = await GetDrawable(ElementV2.Image);
+                        Control.CompoundDrawablePadding = 10;
+                        Control.SetCompoundDrawablesWithIntrinsicBounds(null, null, bitMapDrawable, null);
+                    });
+
+                }
+            }
+        }
+
+        private async Task<BitmapDrawable> GetDrawable(ImageSource source)
+        {
+            var element = (CoreDatePicker)this.Element;
+            var bitMap = await source.ToBitmap();
+            var bitMapDrawable = new BitmapDrawable(Resources, Bitmap.CreateScaledBitmap(bitMap, (element.ImageWidth * 2), element.ImageHeight * 2, true));
+            return bitMapDrawable;
         }
 
         class TextFieldClickHandler : Object, IOnClickListener

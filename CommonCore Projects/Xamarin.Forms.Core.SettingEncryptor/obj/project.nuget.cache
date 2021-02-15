@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "bvtMbyGMU2Ce+/mu9Q9YcP2Z5Cu8BgH+fZNHp2MW7W9C/MkdHFGbbE55O9u6R/zy8liFGAtDIgwN6x/NK5tvnA==",
+  "success": true,
+  "projectFilePath": "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/Xamarin.Forms.Core.SettingEncryptor.csproj",
+  "expectedPackageFiles": [
+    "/Users/lesbrown/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -176,8 +176,8 @@ namespace Xamarin.Forms.Core
                 return await Task.Run(() =>
                 {
                     var collection = db.GetCollection<T>(typeof(T).Name);
-                    var result = collection.Delete(x => x.Id == obj.Id);
-					response.Success = result > 0 ? true : false;
+                    var result = collection.Delete(new BsonValue(obj.Id));
+                    response.Success = result;
                     return response;
                 });
 			}
@@ -191,6 +191,33 @@ namespace Xamarin.Forms.Core
 				semaphore.Release();
 			}
 		}
+
+        public async Task<(bool Success, Exception Error)> DeleteAll<T>() where T : LiteDbModel, new()
+        {
+            (bool Success, Exception Error) response = (false, null);
+
+            await semaphore.WaitAsync();
+
+            try
+            {
+                return await Task.Run(() =>
+                {
+                    var collection = db.GetCollection<T>(typeof(T).Name);
+                    var result = collection.DeleteAll();
+                    response.Success = result == 0 ? false : true;
+                    return response;
+                });
+            }
+            catch (Exception ex)
+            {
+                response.Error = ex;
+                return response;
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
 
         public async Task BulkSync<T>(List<T> list) where T : LiteDbModel, new()
         {
@@ -227,10 +254,9 @@ namespace Xamarin.Forms.Core
 				return await Task.Run(() =>
 				{
 					var collection = db.GetCollection<T>(typeof(T).Name);
-					var result = collection.Delete(x => x.Id == Id);
-  
-                    response.Success = result > 0 ? true : false;
-					return response;
+                    var result = collection.Delete(new BsonValue(Id));
+                    response.Success = result;
+                    return response;
 				});
 			}
 			catch (Exception ex)

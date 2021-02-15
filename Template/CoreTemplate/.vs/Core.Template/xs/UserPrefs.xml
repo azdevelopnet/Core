@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{910E4C8C-85ED-40A1-8568-054BE9B272BB}|Default">
+  <MonoDevelop.Ide.ItemProperties.Core.Template.Core FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Core.Template.Android TriggeredFromHotReload="False" PreferredExecutionTarget="Android.pixel_2_pie_9_0_-_api_28" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Template.iOS/AppDelegate.cs">
+    <Files>
+      <File FileName="Core.Template.Android/MainApplication.cs" Line="36" Column="56" />
+      <File FileName="Core.Template.Android/MainActivity.cs" />
+      <File FileName="Core.Template.Core/Partials/SettingsPartial.cs" />
+      <File FileName="Core.Template.Android/SplashScreenActivity.cs" />
+      <File FileName=".template.config/template.json" Line="29" Column="14" />
+      <File FileName="Core.Template.iOS/AppDelegate.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Core.Template" expanded="True" selected="True">
+            <Node name=".template.config" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Core.Template.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.7BCA69A9-3388-481A-A2D8-14639B9F7F9C" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Adhoc" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

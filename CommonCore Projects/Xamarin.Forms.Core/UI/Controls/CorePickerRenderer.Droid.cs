@@ -18,6 +18,8 @@ using System.Reflection;
 using Plugin.CurrentActivity;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
+using RectShape = Android.Graphics.Drawables.Shapes.RectShape;
 
 [assembly: ExportRenderer(typeof(CorePicker), typeof(CorePickerRenderer))]
 namespace Xamarin.Forms.Core
@@ -74,13 +76,22 @@ namespace Xamarin.Forms.Core
                     textField.Clickable = true;
                     textField.Tag = this;
                     textField.InputType = InputTypes.Null;
+                    
 
                     textField.TextSize = (float)element.FontSize;
-                    if (element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
+                    if (element.FontFamily!=null && element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
                     {
                         var file = element.FontFamily.Split('#')[0];
                         var fontFace = Typeface.CreateFromAsset(this.Context.Assets, file);
                         textField.SetTypeface(fontFace, TypefaceStyle.Normal);
+                    }
+
+                    if (!element.IsEntryUnderline)
+                    {
+                        var shape = new ShapeDrawable(new RectShape());
+                        shape.Paint.Color = Xamarin.Forms.Color.LightGray.ToAndroid();
+                        shape.Paint.SetStyle(Paint.Style.Stroke);
+                        textField.Background = shape;
                     }
 
 
@@ -98,7 +109,7 @@ namespace Xamarin.Forms.Core
                 else
                 {
                     Control.TextSize = (float)element.FontSize;
-                    if (element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
+                    if (element.FontFamily != null && element.FontFamily.IndexOf("#", StringComparison.CurrentCultureIgnoreCase) != -1)
                     {
                         var file = element.FontFamily.Split('#')[0];
                         var fontFace = Typeface.CreateFromAsset(this.Context.Assets, file);
@@ -254,7 +265,7 @@ namespace Xamarin.Forms.Core
  
             if (element == null)
                 element = Element as CorePicker;
-            if (element.Placeholder != null)
+            if (element.Placeholder != null && Control!=null)
                 Control.Hint = element.Placeholder;
         }
 

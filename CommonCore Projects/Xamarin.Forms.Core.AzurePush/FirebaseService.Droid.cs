@@ -1,10 +1,13 @@
 ﻿#if __ANDROID__
+using System.Collections.Generic;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
+using AndroidX.Core.App;
+using AndroidX.Legacy.Content;
 using Firebase.Messaging;
-using System.Linq;
 
 namespace Xamarin.Forms.Core.AzurePush
 {
@@ -22,57 +25,35 @@ namespace Xamarin.Forms.Core.AzurePush
         }
         public override void OnMessageReceived(RemoteMessage message)
         {
+            var dict = new Dictionary<string, string>();
             base.OnMessageReceived(message);
-            string messageBody = string.Empty;
 
             if (message.GetNotification() != null)
             {
-                messageBody = message.GetNotification().Body;
+                dict.Add("Title", message.GetNotification().Title);
+                dict.Add("Message", message.GetNotification().Body);
+                foreach(var key in message.Data.Keys)
+                {
+                    dict.Add(key, message.Data[key]);
+                }
             }
 
             // NOTE: test messages sent via the Azure portal will be received here
             else
             {
-                messageBody = message.Data.Values.First();
+                foreach (var key in message.Data.Keys)
+                {
+                    dict.Add(key, message.Data[key]);
+                }
             }
 
-            // convert the incoming message to a local notification
-            SendLocalNotification(messageBody);
+            CoreDependencyService.SendViewModelMessage(CoreSettings.RemoteNotificationReceived, dict);
 
-            // send the incoming message directly to the MainPage
-            SendMessageToMainPage(messageBody);
+            CoreDependencyService.GetDependency<INotificationManager>().SendNotification(dict["Title"], dict["Message"]);
+
+
         }
 
-        void SendLocalNotification(string body)
-        {
-            var notificationChannelName = CoreSettings.Config.AzurePushSettings.NotificationChannelName;
-
-            var intent = new Intent(this, CoreSettings.MainActivity);
-            intent.AddFlags(ActivityFlags.ClearTop);
-            intent.PutExtra("message", body);
-            var pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.OneShot);
-
-            var notificationBuilder = new NotificationCompat.Builder(this, notificationChannelName)
-                .SetContentTitle("Notification Center Message")
-                .SetSmallIcon(CoreSettings.AppIcon)
-                .SetContentText(body)
-                .SetAutoCancel(true)
-                .SetShowWhen(false)
-                .SetContentIntent(pendingIntent);
-
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
-            {
-                notificationBuilder.SetChannelId(notificationChannelName);
-            }
-
-            var notificationManager = NotificationManager.FromContext(this);
-            notificationManager.Notify(0, notificationBuilder.Build());
-        }
-
-        void SendMessageToMainPage(string body)
-        {
-            CoreDependencyService.SendViewModelMessage(CoreSettings.RemoteNotificationReceived, body);
-        }
     }
 }
 #endif

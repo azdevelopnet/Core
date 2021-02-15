@@ -1,0 +1,38 @@
+{
+  "AppLinkUrl": "http://www.somesite.com/page/{0}",
+  "AESEncryptionKey": "/WRiHtn1P9T5e/jgzhql6IMGBY85Y2SP1M7TWiP+0hc=",
+  "HttpSettings": {
+    "DisplayRawJson": false,
+    "HttpTimeOut": 0,
+    "HttpAllowAutoRedirect": false,
+    "IOSHttpHandler": "ModernHttpClient",
+    "AndroidHttpHandler": "ModernHttpClient",
+    "GZipEnabled": false
+  },
+  "SocialMedia": null,
+  "MobileAppCenter": {
+    "IOSAppId": "LvmW6sGFPKf6A651+8efN1nTgvP0KU4EYgHijQKY66m4YGYDejjH8brXyuA78VWsOPQhWOAlowbwfX+yVo9w1A==",
+    "AndroidAppId": "68pyy/njlkp7hg+S9wf8JYM9Fl8VzDOfebDrU30svrhLBpsDk+uCcOnDkUgkqxjMZoEpPcjufpS9PRCT1m3kgg==",
+    "UWPAppId": "lwnvr4QOlO/IWvUJ1C1YombjRYn4RfEMTRo8aUQP2Qc="
+  },
+  "WebApi": {
+    "BaseAPI": "WzHzjnAZY8HYyvEpoUzRi+AHHeo4SEWVdMFlpCFbrL6t2tmbdP9rZjUERtXjdZZiRyey3w4x7d53sklb8maokA==",
+    "NotificationAPI": "IVpg3By9tBJSFlDE6FbvzT5zvmM8vbtIjf/vhB2HRew="
+  },
+  "CustomSettings": {
+    "IsBiometricEnabled": "MSWgMlu3/hDDdg9Il0CndDoxgBgogFsf6jthFUFoxOE=",
+    "VerboseMessaging": "MOe3oZqnZVotXLtglLHeXckrZoTbX4uW9naeE5Vzw1Y=",
+    "OfflineEnabled": "uloxx3mibKq+nr0NyhZ1E7KtH8FRS0SRf3zIVXln34k="
+  },
+  "AzurePushSettings": {
+    "NotificationChannelName": "YP8VMoRRvh6sr4yGam3RxQdZfQ5EeWzgEHlu8tp59Xk=",
+    "NotificationHubName": "ZUwgPfYwNns/Iw2P0ABsi23x+oJsbV8M51UJtM7sKMI=",
+    "ListenConnectionString": "i242b3EraVC8CUzI7+apu3Z2UmC8KGG5ueTVwlUbLY4=",
+    "DebugTag": "a/PAdE6//kBfncAtDDVdytIZ1fYBDt6rEB4gecIT2R8=",
+    "SubscriptionTags": [
+      "default"
+    ],
+    "FCMTemplateBody": "{\"data\":{\"message\":\"$(messageParam)\"}}",
+    "APNTemplateBody": "{\"aps\":{\"alert\":\"$(messageParam)\"}}"
+  }
+}

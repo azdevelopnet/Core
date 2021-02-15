@@ -8,6 +8,7 @@ using System.Reflection;
 using Xamarin.Forms.Platform.iOS;
 using System.Threading.Tasks;
 using NodaTime;
+using XFPlatform = Xamarin.Forms.Platform.iOS.Platform;
 
 namespace Xamarin.Forms.Core
 {
@@ -25,34 +26,7 @@ namespace Xamarin.Forms.Core
 				return false;
 			}
 		}
-        /// <summary>
-        /// Tos the local notification.
-        /// </summary>
-        /// <returns>The local notification.</returns>
-        /// <param name="userInfo">User info.</param>
-        public static LocalNotification ToLocalNotification(this NSDictionary userInfo)
-        {
-            var notification = new LocalNotification();
-            if (null != userInfo && userInfo.ContainsKey(new NSString("aps")))
-            {
-                NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
-                NSDictionary alert = null;
-                if (aps.ContainsKey(new NSString("alert")))
-                    alert = aps.ObjectForKey(new NSString("alert")) as NSDictionary;
-                if (alert != null)
-                {
-                    notification.Title = (alert[new NSString("title")] as NSString).ToString();
-                    notification.SubTitle = (alert[new NSString("subtitle")] as NSString).ToString();
-                    notification.Message = (alert[new NSString("body")] as NSString).ToString();
-                    if (aps.ContainsKey(new NSString("badge")))
-                    {
-                        var cnt = (alert[new NSString("badge")] as NSString).ToString();
-                        notification.Badge = int.Parse(cnt);
-                    }
-                }
-            }
-            return notification;
-        }
+
         /// <summary>
         /// Changes the color of the image.
         /// </summary>
@@ -205,39 +179,32 @@ namespace Xamarin.Forms.Core
 
         public static UIView ConvertFormsToNative(this Xamarin.Forms.View view)
         {
-    
-            var renderer = RendererFactory.GetRenderer(view);
+            var renderer = view.GetOrCreateRenderer();
             var size = new CGRect(view.X, view.Y, view.Width, view.Height);
             renderer.NativeView.Frame = size;
-
             renderer.NativeView.AutoresizingMask = UIViewAutoresizing.All;
             renderer.NativeView.ContentMode = UIViewContentMode.ScaleToFill;
-
             renderer.Element.Layout(size.ToRectangle());
-
             var nativeView = renderer.NativeView;
-
             nativeView.SetNeedsLayout();
-
             return nativeView;
         }
 
         public static Task<UIImage> ToUIImage(this ImageSource imageSource)
         {
-            IImageSourceHandler handler = null;
-            if (imageSource is UriImageSource)
-            {
-                handler = new ImageLoaderSourceHandler();
-            }
-            else if (imageSource is FileImageSource)
-            {
-                handler = new FileImageSourceHandler();
-            }
-            else if (imageSource is StreamImageSource)
-            {
-                handler = new StreamImagesourceHandler();
-            }
+            IImageSourceHandler handler = imageSource.GetHandler();
             return handler.LoadImageAsync(imageSource);
+        }
+
+        public static IVisualElementRenderer GetOrCreateRenderer(this VisualElement bindable)
+        {
+            var renderer = XFPlatform.GetRenderer(bindable);
+            if (renderer == null)
+            {
+                renderer = XFPlatform.CreateRenderer(bindable);
+                XFPlatform.SetRenderer(bindable, renderer);
+            }
+            return renderer;
         }
     }
 }

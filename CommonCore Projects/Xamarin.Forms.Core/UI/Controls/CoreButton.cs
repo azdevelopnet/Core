@@ -38,19 +38,17 @@ namespace Xamarin.Forms.Core
         }
 
 
-        /// <summary>
-        /// Rounding arc for the button corners
-        /// </summary>
-        //public static readonly BindableProperty CornerRadiusProperty =
-        //    BindableProperty.Create("CornerRadius",
-        //                            typeof(float),
-        //                            typeof(CoreButton),
-        //                            0f);
-        //public float CornerRadius
-        //{
-        //    get { return (float)this.GetValue(CornerRadiusProperty); }
-        //    set { this.SetValue(CornerRadiusProperty, value); }
-        //}
+
+        public new static readonly BindableProperty CornerRadiusProperty =
+            BindableProperty.Create("CornerRadius",
+                                    typeof(float),
+                                    typeof(CoreButton),
+                                    0f);
+        public new float CornerRadius
+        {
+            get { return (float)this.GetValue(CornerRadiusProperty); }
+            set { this.SetValue(CornerRadiusProperty, value); }
+        }
 
         /// <summary>
         /// Color that extends off the button as a shadow

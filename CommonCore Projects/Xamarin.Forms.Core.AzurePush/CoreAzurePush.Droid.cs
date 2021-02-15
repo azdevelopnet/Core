@@ -8,14 +8,12 @@ using Android.OS;
 using Android.Util;
 using Plugin.CurrentActivity;
 using WindowsAzure.Messaging;
+using AppNotificationManager = Android.App.NotificationManager;
 
 namespace Xamarin.Forms.Core.AzurePush
 {
     public class CoreAzurePush
     {
-        static string listenConnectionString = CoreSettings.Config.AzurePushSettings.ListenConnectionString;
-        static string NotificationHubName = CoreSettings.Config.AzurePushSettings.NotificationHubName;
-        static string debugTag = CoreSettings.Config.AzurePushSettings.DebugTag;
         static string fcmTemplateBody = CoreSettings.Config.AzurePushSettings.FCMTemplateBody;
 
         static string notificationChannelName = CoreSettings.Config.AzurePushSettings.NotificationChannelName;
@@ -49,10 +47,10 @@ namespace Xamarin.Forms.Core.AzurePush
             if (resultCode != ConnectionResult.Success)
             {
                 if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
-                    Log.Debug(debugTag, GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                    Log.Debug(CoreSettings.Config.AzurePushSettings.DebugTag, GoogleApiAvailability.Instance.GetErrorString(resultCode));
                 else
                 {
-                    Log.Debug(debugTag, "This device is not supported");
+                    Log.Debug(CoreSettings.Config.AzurePushSettings.DebugTag, "This device is not supported");
                 }
                 return false;
             }
@@ -67,8 +65,7 @@ namespace Xamarin.Forms.Core.AzurePush
                 {
                     try
                     {
-                        //tags = new string[] { "tony@starkindustries.com" };
-                        NotificationHub hub = new NotificationHub(NotificationHubName, listenConnectionString, Ctx);
+                        NotificationHub hub = new NotificationHub(CoreSettings.Config.AzurePushSettings.NotificationHubName, CoreSettings.Config.AzurePushSettings.ListenConnectionString, Ctx);
 
                         // register device with Azure Notification Hub using the token from FCM
                         Registration reg = hub.Register(CoreSettings.DeviceToken, tags);
@@ -80,7 +77,7 @@ namespace Xamarin.Forms.Core.AzurePush
                     }
                     catch (Exception e)
                     {
-                        Log.Error(debugTag, $"Error registering device: {e.Message}");
+                        Log.Error(CoreSettings.Config.AzurePushSettings.DebugTag, $"Error registering device: {e.Message}");
 
                     }
                 }
@@ -101,7 +98,7 @@ namespace Xamarin.Forms.Core.AzurePush
                     Description = channelDescription
                 };
             
-                var notificationManager = (NotificationManager)Ctx.GetSystemService(Context.NotificationService);
+                var notificationManager = (AppNotificationManager)Ctx.GetSystemService(Context.NotificationService);
                 notificationManager.CreateNotificationChannel(channel);
             }
         }

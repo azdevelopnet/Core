@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.Core
 {
-    public class CoreMasterDetailPage<T> : MasterDetailPage
+    public class CoreMasterDetailPage<T> : FlyoutPage
         where T : CoreViewModel
     {
         public T VM { get; set; }
@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Core
     }
 
 
-    public class CoreMasterDetailPage : MasterDetailPage
+    public class CoreMasterDetailPage : FlyoutPage
     {
         string viewModel;
 

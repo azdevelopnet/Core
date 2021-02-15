@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/Xamarin.Forms.Core.SettingEncryptor.csproj": {}
+  },
+  "projects": {
+    "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/Xamarin.Forms.Core.SettingEncryptor.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/Xamarin.Forms.Core.SettingEncryptor.csproj",
+        "projectName": "Xamarin.Forms.Core.SettingEncryptor",
+        "projectPath": "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/Xamarin.Forms.Core.SettingEncryptor.csproj",
+        "packagesPath": "/Users/lesbrown/.nuget/packages/",
+        "outputPath": "/Users/lesbrown/Documents/GitHub/Core/CommonCore Projects/Xamarin.Forms.Core.SettingEncryptor/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/lesbrown/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.102/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

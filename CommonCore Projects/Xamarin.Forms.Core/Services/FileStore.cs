@@ -19,6 +19,17 @@ namespace Xamarin.Forms.Core
             _serializer = new JsonSerializer();
         }
 
+        public async Task<bool> FileExists(string contentName)
+        {
+            await fileStoreLock.WaitAsync();
+            return await Task.Run(() => {
+                using (var isoStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    return isoStorage.FileExists(contentName);
+                }
+            });
+        }
+
         public async Task<(T Response, bool Success, Exception Error)> GetAsync<T>(string contentName) where T : class, new()
         {
             await fileStoreLock.WaitAsync();

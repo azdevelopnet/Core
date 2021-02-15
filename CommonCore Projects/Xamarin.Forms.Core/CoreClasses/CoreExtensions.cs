@@ -17,9 +17,16 @@ using System.Net.Http;
 using System.Net;
 using System.Collections.Specialized;
 using Xamarin.Forms.Core;
+using Xamarin.Forms;
+using System.IO;
+using Xamarin.Essentials;
+
 
 #if __ANDROID__
 using Android.OS;
+using Xamarin.Forms.Platform.Android;
+#else
+using Xamarin.Forms.Platform.iOS;
 #endif
 
 namespace Xamarin.Forms.Core
@@ -44,6 +51,113 @@ namespace Xamarin.Forms.Core
             }
         }
 
+        public static async Task<bool> HeightTo(this View view, double height, uint duration = 250, Easing easing = null)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            var heightAnimation = new Animation(x => view.HeightRequest = x, view.Height, height);
+            heightAnimation.Commit(view, "HeightAnimation", 10, duration, easing, (finalValue, finished) => { tcs.SetResult(finished); });
+
+            return await tcs.Task;
+        }
+
+        public static async Task<bool> WidthTo(this View view, double width, uint duration = 250, Easing easing = null)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            var heightAnimation = new Animation(x => view.WidthRequest = x, view.Height, width);
+            heightAnimation.Commit(view, "WidthAnimation", 10, duration, easing, (finalValue, finished) => { tcs.SetResult(finished); });
+
+            return await tcs.Task;
+        }
+
+        public static async Task<byte[]> ResizedImageArray(this FileResult photo, double width, int compressionRate = 50)
+        {
+            var stream = await photo.OpenReadAsync();
+            var array = await stream.ToByteArray();
+            var size = CoreDependencyService.GetDependency<IImageManager>().GetSize(array);
+            var newHeight = (float)size.Height;
+
+            if (size.Width > width)
+            {
+                var percentChange = (float)(width / size.Width);
+                newHeight = (float)(percentChange * size.Height);
+            }
+
+            return ImageResizer.ResizeImage(array, (float)width, newHeight, compressionRate);
+        }
+
+        public static void FocusNext(this StackLayout layout, int index)
+        {
+            var view = layout.Children.FirstOrDefault(x => x.TabIndex == index);
+            view?.Focus();
+        }
+
+
+        public static void FindViewByStyleId(this ILayoutController container, string styleId, ref object obj)
+        {
+            if (container is Layout)
+            {
+                var layout = (Layout)container;
+                if (layout.StyleId == styleId)
+                {
+                    obj = layout;
+                    return;
+                }
+            }
+
+            var view = container.Children.FirstOrDefault(x => x.StyleId == styleId);
+            if (view != null)
+            {
+                obj = view;
+                return;
+            }
+            else
+            {
+                foreach (var item in container.Children)
+                {
+                    if (item is ILayoutController)
+                    {
+                        ((ILayoutController)item).FindViewByAutomationId(styleId, ref obj);
+                    }
+                }
+            }
+
+
+        }
+
+
+        public static void FindViewByAutomationId(this ILayoutController container, string automationId, ref object obj)
+        {
+            if (container is Layout)
+            {
+                var layout = (Layout)container;
+                if (layout.AutomationId == automationId)
+                {
+                    obj = layout;
+                    return;
+                }
+            }
+
+            var view = container.Children.FirstOrDefault(x => x.AutomationId == automationId);
+            if (view != null)
+            {
+                obj = view;
+                return;
+            }
+            else
+            {
+                foreach (var item in container.Children)
+                {
+                    if (item is ILayoutController)
+                    {
+                        ((ILayoutController)item).FindViewByAutomationId(automationId, ref obj);
+                    }
+                }
+            }
+
+
+        }
 
         public static T OnIdiom<T>(this object call, params T[] parameters)
         {
@@ -76,6 +190,81 @@ namespace Xamarin.Forms.Core
             }
 
             return obj;
+        }
+
+        public static void ClearInstanceResources(this object obj)
+        {
+            foreach (var prop in obj.GetType().GetProperties().Where(x => x.CanWrite))
+            {
+                try
+                {
+                    if (prop.PropertyType.IsClass)
+                        prop.SetValue(obj, null);
+                }
+                catch { }
+            }
+            foreach (var field in obj.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                try
+                {
+                    if (field.FieldType.IsClass)
+                        field.SetValue(obj, null);
+                }
+                catch { }
+            }
+        }
+
+        public static IImageSourceHandler GetHandler(this ImageSource source)
+        {
+            IImageSourceHandler returnValue = null;
+            if (source is UriImageSource)
+            {
+                returnValue = new ImageLoaderSourceHandler();
+            }
+            else if (source is FileImageSource)
+            {
+                returnValue = new FileImageSourceHandler();
+            }
+            else if (source is StreamImageSource)
+            {
+                returnValue = new StreamImagesourceHandler();
+            }
+            else if (source is FontImageSource)
+            {
+                returnValue = new FontImageSourceHandler();
+            }
+            return returnValue;
+        }
+
+        public static string[] SplitAndTrim(this string text, string separator)
+        {
+            var lst = text.Split(separator);
+
+            for (var x = 0; x < lst.Length; x++)
+                lst[x] = lst[x].ToLower().Trim();
+
+            return lst.ToArray();
+        }
+        public static async Task<string> ToBase64(this Stream stream)
+        {
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes, 0, (int)stream.Length);
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static async Task<byte[]> ToByteArray(this Stream stream)
+        {
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes, 0, (int)stream.Length);
+            return bytes;
+        }
+
+        public static string[] Trim(this string[] array)
+        {
+            var lst = new string[array.Length];
+            for (var x = 0; x < array.Length; x++)
+                lst[x] = array[x].Trim();
+            return lst;
         }
 
         public static T[] AddItem<T>(this T[] array, T obj)
@@ -582,16 +771,6 @@ namespace Xamarin.Forms.Core
             return (string)prop.GetValue(obj, null);
         }
 
-        /// <summary>
-        /// Returns an ObservableCollection from a set of enumerable items.
-        /// </summary>
-        /// <returns>The observable collection.</returns>
-        /// <param name="items">Items.</param>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static OptimizedObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> items)
-        {
-            return new OptimizedObservableCollection<T>(items);
-        }
 
         /// <summary>
         /// Add a range of IEnumerable collection to an existing Collection.
@@ -1071,6 +1250,34 @@ namespace Xamarin.Forms.Core
             return newObj;
         }
 
+        public static void ShallowCopy<T>(this T item, T copyfrom) where T : new()
+        {
+            foreach (var prop in typeof(T).GetProperties())
+            {
+                if (prop.CanRead && prop.CanWrite)
+                {
+                    prop.SetValue(item, prop.GetValue(copyfrom));
+                }
+            }
+        }
+
+        public static byte[] ReadAllBytes(this Stream instream)
+        {
+            if (instream is MemoryStream)
+                return ((MemoryStream)instream).ToArray();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                instream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+
+        public static T GetBoundItem<T>(this object view) where T : class, new()
+        {
+            return (T)((View)view).BindingContext;
+        }
+
         /// <summary>
         /// Removes the animations from page.
         /// </summary>
@@ -1159,17 +1366,6 @@ namespace Xamarin.Forms.Core
             return formattedString;
         }
 
-        //public static FormattedString AddTextSpan(this FormattedString formattedString, string text, Style style)
-        //{
-        //    formattedString.Spans.Add(new Span() { Text = text, Style = style });
-        //    return formattedString;
-        //}
-
-        //public static FormattedString AddTextSpan(this FormattedString formattedString, Style style)
-        //{
-        //    formattedString.Spans.Add(new Span() { Style = style });
-        //    return formattedString;
-        //}
 
         public static FormattedString AddSpan(this FormattedString formattedString, Span span)
         {
@@ -1233,7 +1429,7 @@ namespace Xamarin.Forms.Core
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         public static void PushNonAwaited<T>(this INavigation nav, bool animated = true) where T : ContentPage, new()
         {
-            CoreSettings.AppNav.PushAsync(new T(), animated).ConfigureAwait(false);
+            nav.PushAsync(new T(), animated).ConfigureAwait(false);
         }
         /// <summary>
         /// PushAysnc method with ConfigureAwait(false)
@@ -1243,7 +1439,7 @@ namespace Xamarin.Forms.Core
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public static void PushNonAwaited(this INavigation nav, ContentPage page, bool animated = true)
         {
-            CoreSettings.AppNav.PushAsync(page, animated).ConfigureAwait(false);
+            nav.PushAsync(page, animated).ConfigureAwait(false);
         }
         /// <summary>
         /// PopAysnc method with ConfigureAwait(false)
@@ -1252,7 +1448,7 @@ namespace Xamarin.Forms.Core
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public static void PopNonAwaited(this INavigation nav, bool animated = true)
         {
-            CoreSettings.AppNav.PopAsync(animated).ConfigureAwait(false);
+            nav.PopAsync(animated).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1410,55 +1606,43 @@ namespace Xamarin.Forms.Core
     }
 }
 
-namespace Xamarin.Forms.Markup
+namespace Xamarin.Forms.Helpers
 {
-    public static class CoreMarkupExtensions
+    public class Define
     {
-
-        public static TView BindTap<TView>(this TView view, Action action) where TView : View
+        public static RowDefinition Row(object obj)
         {
-            var gesture = new TapGestureRecognizer()
+            if (obj is string)
             {
-                Command = new Command(() => { action?.Invoke(); })
-            };
-            view.GestureRecognizers.Add(gesture);
-            return view;
-        }
-
-        #region Headless Compression for Android
-        public static StackLayout IsHeadless(this StackLayout layout)
-        {
-            if (CoreSettings.OS == DeviceOS.ANDROID)
-            {
-                CompressedLayout.SetIsHeadless(layout, true);
+                var num = double.Parse(((string)obj).Replace("*", string.Empty));
+                return new RowDefinition() { Height = new GridLength(num, GridUnitType.Star) };
             }
-            return layout;
-        }
-        public static AbsoluteLayout IsHeadless(this AbsoluteLayout layout)
-        {
-            if (CoreSettings.OS == DeviceOS.ANDROID)
+            else if (obj is GridLength)
             {
-                CompressedLayout.SetIsHeadless(layout, true);
+                return new RowDefinition() { Height = (GridLength)obj };
             }
-            return layout;
-        }
-        public static Grid IsHeadless(this Grid layout)
-        {
-            if (CoreSettings.OS == DeviceOS.ANDROID)
+            else
             {
-                CompressedLayout.SetIsHeadless(layout, true);
+                return new RowDefinition() { Height = new GridLength(double.Parse(obj.ToString()), GridUnitType.Star) };
             }
-            return layout;
         }
-        public static RelativeLayout IsHeadless(this RelativeLayout layout)
+        public static ColumnDefinition Column(object obj)
         {
-            if (CoreSettings.OS == DeviceOS.ANDROID)
+            if (obj is string)
             {
-                CompressedLayout.SetIsHeadless(layout, true);
+                var num = double.Parse(((string)obj).Replace("*", string.Empty));
+                return new ColumnDefinition() { Width = new GridLength(num, GridUnitType.Star) };
             }
-            return layout;
+            else if (obj is GridLength)
+            {
+                return new ColumnDefinition() { Width = (GridLength)obj };
+            }
+            else
+            {
+                return new ColumnDefinition() { Width = new GridLength(double.Parse(obj.ToString()), GridUnitType.Star) };
+            }
         }
-        #endregion
     }
 }
+
 

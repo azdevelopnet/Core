@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{BC69E116-300C-4CDF-8991-BE8D5782C6B1}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Core.Template.Core</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BusinessLogic\SomeBusinessLogic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SomeValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SomeObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ConfigPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ExtensionsPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\FontFamilyPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\SettingsPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\StylesPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Partials\ViewModelPartial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SomeViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\FontDemo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SomePage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)BusinessLogic\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Config\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Partials\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.dev.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.prod.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Config\settings\config.qa.json" />
+  </ItemGroup>
+</Project>

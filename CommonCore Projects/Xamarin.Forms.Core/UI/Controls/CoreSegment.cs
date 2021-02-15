@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.ComponentModel;
 
+
 namespace Xamarin.Forms.Core
 {
     [DesignTimeVisible(true)]
     public class CoreSegmentControl : ContentView
     {
-        private StackLayout _layout;
+        private Grid _layout;
 
         public static readonly BindableProperty CommandProperty =
             BindableProperty.Create("Command",
@@ -29,7 +30,8 @@ namespace Xamarin.Forms.Core
             BindableProperty.Create("SelectedIndex",
                                     typeof(int),
                                     typeof(CoreSegmentControl),
-                                    0);
+                                    0,
+                                    propertyChanged: IndexChangedEvent, defaultBindingMode: BindingMode.TwoWay);
 
         public static readonly BindableProperty FontSizeProperty =
             BindableProperty.Create("FontSize",
@@ -94,11 +96,7 @@ namespace Xamarin.Forms.Core
         public List<string> ItemsSource
         {
             get { return (List<string>)this.GetValue(ItemsSourceProperty); }
-            set
-            {
-                this.SetValue(ItemsSourceProperty, value);
-                RenderControl();
-            }
+            set { this.SetValue(ItemsSourceProperty, value); }
         }
 
 
@@ -157,10 +155,25 @@ namespace Xamarin.Forms.Core
             set { SetValue(BorderColorProperty, value); }
         }
 
+        public static void IndexChangedEvent(BindableObject bindable, object oldValue, object newvalue)
+        {
+            if (newvalue != null)
+            {
+                var ctrl = (CoreSegmentControl)bindable;
+                ctrl.SelectedIndex = (int)newvalue;
+                ctrl.OnPropertyChanged("SelectedIndex");
+                ctrl.OnPropertyChanged("SelectedIndexProperty");
+                ctrl.SegmentClickedByIndex((int)newvalue);
+            }
+
+        }
 
         public static void ItemsSourceChangedEvent(BindableObject bindable, object oldValue, object newvalue)
         {
-            ((CoreSegmentControl)bindable).RenderControl();
+            if (newvalue != null)
+            {
+                ((CoreSegmentControl)bindable).RenderControl();
+            }
         }
 
 
@@ -168,7 +181,7 @@ namespace Xamarin.Forms.Core
         {
             if (ItemsSource != null)
             {
-                _layout = new StackLayout() { Spacing = -1, Orientation = StackOrientation.Horizontal };
+                _layout = new Grid() { ColumnSpacing = -1 };
                 for (int x = 0; x < ItemsSource.Count; x++)
                 {
                     var seg = ItemsSource[x];
@@ -235,41 +248,45 @@ namespace Xamarin.Forms.Core
                     };
                     view.GestureRecognizers.Add(new TapGestureRecognizer()
                     {
-                        Command = new Command(() => {
-                            SegmentClicked(view);
+                        Command = new Command(() =>
+                        {
+                            SelectedIndex = ((Grid)this.Content).Children.IndexOf(view);
                         })
                     });
 
-                    _layout.Children.Add(view);
-
-
+                    _layout.AddChild(view, 0, x);
                 }
 
                 this.Content = _layout;
             }
         }
 
-        private void SegmentClicked(Xamarin.Forms.PancakeView.PancakeView view)
+        private void SegmentClickedByIndex(int idx)
         {
-            var stackLayout = (StackLayout)this.Content;
-            foreach (var item in stackLayout.Children)
+            if (this.Content != null && this.Content is Grid)
             {
-                var pancake = (Xamarin.Forms.PancakeView.PancakeView)item;
-                var lbl = (Label)((StackLayout)pancake.Content).Children[0];
-                if (pancake == view)
+                var grid = (Grid)this.Content;
+                if (grid.Children != null)
                 {
-                    SelectedIndex = stackLayout.Children.IndexOf(pancake);
-                    pancake.BackgroundColor = this.SelectedBackground;
-                    lbl.TextColor = this.SelectedTextColor;
-                }
-                else
-                {
-                    pancake.BackgroundColor = this.UnselectedBackground;
-                    lbl.TextColor = this.UnselectedTextColor;
+                    foreach (var item in grid.Children)
+                    {
+                        var pancake = (Xamarin.Forms.PancakeView.PancakeView)item;
+                        var lbl = (Label)((StackLayout)pancake.Content).Children[0];
+                        if (idx == grid.Children.IndexOf(pancake))
+                        {
+                            pancake.BackgroundColor = this.SelectedBackground;
+                            lbl.TextColor = this.SelectedTextColor;
+                        }
+                        else
+                        {
+                            pancake.BackgroundColor = this.UnselectedBackground;
+                            lbl.TextColor = this.UnselectedTextColor;
+                        }
+                    }
+
+                    Command?.Execute(SelectedIndex);
                 }
             }
-
-            Command?.Execute(SelectedIndex);
 
         }
 

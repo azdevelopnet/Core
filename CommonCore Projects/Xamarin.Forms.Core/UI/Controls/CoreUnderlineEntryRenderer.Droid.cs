@@ -47,7 +47,7 @@ namespace Xamarin.Forms.Core
                 {
                     aa.Handled = false;
                     var w = editText.Width;
-                    var wl = editText.CompoundPaddingLeft;
+                    //var wl = editText.CompoundPaddingLeft;
                     var wr = w - editText.CompoundPaddingRight;
                     var x = aa.Event.GetX();
                     if (wr < x && aa.Event.Action == Views.MotionEventActions.Down)
