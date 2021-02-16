@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Core
 
         public void SendNotification(string title, string message, DateTime? notifyTime = null)
         {
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, er) =>
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) =>
             {
                 if (approved)
                 {

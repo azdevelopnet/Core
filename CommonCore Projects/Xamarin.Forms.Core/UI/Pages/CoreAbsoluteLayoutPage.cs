@@ -3,56 +3,6 @@ using System.Linq;
 
 namespace Xamarin.Forms.Core
 {
-    public enum DisplayPosition
-    {
-        Above,
-        Below
-    }
-    public class PopupParameter
-    {
-        public bool UseParentBindingContext { get; set; } = true;
-        public bool IsAnimatedOpen { get; set; } = true;
-        public bool IsAnimatedClose { get; set; } = true;
-        public string ContainerAutomationId { get; set; } = "CorePopupAutomationId";
-        public double PercentHorizontal { get; set; } = 0.5;
-        public double PercentVertical { get; set; } = 0.5;
-        public double PercentWidth { get; set; } = 0.85;
-        public double PercentHeight { get; set; } = 0.5;
-
-        public bool HasBackgroundOverlay { get; set; } = false;
-        public string OverlayAutomationId { get; set; } = "CoreContainerBackdropId";
-        public double OverlayOpacity { get; set; } = 1;
-        public Color OverlayColor { get; set; } = Color.FromHex("#80000000");
-        public View AnchorView { get; set; }
-        public DisplayPosition DisplayPosition { get; set; } = DisplayPosition.Below;
-
-        public Rectangle ToPercentRectange()
-        {
-            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, PercentWidth);
-        }
-        public Rectangle ToAbsoluteRectange(Page page, View popup)
-        {
-
-            if (AnchorView != null && page != null)
-            {
-                var coord = DependencyService.Get<IVisualElementLocation>().GetCoordinates(AnchorView);
-                PercentHorizontal = coord.X;
-                if (DisplayPosition == DisplayPosition.Below)
-                {
-                    PercentVertical = coord.Y + AnchorView.Height;
-                }
-                else
-                {
-                    PercentVertical = coord.Y - popup.HeightRequest;
-                }
-            
-                PercentWidth = page.Width * PercentWidth;
-                PercentHeight = page.Height * PercentHeight;
-            }
-            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, PercentWidth);
-        }
-    }
-
     public abstract class CoreAbsoluteLayoutPage<T> : CorePage<T>
      where T : CoreViewModel, new()
     {
@@ -101,8 +51,7 @@ namespace Xamarin.Forms.Core
 
     }
 
-
-    public abstract class CoreAbsoluteLayoutPage: CorePage
+    public abstract class CoreAbsoluteLayoutPage : CorePage
     {
         private AbsoluteLayout _layout;
         private View _content;
@@ -147,9 +96,87 @@ namespace Xamarin.Forms.Core
         }
     }
 
+    public enum DisplayPosition
+    {
+        Above,
+        Below
+    }
+
+    public class AnchorPopup
+    {
+        public bool UseParentBindingContext { get; set; } = true;
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public View AnchorView { get; set; }
+        public DisplayPosition DisplayPosition { get; set; } = DisplayPosition.Below;
+
+        public Rectangle ToAbsoluteRectange(Page page, View popup)
+        {
+            if (AnchorView != null && page != null)
+            {
+                var coord = DependencyService.Get<IVisualElementLocation>().GetCoordinates(AnchorView);
+                var xPosition = (double)coord.X;
+                var yPosition = 0.0;
+                if (DisplayPosition == DisplayPosition.Below)
+                {
+                    yPosition = (double)(coord.Y + AnchorView.Height);
+                }
+                else
+                {
+                    yPosition = (double)(coord.Y - popup.HeightRequest);
+                }
+                return new Rectangle(xPosition, yPosition, Width, Height);
+            }
+            else
+            {
+                return new Rectangle();
+            }
+        }
+    }
+
+    public class PagePopup
+    {
+        public bool UseParentBindingContext { get; set; } = true;
+        public double PercentHorizontal { get; set; } = 0.5;
+        public double PercentVertical { get; set; } = 0.5;
+        public double PercentWidth { get; set; } = 0.85;
+        public double PercentHeight { get; set; } = 0.5;
+        public bool HasBackgroundOverlay { get; set; } = false;
+        public double OverlayOpacity { get; set; } = 1;
+        public Color OverlayColor { get; set; } = Color.FromHex("#80000000");
+
+        public Rectangle ToPercentRectange()
+        {
+            return new Rectangle(PercentHorizontal, PercentVertical, PercentWidth, PercentWidth);
+        }
+
+    }
+
     public static class CoreAbsoluteLayoutPageExtensions
     {
-        public static void ShowPopup(this Page page, View popup, PopupParameter parameters)
+        public static void ShowAnchorPopup(this Page page, View popup, AnchorPopup parameters)
+        {
+            if (popup == null || parameters == null || parameters.AnchorView == null)
+                return;
+
+            var layout = page.GetAbsoluteLayout();
+            if (layout != null)
+            {
+
+                popup.AutomationId = "CorePopupAutomationId";
+                if (parameters.UseParentBindingContext)
+                    popup.BindingContext = layout.BindingContext;
+
+                AbsoluteLayout.SetLayoutBounds(popup, parameters.ToAbsoluteRectange(page, popup));
+                layout.Children.Add(popup);
+
+                popup.ScaleTo(0.99, 200).ContinueWith(async (t) =>
+                {
+                    await popup.ScaleTo(1, 200);
+                });
+            }
+        }
+        public static void ShowPagePopup(this Page page, View popup, PagePopup parameters)
         {
             if (popup == null || parameters == null)
                 return;
@@ -162,7 +189,7 @@ namespace Xamarin.Forms.Core
                 {
                     var overlay = new StackLayout()
                     {
-                        AutomationId = parameters.OverlayAutomationId,
+                        AutomationId = "CoreContainerBackdropId",
                         BackgroundColor = parameters.OverlayColor,
                         Opacity = parameters.OverlayOpacity
                     };
@@ -173,41 +200,38 @@ namespace Xamarin.Forms.Core
                 }
 
 
-                popup.AutomationId = parameters.ContainerAutomationId;
+                popup.AutomationId = "CorePopupAutomationId";
                 if (parameters.UseParentBindingContext)
                     popup.BindingContext = layout.BindingContext;
 
-                if (parameters.AnchorView != null)
-                {
-                    AbsoluteLayout.SetLayoutBounds(popup, parameters.ToAbsoluteRectange(page, popup));
-                }
-                else
-                {
-                    AbsoluteLayout.SetLayoutBounds(popup, parameters.ToPercentRectange());
-                    AbsoluteLayout.SetLayoutFlags(popup, AbsoluteLayoutFlags.All);
-                }
+                AbsoluteLayout.SetLayoutBounds(popup, parameters.ToPercentRectange());
+                AbsoluteLayout.SetLayoutFlags(popup, AbsoluteLayoutFlags.All);
                 layout.Children.Add(popup);
 
-                if (parameters.IsAnimatedOpen)
+                popup.ScaleTo(0.99, 200).ContinueWith(async (t) =>
                 {
-                    popup.ScaleTo(0.99, 200).ContinueWith(async (t) =>
-                    {
-                        await popup.ScaleTo(1, 200);
-                    });
-                }
+                    await popup.ScaleTo(1, 200);
+                });
             }
         }
 
-        public static void ClosePopup(this Page page, PopupParameter parameters)
+        public static bool PopupIsOpen(this Page page)
         {
-            if (parameters == null)
-                return;
+            var layout = page.GetAbsoluteLayout();
+            var popup = layout.Children.FirstOrDefault(x => x.AutomationId == "CorePopupAutomationId");
+            if (popup != null)
+                return true;
+            else
+                return false;
+        }
 
+        public static void ClosePopup(this Page page)
+        {
             var layout = page.GetAbsoluteLayout();
             if (layout != null)
             {
-                var overlay = layout.Children.FirstOrDefault(x => x.AutomationId == parameters.OverlayAutomationId);
-                var popup = layout.Children.FirstOrDefault(x => x.AutomationId == parameters.ContainerAutomationId);
+                var overlay = layout.Children.FirstOrDefault(x => x.AutomationId == "CoreContainerBackdropId");
+                var popup = layout.Children.FirstOrDefault(x => x.AutomationId == "CorePopupAutomationId");
 
                 if (popup != null)
                 {
