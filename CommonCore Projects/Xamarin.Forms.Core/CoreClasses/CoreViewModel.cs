@@ -198,7 +198,7 @@ namespace Xamarin.Forms.Core
                 if(Application.Current.MainPage is TabbedPage)
                 {
                     var tab = (TabbedPage)Application.Current.MainPage;
-                    if (tab.CurrentPage is INavigation)
+                    if (tab.CurrentPage is NavigationPage)
                         return ((NavigationPage)tab.CurrentPage).Navigation;
                     else
                         return null;

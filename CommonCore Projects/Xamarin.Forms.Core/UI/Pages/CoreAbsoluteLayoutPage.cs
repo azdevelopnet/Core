@@ -193,8 +193,8 @@ namespace Xamarin.Forms.Core
             if (!view.IsAbsoluteLayout() || popup == null || parameters == null || parameters.AnchorView == null)
                 return;
 
-
             var layout = (AbsoluteLayout)((ContentView)view).Content;
+            layout.DisableAllBut(parameters.AnchorView);
             layout?.ShowAnchorLayout(popup, parameters);
         }
 
@@ -213,9 +213,66 @@ namespace Xamarin.Forms.Core
             if (popup == null || parameters == null || parameters.AnchorView == null)
                 return;
 
-
             var layout = page.GetAbsoluteLayout();
+            layout.DisableAllBut(parameters.AnchorView);
             layout?.ShowAnchorLayout(popup, parameters);
+        }
+
+        private static void EnableAll(this ILayoutController page)
+        {
+
+            foreach (var item in page.Children)
+            {
+                if (item is View)
+                {
+                    ((View)item).IsEnabled = true;
+                }
+                if (item.IsType<ScrollView>())
+                {
+                    ((ScrollView)item).Orientation = ScrollOrientation.Vertical;
+                }
+
+                if (item is ILayoutController)
+                {
+                    ((ILayoutController)item).EnableAll();
+                }
+            }
+        }
+
+        private static bool IsType<T> (this object item) where T:class
+        {
+            if (item is T)
+                return true;
+            else
+                return false;
+        }
+
+        private static void DisableAllBut(this ILayoutController page, View anchor)
+        {
+
+            foreach(var item in page.Children)
+            {
+                if (item != anchor)
+                {
+                    if (item.IsType<ScrollView>())
+                    {
+                        ((ScrollView)item).Orientation = ScrollOrientation.Neither;
+                    }
+                    else
+                    {
+                        if (!item.IsType<ILayoutController>() && item.IsType<View>())
+                        {
+                            ((View)item).IsEnabled = false;
+                        }
+                    }
+
+                }
+
+                if (item.IsType<ILayoutController>())
+                {
+                    ((ILayoutController)item).DisableAllBut(anchor);
+                }
+            }
         }
 
         public static void ShowPagePopup(this Page page, View popup, PagePopup parameters)
@@ -240,6 +297,8 @@ namespace Xamarin.Forms.Core
         public static void ClosePopup(this Page page)
         {
             var layout = page.GetAbsoluteLayout();
+            layout.EnableAll();
+
             if (layout != null)
             {
                 var overlay = layout.Children.FirstOrDefault(x => x.AutomationId == "CoreContainerBackdropId");
@@ -295,5 +354,6 @@ namespace Xamarin.Forms.Core
             return null;
         }
     }
+
 }
 
