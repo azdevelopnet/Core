@@ -356,6 +356,7 @@
       <DependentUpon>CoreTabbedPage.cs</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccessbilityEnums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Pages\CoreAbsoluteContentView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />

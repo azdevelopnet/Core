@@ -30,24 +30,6 @@ namespace Xamarin.Forms.Core
             }
         }
 
-        protected override void OnAppearing()
-        {
-            this.SizeChanged += PageSizeChanged;
-            base.OnAppearing();
-            PageSizeChanged(this, null);
-        }
-        protected override void OnDisappearing()
-        {
-            this.SizeChanged -= PageSizeChanged;
-            base.OnDisappearing();
-        }
-
-        public virtual void PageSizeChanged(object sender, EventArgs args) { }
-
-        public void Dispose()
-        {
-            this.SizeChanged -= PageSizeChanged;
-        }
 
     }
 
@@ -76,24 +58,7 @@ namespace Xamarin.Forms.Core
                 }
             }
         }
-        protected override void OnAppearing()
-        {
-            this.SizeChanged += PageSizeChanged;
-            base.OnAppearing();
-            PageSizeChanged(this, null);
-        }
-        protected override void OnDisappearing()
-        {
-            this.SizeChanged -= PageSizeChanged;
-            base.OnDisappearing();
-        }
 
-        public virtual void PageSizeChanged(object sender, EventArgs args) { }
-
-        public void Dispose()
-        {
-            this.SizeChanged -= PageSizeChanged;
-        }
     }
 
     public enum DisplayPosition
@@ -110,9 +75,9 @@ namespace Xamarin.Forms.Core
         public View AnchorView { get; set; }
         public DisplayPosition DisplayPosition { get; set; } = DisplayPosition.Below;
 
-        public Rectangle ToAbsoluteRectange(Page page, View popup)
+        public Rectangle ToAbsoluteRectange(View popup)
         {
-            if (AnchorView != null && page != null)
+            if (AnchorView != null)
             {
                 var coord = DependencyService.Get<IVisualElementLocation>().GetCoordinates(AnchorView);
                 var xPosition = (double)coord.X;
@@ -154,12 +119,21 @@ namespace Xamarin.Forms.Core
 
     public static class CoreAbsoluteLayoutPageExtensions
     {
-        public static void ShowAnchorPopup(this Page page, View popup, AnchorPopup parameters)
+        private static bool IsAbsoluteLayout(this ContentView view)
         {
-            if (popup == null || parameters == null || parameters.AnchorView == null)
-                return;
+            if (view is ContentView)
+            {
+                if (((ContentView)view).Content is AbsoluteLayout)
+                {
+                    return true;
+                }
+            }
 
-            var layout = page.GetAbsoluteLayout();
+            return false;
+        }
+
+        private static void ShowAnchorLayout(this AbsoluteLayout layout, View popup, AnchorPopup parameters)
+        {
             if (layout != null)
             {
 
@@ -167,7 +141,7 @@ namespace Xamarin.Forms.Core
                 if (parameters.UseParentBindingContext)
                     popup.BindingContext = layout.BindingContext;
 
-                AbsoluteLayout.SetLayoutBounds(popup, parameters.ToAbsoluteRectange(page, popup));
+                AbsoluteLayout.SetLayoutBounds(popup, parameters.ToAbsoluteRectange(popup));
                 layout.Children.Add(popup);
 
                 popup.ScaleTo(0.99, 200).ContinueWith(async (t) =>
@@ -176,12 +150,9 @@ namespace Xamarin.Forms.Core
                 });
             }
         }
-        public static void ShowPagePopup(this Page page, View popup, PagePopup parameters)
-        {
-            if (popup == null || parameters == null)
-                return;
 
-            var layout = page.GetAbsoluteLayout();
+        private static void ShowPopupLayout(this AbsoluteLayout layout, View popup, PagePopup parameters)
+        {
             if (layout != null)
             {
 
@@ -213,6 +184,47 @@ namespace Xamarin.Forms.Core
                     await popup.ScaleTo(1, 200);
                 });
             }
+        }
+
+
+        public static void ShowAnchorPopup(this ContentView view, View popup, AnchorPopup parameters)
+        {
+
+            if (!view.IsAbsoluteLayout() || popup == null || parameters == null || parameters.AnchorView == null)
+                return;
+
+
+            var layout = (AbsoluteLayout)((ContentView)view).Content;
+            layout?.ShowAnchorLayout(popup, parameters);
+        }
+
+        public static void ShowPagePopup(this ContentView view, View popup, PagePopup parameters)
+        {
+            if (!view.IsAbsoluteLayout() || popup == null || parameters == null )
+                return;
+
+            var layout = (AbsoluteLayout)((ContentView)view).Content;
+            layout?.ShowPopupLayout(popup, parameters);
+        }
+
+        public static void ShowAnchorPopup(this Page page, View popup, AnchorPopup parameters)
+        {
+
+            if (popup == null || parameters == null || parameters.AnchorView == null)
+                return;
+
+
+            var layout = page.GetAbsoluteLayout();
+            layout?.ShowAnchorLayout(popup, parameters);
+        }
+
+        public static void ShowPagePopup(this Page page, View popup, PagePopup parameters)
+        {
+            if (popup == null || parameters == null)
+                return;
+
+            var layout = page.GetAbsoluteLayout();
+            layout?.ShowPopupLayout(popup, parameters);
         }
 
         public static bool PopupIsOpen(this Page page)

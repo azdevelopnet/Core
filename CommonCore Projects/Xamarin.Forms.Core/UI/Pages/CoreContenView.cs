@@ -1,6 +1,8 @@
 ﻿using System;
 namespace Xamarin.Forms.Core
 {
+
+
     public class CoreContenView : ContentView
     {
         string viewModelName;
