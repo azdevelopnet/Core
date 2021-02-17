@@ -93,43 +93,21 @@ namespace Xamarin.Forms.Core
                 if (newvalue != null)
                 {
                     var lst = (ObservableCollection<LazyTabbedModel>)newvalue;
-                    foreach (var tab in lst)
-                    {
-                        tab.TabPage.Title = tab.Title;
-                        tab.TabPage.BindingContext = tab;
-                        var nav = new NavigationPage(tab.TabPage) { IconImageSource = tab.IconSource, AutomationId = tab.AutomationId, Title = tab.Title };
-                        if (tab.IsRootPage)
-                        {
-                            obj.RootPage = nav;
-                        }
-                        else
-                        {
-                            obj.Children.Add(nav);
-                        }
-                    }
 
-                    if (obj.RootPage != null)
+                    if (lst.Any(x => x.IsRootPage))
                     {
-                        obj.NavigateRootPage();
+                        obj.PopulateRootPage();
+                    }
+                    else
+                    {
+                        obj.PopulateNonRootPages();
                     }
                 }
             }
         }
 
-
         protected override void OnCurrentPageChanged()
         {
-            if (RootPage!=null && CurrentPage != RootPage)
-            {
-                Children.Remove(RootPage);
-#if __ANDROID__
-                this.On<Xamarin.Forms.PlatformConfiguration.Android>().SetIsSwipePagingEnabled(true);
-#endif
-                
-                this.IsHidden = false;
-                _effect.UpdateVisiblity();
-            }
-
             LazyLoadPageCurrentPage();
         }
 
@@ -144,20 +122,15 @@ namespace Xamarin.Forms.Core
 
         public void NavigateRootPage()
         {
-            if (RootPage != null && !Children.Contains(RootPage))
-            {
-                Children.Insert(0, RootPage);
-                CurrentPage = RootPage;
-
-#if __ANDROID__
-                this.On<Xamarin.Forms.PlatformConfiguration.Android>().SetIsSwipePagingEnabled(false);
-#endif
-
-                this.IsHidden = true;
-                _effect.UpdateVisiblity();
-            }
+            if(RootPage!=null)
+                PopulateRootPage();
         }
 
+        public void NavigateTabbedPages()
+        {
+            if (RootPage != null)
+                PopulateNonRootPages();
+        }
 
         private void LazyLoadPageCurrentPage()
         {
@@ -171,6 +144,46 @@ namespace Xamarin.Forms.Core
                         lazy.LoadView();
                 }
             }
+        }
+
+        private void PopulateRootPage()
+        {
+            Children.Clear();
+            foreach (var tab in TabCollection.Where(x => x.IsRootPage))
+            {
+                tab.TabPage.Title = tab.Title;
+                tab.TabPage.BindingContext = tab;
+                var nav = new NavigationPage(tab.TabPage) { IconImageSource = tab.IconSource, AutomationId = tab.AutomationId, Title = tab.Title };
+                RootPage = nav;
+                Children.Add(nav);
+            }
+
+            this.IsHidden = true;
+            _effect.UpdateVisiblity();
+
+#if __ANDROID__
+            this.On<Xamarin.Forms.PlatformConfiguration.Android>().SetIsSwipePagingEnabled(false);
+#endif
+
+        }
+        private void PopulateNonRootPages()
+        {
+            Children.Clear();
+            foreach (var tab in TabCollection.Where(x => !x.IsRootPage))
+            {
+                tab.TabPage.Title = tab.Title;
+                tab.TabPage.BindingContext = tab;
+                var nav = new NavigationPage(tab.TabPage) { IconImageSource = tab.IconSource, AutomationId = tab.AutomationId, Title = tab.Title };
+                Children.Add(nav);
+            }
+
+            this.IsHidden = false;
+            _effect.UpdateVisiblity();
+
+#if __ANDROID__
+            this.On<Xamarin.Forms.PlatformConfiguration.Android>().SetIsSwipePagingEnabled(true);
+#endif
+
         }
 
         private static void OnToolbarBottomPropertyChanged(BindableObject bindable, object value, object newValue)
@@ -229,6 +242,7 @@ namespace Xamarin.Forms.Core
                 disposable.Dispose();
             }
         }
+       
     }
     #endregion
 }

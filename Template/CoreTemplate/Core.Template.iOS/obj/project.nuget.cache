@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "BBTEfLPedy+wF31lQcs7XKJRyFkY/Vn0nLK8gndoaV4S7aDS0BUO2TL1PflcQ/M61P2ynt/5w+hXLFORhChApQ==",
+  "success": true,
+  "projectFilePath": "/Users/lesbrown/Documents/GitHub/Core/Template/CoreTemplate/Core.Template.iOS/Core.Template.iOS.csproj",
+  "expectedPackageFiles": [
+    "/Users/lesbrown/.nuget/packages/fody/6.3.0/fody.6.3.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/microsoft.appcenter/4.1.0/microsoft.appcenter.4.1.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/microsoft.appcenter.analytics/4.1.0/microsoft.appcenter.analytics.4.1.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/microsoft.appcenter.crashes/4.1.0/microsoft.appcenter.crashes.4.1.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/modernhttpclient-updated/3.4.3/modernhttpclient-updated.3.4.3.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/nodatime/3.0.5/nodatime.3.0.5.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/plugin.badge/2.3.1/plugin.badge.2.3.1.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/portable.bouncycastle/1.8.5/portable.bouncycastle.1.8.5.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/propertychanged.fody/3.3.1/propertychanged.fody.3.3.1.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/skiasharp/2.80.2/skiasharp.2.80.2.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/skiasharp.views/2.80.2/skiasharp.views.2.80.2.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/skiasharp.views.forms/2.80.2/skiasharp.views.forms.2.80.2.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/system.componentmodel/4.3.0/system.componentmodel.4.3.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/system.runtime.compilerservices.unsafe/4.7.1/system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/xamarin.communitytoolkit.markup/1.0.2/xamarin.communitytoolkit.markup.1.0.2.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512",
+    "/Users/lesbrown/.nuget/packages/xamarin.forms.pancakeview/2.3.0.759/xamarin.forms.pancakeview.2.3.0.759.nupkg.sha512"
+  ],
+  "logs": []
+}

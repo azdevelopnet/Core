@@ -1,20 +1,30 @@
 ﻿<Properties StartupConfiguration="{910E4C8C-85ED-40A1-8568-054BE9B272BB}|Default">
   <MonoDevelop.Ide.ItemProperties.Core.Template.Core FirstBuild="True" />
   <MonoDevelop.Ide.ItemProperties.Core.Template.Android TriggeredFromHotReload="False" PreferredExecutionTarget="Android.pixel_2_pie_9_0_-_api_28" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Template.iOS/AppDelegate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core.Template.iOS/Properties/AssemblyInfo.cs">
     <Files>
       <File FileName="Core.Template.Android/MainApplication.cs" Line="36" Column="56" />
       <File FileName="Core.Template.Android/MainActivity.cs" />
       <File FileName="Core.Template.Core/Partials/SettingsPartial.cs" />
       <File FileName="Core.Template.Android/SplashScreenActivity.cs" />
-      <File FileName=".template.config/template.json" Line="29" Column="14" />
+      <File FileName=".template.config/template.json" />
       <File FileName="Core.Template.iOS/AppDelegate.cs" Line="1" Column="1" />
+      <File FileName="Core.Template.iOS/Properties/AssemblyInfo.cs" Line="4" Column="24" />
+      <File FileName="Core.Template.Android/Properties/AssemblyInfo.cs" Line="6" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Core.Template" expanded="True" selected="True">
+          <Node name="Core.Template" expanded="True">
             <Node name=".template.config" expanded="True" />
+            <Node name="Core.Template.Android" expanded="True">
+              <Node name="Properties" expanded="True" />
+            </Node>
+            <Node name="Core.Template.iOS" expanded="True">
+              <Node name="Properties" expanded="True">
+                <Node name="AssemblyInfo.cs" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
