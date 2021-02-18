@@ -82,7 +82,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ContextMenuService.Droid.cs">
       <DependentUpon>IContextMenuService.cs</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\util.Droid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreBusiness.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreClasses\CoreStyles.cs" />
@@ -313,7 +312,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Toolkit\Behaviors\BaseBehavior.shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Controls\CoreCircularProgressbar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReturnKeyTypes.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResizer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\IImageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dependencies\ImageManager.IOS.cs">
       <DependentUpon>IImageManager.cs</DependentUpon>
